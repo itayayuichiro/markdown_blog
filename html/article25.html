@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>新卒エンジニアが知っておくと便利なツール&コマンド集</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+  <h1 class="title">新卒エンジニアが知っておくと便利なツール&コマンド集</h1>
+</header>
+<h2 id="概要" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 1.75em; orphans: 3; widows: 3; break-after: avoid; margin-bottom: 0.85em; margin-top: 0px !important;">概要</h2><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">記事のテーマは他の同期のエンジニアより<span style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-weight: 700; font-size: inherit;">半歩先に進みたい人</span>のために書いた記事となっています。</p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">新人研修や学校の授業や本など色々な方法でみなさん技術を学んでいると思うのですが、それらはまとまった知識を得ることができるのですが「本質とはちょっと違うが知っておくと便利なこと」はなかなか教えてくれません。</p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">そこで今回はその「本質とはちょっと違うが知っておくと便利なこと」をひとまとめにして紹介してようと思いこの記事を書きました。</p><h2 id="技術紹介" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 1.75em; orphans: 3; widows: 3; break-after: avoid; margin-top: 1.275em; margin-bottom: 0.85em;">技術紹介</h2><h3 id="ツール編" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 1.5em; orphans: 3; widows: 3; break-after: avoid; margin-top: 1.275em; margin-bottom: 0.85em;">ツール編</h3><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">この章で紹介するツールは下記の３つです。</p><table style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; border-collapse: collapse; border-spacing: 0px; font-size: inherit; break-inside: avoid; margin-top: 0px; margin-bottom: 0.85em; overflow: auto;"><thead style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit;"><tr style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; break-inside: avoid; border-top: 1px solid rgb(204, 204, 204);"><th style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">ツール名</th><th style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">オススメ度</th></tr></thead><tbody style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit;"><tr style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; break-inside: avoid; border-top: 1px solid rgb(204, 204, 204);"><td style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">Clipy</td><td style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">☆☆☆☆☆</td></tr><tr style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; break-inside: avoid; background-color: rgb(248, 248, 248); border-top: 1px solid rgb(204, 204, 204);"><td style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">trello</td><td style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">☆☆☆☆☆</td></tr><tr style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; break-inside: avoid; border-top: 1px solid rgb(204, 204, 204);"><td style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">ScriptAutoRunner</td><td style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">☆☆☆</td></tr></tbody></table><h5 id="clipyアプリケーション" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 1em; orphans: 3; widows: 3; break-after: avoid; margin-top: 1.275em; margin-bottom: 0.85em;">Clipy(アプリケーション)</h5><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">前にコピーした情報をすぐに呼び出すことができるツール。みなさんコピーするときにcommand + cでコピーすると思うのですが、その状態で別のテキストをコピーすると、当たり前ですけど、一個前の情報は消えてしまいますよね。</p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">でも、この<span style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-weight: 700; font-size: inherit;">Clipy</span>を使うとその情報を簡単に引き出すことができるのです。これで</p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">「あー！！さっきコピーしてたテキストまたコピーしなきゃ...」</p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">ということがなくなります！</p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;"><img src="http://masyumaroking.com/storage/b6qjL52XYclDeuKD3G5B1wY1EG4V43ifvWzhePog.png" alt="スクリーンショット 2019-11-28 19.21.48.png" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; border: 0px; font-size: inherit; break-inside: avoid; max-width: 100%;">&nbsp;<a href="https://clipy-app.com/" target="_blank" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; text-decoration-line: none; font-size: inherit; color: rgb(65, 131, 196); background: 0px 0px;">ダウンロードリンク</a></p><h5 id="trello無料webサービス" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 1em; orphans: 3; widows: 3; break-after: avoid; margin-top: 1.275em; margin-bottom: 0.85em;">trello(無料Webサービス)</h5><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">これはタスク管理する時のタスクツール。実際の現場に入ると１つのことだけやっていればいいということはなく、複数のタスクを並行してこなさなくてはなりません。</p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">そうなったときにこのタスクはどこまで完了していて、このタスクはOOさんのレス待ちで...みたいな情報を頭だけで記憶してるのはムリがありますよね...(特に新卒で入社したときなどは。)</p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">そんなときにこの<span style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-weight: 700; font-size: inherit;">trello</span>というサービスは非常に有用です。 下記にタスクを管理する例を提示します。</p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;"><img src="http://masyumaroking.com/storage/Hncm2fQ3aamEOFyYJQk4XO34gNeyE9UxowLZ3NjP.png" alt="スクリーンショット 2019-11-28 19.18.37.png" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; border: 0px; font-size: inherit; break-inside: avoid; max-width: 100%;"></p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">上記のように未完・着手・レス待ち・完了・凍結のようにしておけば大体のタスクは割り振ることができます。</p><ol style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; margin: 0px 0px 0.85em; padding: 0px 0px 0px 2em;"><li style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit;">まず人に依頼されたら未完の欄にそのタスクを記載します。</li><li style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit;">そしてそのタスクを始めたら着手に変更します。</li><li style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit;">そして、プルリク状態になったりPMの承認待ちになったらレス待ちにしておきます。</li><li style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit;">そして承認が降りたり、プルリクにOKが出たら完了にします。</li></ol><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">もちろん区分の仕方は個人で自由に変えていいですし、trelloは自由度が高いのでそれにちゃんと対応することができます。</p><h4 id="scriptautorunnerchrome拡張" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 1.25em; orphans: 3; widows: 3; break-after: avoid; margin-top: 1.275em; margin-bottom: 0.85em;">ScriptAutoRunner(Chrome拡張)</h4><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">これはJavaScriptを知ってる人ならぜひとも入れてほしい拡張で、特定のサイトで自分が予め書いたJSを動かすことができるというものです！</p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">例えば、定期的にセッションが切れるようなログインが必要なサイトにいちいちログイン情報を入力してログインするのが面倒だというときに、ログイン画面が表示されたらIDパスワードを入力してログインボタンをクリックするというJSを書いておけば<span style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-weight: 700; font-size: inherit;">自動でログイン</span>することが可能になります。</p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">さらに応用的な使い方をする例として、プルリクを出すときに間違えてデバック中に使っていた「System.out.println」がコードに混じっていた際に下記のようなコードを書いておけば警告することもできます。&nbsp;<img src="http://masyumaroking.com/storage/JOcsu3DX6hojCDgwyPgSsJEypBoqlXIg4GAZlKWu.png" alt="スクリーンショット 2019-11-28 19.27.18.png" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; border: 0px; font-size: inherit; break-inside: avoid; max-width: 100%;"></p><h3 id="ショートカット編" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 1.5em; orphans: 3; widows: 3; break-after: avoid; margin-top: 1.275em; margin-bottom: 0.85em;">ショートカット編</h3><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">この章で紹介するショートカットは下記の3つです。</p><table style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; border-collapse: collapse; border-spacing: 0px; font-size: inherit; break-inside: avoid; margin-top: 0px; margin-bottom: 0.85em;  overflow: auto;"><thead style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit;"><tr style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; break-inside: avoid; border-top: 1px solid rgb(204, 204, 204);"><th style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">ショートカット</th><th style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">オススメ度</th></tr></thead><tbody style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit;"><tr style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; break-inside: avoid; border-top: 1px solid rgb(204, 204, 204);"><td style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">command + d</td><td style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">☆☆☆☆☆</td></tr><tr style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; break-inside: avoid; background-color: rgb(248, 248, 248); border-top: 1px solid rgb(204, 204, 204);"><td style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">alt + →</td><td style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">☆☆☆</td></tr><tr style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; break-inside: avoid; border-top: 1px solid rgb(204, 204, 204);"><td style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">command + →</td><td style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">☆☆☆</td></tr></tbody></table><h4 id="command--d" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 1.25em; orphans: 3; widows: 3; break-after: avoid; margin-top: 1.275em; margin-bottom: 0.85em;">command + d</h4><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">コマンドは僕がこの記事を書こうと思ったきっかけになったコマンドです。</p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;"><span style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-weight: 700; font-size: inherit;">※VSCode,Sublime Text,Atomでは動作しましたがIntellJなど別のエディタでは自分で設定する必要があるかもしれません...</span></p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">このコマンドを使うと同じ<span style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-weight: 700; font-size: inherit;">単語を複数選択</span>することができるようになります。</p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">一体どういうことなんだ？という人のために早速例を見せます。</p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;"><img src="http://masyumaroking.com/storage/TgWuOYuVmgR6Kj9iUkiNuTrDBYZ6eGOszxaLVnlz.png" alt="スクリーンショット 2019-11-28 19.33.52.png" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; border: 0px; font-size: inherit; break-inside: avoid; max-width: 100%;"></p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">例えばこのようなコードがあったとして、この「doc」というコメントを「document」に変更したい！となった場合に、まず「doc」を選択して</p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;"><img src="http://masyumaroking.com/storage/q1cHyRR94R3oyPgETc25zXyIbSBdBQQnfmpcz0o4.png" alt="スクリーンショット 2019-11-28 19.34.03.png" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; border: 0px; font-size: inherit; break-inside: avoid; max-width: 100%;">&nbsp;その状態でcommand + dを押すと その下にあるdocも選択することができます。そしてその状態で文字を追加すると最初のdocだけでなくcommand + dで選択した単語も一緒に編集されます！&nbsp;<img src="http://masyumaroking.com/storage/QjE6hYlbZpZFzsCCcLZgq8z0EAhAG4bGEPGtvwnY.png" alt="スクリーンショット 2019-11-28 19.34.09.png" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; border: 0px; font-size: inherit; break-inside: avoid; max-width: 100%;"></p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">これと一緒に下記のコマンドも覚えておくとキーボードでの操作がスムーズになります。</p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;"><span style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-weight: 700; font-size: inherit;">alt + →</span>&nbsp;単語の最後に移動</p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;"><span style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-weight: 700; font-size: inherit;">command + →</span>&nbsp;行の最後に移動</p><h3 id="エイリアスについて" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 1.5em; orphans: 3; widows: 3; break-after: avoid; margin-top: 1.275em; margin-bottom: 0.85em;">エイリアスについて</h3><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">この次の章でいくつかコマンドを紹介するのですが、その前にエイリアスというものの存在を知らない人はぜひエイリアスというものを知ってもらいたいです。</p><h4 id="エイリアスとは？" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 1.25em; orphans: 3; widows: 3; break-after: avoid; margin-top: 1.275em; margin-bottom: 0.85em;">エイリアスとは？</h4><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">エイリアスとは簡単に言うと</p><pre style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: inherit; white-space: pre-wrap; break-inside: avoid; direction: ltr; margin-top: 0px; margin-bottom: 1.275em; padding: 0.85em 1em; border: none; color: inherit; overflow: auto; overflow-wrap: normal; background: rgb(247, 247, 247);"><code style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 0.85em; break-inside: avoid; direction: ltr; margin: 0px; padding: 0px; border: none; color: inherit; background: 0px 0px; display: inline; max-width: initial; overflow: initial; line-height: inherit; white-space: pre;">bundle exec ruby crawler.rb
+</code></pre><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">のようなコマンドを</p><pre style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: inherit; white-space: pre-wrap; break-inside: avoid; direction: ltr; margin-top: 0px; margin-bottom: 1.275em; padding: 0.85em 1em; border: none; color: inherit; overflow: auto; overflow-wrap: normal; background: rgb(247, 247, 247);"><code style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 0.85em; break-inside: avoid; direction: ltr; margin: 0px; padding: 0px; border: none; color: inherit; background: 0px 0px; display: inline; max-width: initial; overflow: initial; line-height: inherit; white-space: pre;">ber crawler.rb
+</code></pre><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">のように全部入力しないで入力するように辞書登録する機能のようなものです。</p><h4 id="エイリアスの設定方法" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 1.25em; orphans: 3; widows: 3; break-after: avoid; margin-top: 1.275em; margin-bottom: 0.85em;">エイリアスの設定方法</h4><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">エイリアスの設定は非常に簡単です。先程示した例のようにエイリアスを設定する手順は</p><ol style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; margin: 0px 0px 0.85em; padding: 0px 0px 0px 2em;"><li style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit;">~/.bashrcファイルを開く(zshの場合は~/.zshrc)</li><li style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit;">ファイルに<code style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 0.85em; break-inside: avoid; direction: ltr; margin: 0px; padding: 0.2em; border: none; color: inherit; background-color: rgb(247, 247, 247);">alias ber="bundle exec ruby"</code>のような書き込みをする</li><li style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit;">ファイルを保存する</li><li style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit;">上記の設定ファイルを再読み込みする&nbsp;<code style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 0.85em; break-inside: avoid; direction: ltr; margin: 0px; padding: 0.2em; border: none; color: inherit; background-color: rgb(247, 247, 247);">source ~/.bashrc</code>&nbsp;or&nbsp;<code style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 0.85em; break-inside: avoid; direction: ltr; margin: 0px; padding: 0.2em; border: none; color: inherit; background-color: rgb(247, 247, 247);">source ~/.zshrc</code>&nbsp;以上！！</li></ol><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">これを知ってるだけで毎回長いコマンドを入力して、入力ミスをするといったことが起きなくなります。</p><h3 id="コマンド編" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 1.5em; orphans: 3; widows: 3; break-after: avoid; margin-top: 1.275em; margin-bottom: 0.85em;">コマンド編</h3><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em;">この章で紹介するコマンドは下記の3つです。 (コマンドに関しては使う人や使うケースがだいぶ限られているのでなんかこんなこと書いてあったなぁ..程度に覚えていただけたら幸いです。)</p><table style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; border-collapse: collapse; border-spacing: 0px; font-size: inherit; break-inside: avoid; margin-top: 0px; margin-bottom: 0.85em;  overflow: auto;"><thead style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit;"><tr style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; break-inside: avoid; border-top: 1px solid rgb(204, 204, 204);"><th style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">コマンド</th><th style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">オススメ度</th></tr></thead><tbody style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit;"><tr style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; break-inside: avoid; border-top: 1px solid rgb(204, 204, 204);"><td style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">git add ファイル名 -p</td><td style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">☆☆☆☆☆</td></tr><tr style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; break-inside: avoid; background-color: rgb(248, 248, 248); border-top: 1px solid rgb(204, 204, 204);"><td style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">git stash save '任意の名前'</td><td style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px; border: 1px solid rgb(221, 221, 221);">☆☆☆☆☆</td></tr><tr style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; break-inside: avoid; border-top: 1px solid rgb(204, 204, 204);"><td style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: inherit; padding: 6px 13px
+</body>
+</html>

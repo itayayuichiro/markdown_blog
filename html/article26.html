@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>カレンダーメモアプリに保存ボタンを実装する</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+  <h1 class="title">カレンダーメモアプリに保存ボタンを実装する</h1>
+</header>
+<h1 style="box-sizing: inherit; font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Kaku Gothic ProN&quot;, メイリオ, meiryo, sans-serif; line-height: 1.5; color: rgb(51, 51, 51); margin: 0px 0px 2.4rem; font-size: 1.8em; font-feature-settings: &quot;palt&quot;; cursor: pointer; position: relative; border-bottom: 1px solid rgb(221, 221, 221); padding-bottom: 0.1em; background-color: rgb(255, 255, 255);">概要</h1><p style="box-sizing: inherit; margin: 0px; line-height: 1.9; color: rgb(51, 51, 51); font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Kaku Gothic ProN&quot;, メイリオ, meiryo, sans-serif; font-size: 16px; background-color: rgb(255, 255, 255);">カレンダーメモアプリを作っていて、カレンダーを表示するところまではできたのでいよいよメモを登録するところを実装しようと思います。<br style="box-sizing: inherit;">カレンダーの画面制作についてはこちらを見てください...<br style="box-sizing: inherit;"><a href="https://qiita.com/itaya" class="autolink" style="box-sizing: inherit; color: rgb(98, 0, 172); text-decoration-line: none; background-color: transparent; word-break: break-all;">https://qiita.com/itaya</a></p><h2 style="box-sizing: inherit; font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Kaku Gothic ProN&quot;, メイリオ, meiryo, sans-serif; line-height: 1.5; color: rgb(51, 51, 51); margin: 2.2em 0px 2.4rem; font-size: 1.6em; font-feature-settings: &quot;palt&quot;; cursor: pointer; position: relative; border-bottom: 1px solid rgb(221, 221, 221); padding-bottom: 0.1em; background-color: rgb(255, 255, 255);"><span id="画面を作成する" class="fragment" style="box-sizing: inherit; position: relative; display: block; top: -1.5em;"></span><a href="https://qiita.com/drafts/a8c0d7f194234e86c5fe/edit#%E7%94%BB%E9%9D%A2%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B" style="box-sizing: inherit; color: rgb(98, 0, 172); text-decoration-line: none; background-color: transparent; word-break: break-all;"></a>画面を作成する</h2><p style="box-sizing: inherit; margin: 0px; line-height: 1.9; color: rgb(51, 51, 51); font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Kaku Gothic ProN&quot;, メイリオ, meiryo, sans-serif; font-size: 16px; background-color: rgb(255, 255, 255);">現状の画面はこちら<br style="box-sizing: inherit;"><a href="https://camo.qiitausercontent.com/972537eaea8f8edd7228aea5691618caf9ed85cd/68747470733a2f2f71696974612d696d6167652d73746f72652e73332e61702d6e6f727468656173742d312e616d617a6f6e6177732e636f6d2f302f38333430392f32383530663536372d653434342d336563382d316539622d3162376664353536613461642e706e67" target="_blank" rel="nofollow noopener" style="box-sizing: inherit; color: rgb(98, 0, 172); text-decoration-line: none; background-color: transparent; word-break: break-all;"><img width="356" alt="スクリーンショット 2020-07-13 19.15.08.png" src="https://camo.qiitausercontent.com/972537eaea8f8edd7228aea5691618caf9ed85cd/68747470733a2f2f71696974612d696d6167652d73746f72652e73332e61702d6e6f727468656173742d312e616d617a6f6e6177732e636f6d2f302f38333430392f32383530663536372d653434342d336563382d316539622d3162376664353536613461642e706e67" data-canonical-src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/83409/2850f567-e444-3ec8-1e9b-1b7fd556a4ad.png" loading="lazy" style="box-sizing: inherit; vertical-align: middle; border-style: none; margin: 1.5em 0px; max-width: 100%;"></a></p><div class="code-frame" data-lang="xml" style="box-sizing: inherit; margin: 1.5em -32px; padding: 1em 32px; font-size: 0.9em; position: relative; background-color: rgb(54, 69, 73); color: rgb(227, 227, 227); font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Kaku Gothic ProN&quot;, メイリオ, meiryo, sans-serif;"><div class="code-lang" style="box-sizing: inherit; color: rgb(238, 238, 238); display: inline-block; background-color: rgb(119, 119, 119); padding: 2px 4px; transform: translateY(-1em); word-break: break-all;"><span class="bold" style="box-sizing: inherit;">fragment_create.xml</span></div><div class="highlight" style="box-sizing: inherit; padding: 0.5em; overflow-x: auto;"><pre style="box-sizing: inherit; font-family: SFMono-Regular, Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; padding: 0px; margin-top: 0px; margin-bottom: 0px; font-size: inherit; line-height: 1.8; word-break: break-all; overflow-wrap: break-word; color: inherit; background-color: transparent; border: none; border-radius: 0px;"><span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;layout</span> <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">xmlns:android=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">xmlns:app=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"http://schemas.android.com/apk/res-auto"</span>
+    <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">xmlns:tools=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"http://schemas.android.com/tools"</span><span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&gt;</span>
+
+    <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;data&gt;</span>
+
+        <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;variable</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">name=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"monthData"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">type=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"String"</span> <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">/&gt;</span>
+
+    <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;/data&gt;</span>
+
+    <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;androidx.constraintlayout.widget.ConstraintLayout</span>
+        <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_width=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"match_parent"</span>
+        <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_height=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"match_parent"</span>
+        <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:background=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@color/design_default_color_on_primary"</span>
+        <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">tools:context=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">".MainActivity"</span><span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&gt;</span>
+
+        <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;TextView</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:id=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@+id/label"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_width=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"match_parent"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_height=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"wrap_content"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:background=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@color/design_default_color_primary_variant"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:paddingVertical=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"10dp"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:text=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"新規メモ登録"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:textColor=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@color/design_default_color_on_primary"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:textSize=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"30sp"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:layout_constraintStart_toStartOf=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"parent"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:layout_constraintTop_toTopOf=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"parent"</span> <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">/&gt;</span>
+
+        <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;ImageView</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:id=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@+id/save"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_width=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"match_parent"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_height=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"100dp"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:src=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@drawable/flame_style"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:layout_constraintStart_toStartOf=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"parent"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:layout_constraintTop_toBottomOf=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@+id/label"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:srcCompat=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@android:drawable/ic_btn_speak_now"</span> <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">/&gt;</span>
+
+
+        <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;TextView</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:id=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@+id/category_label"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_width=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"match_parent"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_height=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"wrap_content"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:paddingVertical=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"10dp"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:text=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"カテゴリ選択"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:textSize=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"20sp"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:layout_constraintStart_toStartOf=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"parent"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:layout_constraintTop_toBottomOf=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@+id/label"</span> <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">/&gt;</span>
+
+        <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;Spinner</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:id=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@+id/category"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_width=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"match_parent"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_height=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"wrap_content"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_marginLeft=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"30dp"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_marginRight=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"30dp"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:layout_constraintStart_toStartOf=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"parent"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:layout_constraintTop_toBottomOf=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@+id/category_label"</span> <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">/&gt;</span>
+
+        <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;TextView</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:id=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@+id/title_label"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_width=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"match_parent"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_height=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"wrap_content"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:paddingVertical=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"10dp"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:text=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"タイトル"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:textSize=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"20sp"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:layout_constraintStart_toStartOf=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"parent"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:layout_constraintTop_toBottomOf=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@+id/category"</span> <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">/&gt;</span>
+
+        <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;com.google.android.material.textfield.TextInputLayout</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:id=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@+id/input_title"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_width=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"match_parent"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_height=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"200dp"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:hint=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"非必須"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:layout_constraintStart_toStartOf=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"parent"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:layout_constraintTop_toBottomOf=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@+id/title_label"</span><span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&gt;</span>
+
+            <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;com.google.android.material.textfield.TextInputEditText</span>
+                <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_width=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"match_parent"</span>
+                <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_height=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"wrap_content"</span>
+                <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:lines=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"1"</span>
+                <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:maxLines=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"1"</span> <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">/&gt;</span>
+        <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;/com.google.android.material.textfield.TextInputLayout&gt;</span>
+
+    <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
+<span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;/layout&gt;</span>
+</pre></div></div><h2 style="box-sizing: inherit; font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Kaku Gothic ProN&quot;, メイリオ, meiryo, sans-serif; line-height: 1.5; color: rgb(51, 51, 51); margin: 2.2em 0px 2.4rem; font-size: 1.6em; font-feature-settings: &quot;palt&quot;; cursor: pointer; position: relative; border-bottom: 1px solid rgb(221, 221, 221); padding-bottom: 0.1em; background-color: rgb(255, 255, 255);"><span id="保存ボタンを作成する" class="fragment" style="box-sizing: inherit; position: relative; display: block; top: -1.5em;"></span><a href="https://qiita.com/drafts/a8c0d7f194234e86c5fe/edit#%E4%BF%9D%E5%AD%98%E3%83%9C%E3%82%BF%E3%83%B3%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B" style="box-sizing: inherit; color: rgb(98, 0, 172); text-decoration-line: none; background-color: transparent; word-break: break-all;"></a>保存ボタンを作成する</h2><p style="box-sizing: inherit; margin: 0px; line-height: 1.9; color: rgb(51, 51, 51); font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Kaku Gothic ProN&quot;, メイリオ, meiryo, sans-serif; font-size: 16px; background-color: rgb(255, 255, 255);">保存ボタンがなかったので、追加するのですが、下の方に自分の使ってるカレンダーアプリが追加ボタンが下ではなくタイトルのところにあったのでそこに実装することにします。</p><div class="code-frame" data-lang="xml" style="box-sizing: inherit; margin: 1.5em -32px; padding: 1em 32px; font-size: 0.9em; position: relative; background-color: rgb(54, 69, 73); color: rgb(227, 227, 227); font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, &quot;Helvetica Neue&quot;, &quot;Hiragino Kaku Gothic ProN&quot;, メイリオ, meiryo, sans-serif;"><div class="code-lang" style="box-sizing: inherit; color: rgb(238, 238, 238); display: inline-block; background-color: rgb(119, 119, 119); padding: 2px 4px; transform: translateY(-1em); word-break: break-all;"><span class="bold" style="box-sizing: inherit;">fragment_create.xml</span></div><div class="highlight" style="box-sizing: inherit; padding: 0.5em; overflow-x: auto;"><pre style="box-sizing: inherit; font-family: SFMono-Regular, Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; padding: 0px; margin-top: 0px; margin-bottom: 0px; font-size: inherit; line-height: 1.8; word-break: break-all; overflow-wrap: break-word; color: inherit; background-color: transparent; border: none; border-radius: 0px;"><span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;layout</span> <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">xmlns:android=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">xmlns:app=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"http://schemas.android.com/apk/res-auto"</span>
+    <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">xmlns:tools=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"http://schemas.android.com/tools"</span><span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&gt;</span>
+
+    <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;data&gt;</span>
+
+        <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;variable</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">name=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"monthData"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">type=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"String"</span> <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">/&gt;</span>
+
+    <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;/data&gt;</span>
+
+    <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;androidx.constraintlayout.widget.ConstraintLayout</span>
+        <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_width=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"match_parent"</span>
+        <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_height=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"match_parent"</span>
+        <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:background=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@color/design_default_color_on_primary"</span>
+        <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">tools:context=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">".MainActivity"</span><span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&gt;</span>
+
+        <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;androidx.constraintlayout.widget.ConstraintLayout</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:id=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@+id/label"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_width=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"match_parent"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_height=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"wrap_content"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:background=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@color/design_default_color_primary_variant"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:layout_constraintStart_toStartOf=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"parent"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:layout_constraintTop_toTopOf=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"parent"</span><span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&gt;</span>
+
+            <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;ImageView</span>
+                <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:id=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@+id/save"</span>
+                <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_width=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"wrap_content"</span>
+                <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_height=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"wrap_content"</span>
+                <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_marginEnd=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"20dp"</span>
+                <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:layout_constraintBottom_toBottomOf=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"parent"</span>
+                <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:layout_constraintEnd_toEndOf=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"parent"</span>
+                <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:layout_constraintTop_toTopOf=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"parent"</span>
+                <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:srcCompat=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@android:drawable/ic_menu_save"</span> <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">/&gt;</span>
+
+            <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;TextView</span>
+                <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:id=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@+id/title"</span>
+                <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_width=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"wrap_content"</span>
+                <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_height=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"wrap_content"</span>
+                <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:paddingVertical=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"10dp"</span>
+                <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:text=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"新規メモ登録"</span>
+                <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:textColor=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@color/design_default_color_on_primary"</span>
+                <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:textSize=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"30sp"</span>
+                <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:layout_constraintStart_toStartOf=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"parent"</span>
+                <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:layout_constraintTop_toTopOf=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"parent"</span> <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">/&gt;</span>
+
+
+        <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
+
+
+        <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;TextView</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:id=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@+id/category_label"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_width=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"match_parent"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_height=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"wrap_content"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:paddingVertical=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"10dp"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:text=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"カテゴリ選択"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:textSize=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"20sp"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:layout_constraintStart_toStartOf=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"parent"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">app:layout_constraintTop_toBottomOf=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@+id/label"</span> <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">/&gt;</span>
+
+        <span class="nt" style="box-sizing: inherit; color: rgb(255, 128, 149);">&lt;Spinner</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:id=</span><span class="s" style="box-sizing: inherit; color: rgb(65, 183, 215);">"@+id/category"</span>
+            <span class="na" style="box-sizing: inherit; color: rgb(139, 223, 76);">android:layout_width=</span><span
+</body>
+</html>
