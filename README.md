@@ -11,6 +11,6 @@ brew install pandoc
 ## html生成
 
 ```
-pandoc -f markdown -t html --template=mytemplate ./md/xxx.md > ./html/xxx.html
+pandoc -f markdown -t html --template=mytemplate ./md/xxx.md > ./docs/xxx.html
 ```
 
