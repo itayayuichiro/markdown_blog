@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <link rel="icon" href="./favicon.ico" />
-  <title>seleniumでgoogleの検索結果を取得してみよう！ | 昼寝王子のエンジニアブログ</title>
+  <link rel="icon" href="../favicon.ico" />
+  <title>【裏技】GoogleのPlaces APIで電話番号検索を行う方法 | 昼寝王子のエンジニアブログ</title>
   <style type="text/css">code{white-space: pre;}</style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
      crossorigin="anonymous"></script>
@@ -304,79 +304,80 @@ pre {
 <body>
   <div class="md2html-container">
 <header>
-  <h1 class="title">seleniumでgoogleの検索結果を取得してみよう！</h1>
+<h1 class="title">【裏技】GoogleのPlaces
+APIで電話番号検索を行う方法</h1>
 </header>
-<p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 16px; orphans: 3; widows: 3; margin-bottom: 0.85em; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255); margin-top: 0px !important;">railsを覚えるより前に、簡単なphpを覚えた方がいいと思っている昼寝王子です。 今日は、ruby + seleniumでgoogleの検索結果を取得するコードを紹介します。</p><h2 id="google検索結果のクローリング" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 1.75em; orphans: 3; widows: 3; break-after: avoid; margin-top: 1.275em; margin-bottom: 0.85em; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255);">google検索結果のクローリング</h2><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 16px; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255);">googleの検索結果は、jsなどが動いてhtmlが生成されているので単なるopen-uriなどでは取得が大変難しいです。そこで、使うのがseleniumです。seleniumではブラウザを実際に操作してスクレイピングを行うので、取得ができるのです。 今回はGoogleの検索結果をクローリングして見たいと思います。</p><h2 id="早速やってみる" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 1.75em; orphans: 3; widows: 3; break-after: avoid; margin-top: 1.275em; margin-bottom: 0.85em; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255);">早速やってみる</h2><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 16px; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255);">今回は、「伝説の勇者の伝説」というキーワードをGoogle検索し、最初4ページのタイトルを取得するというものを作りたいと思います。</p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 16px; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255);"><span style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-weight: 700; font-size: inherit;">Gemfile</span></p><pre style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 16px; white-space: pre-wrap; break-inside: avoid; direction: ltr; margin-top: 0px; margin-bottom: 1.275em; padding: 0.85em 1em; border: none; color: rgb(51, 51, 51); overflow: auto; overflow-wrap: normal; background: rgb(247, 247, 247); letter-spacing: 0.2px;"><code style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 0.85em; break-inside: avoid; direction: ltr; margin: 0px; padding: 0px; border: none; color: inherit; background: 0px 0px; display: inline; max-width: initial; overflow: initial; line-height: inherit; white-space: pre;">gem 'selenium-webdriver'
-gem 'nokogiri'
-</code></pre><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 16px; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255);"><span style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-weight: 700; font-size: inherit;">google-crawler.rb</span></p><pre style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 16px; white-space: pre-wrap; break-inside: avoid; direction: ltr; margin-top: 0px; margin-bottom: 1.275em; padding: 0.85em 1em; border: none; color: rgb(51, 51, 51); overflow: auto; overflow-wrap: normal; background: rgb(247, 247, 247); letter-spacing: 0.2px;"><code style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 0.85em; break-inside: avoid; direction: ltr; margin: 0px; padding: 0px; border: none; color: inherit; background: 0px 0px; display: inline; max-width: initial; overflow: initial; line-height: inherit; white-space: pre;">require 'nokogiri'
-require 'selenium-webdriver'
-
-class Crawler
-    def get_title_text(driver)
-        #Nokogiriを用いてHTMLをパースする
-        doc = Nokogiri::HTML.parse(driver.page_source, nil, 'utf-8')
-        #ユーザー名を取得
-        doc.css('h3.r').each do |h3|
-            puts h3.text
-        end    
-    end
-
-    def main
-        ua = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36"
-        #ブラウザ立ち上げモード
-        #caps = Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' =&gt; {args: ["--user-agent=#{ua}", 'window-size=1280x800']})
-        #ヘッドレスモード
-        caps = Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' =&gt; {args: ["--headless","--no-sandbox", "--disable-setuid-sandbox", "--disable-gpu", "--user-agent=#{ua}", 'window-size=1280x800']})
-        driver = Selenium::WebDriver.for :chrome, desired_capabilities: caps
-
-        #googleのトップページに移動
-        driver.navigate.to "https://www.google.co.jp/"
-        #google検索フォームに値を入力
-        driver.execute_script("document.getElementById('lst-ib').value = '株式会社ルーター'")
-        #検索ボタンをクリック
-        driver.execute_script("document.getElementsByName('btnK')[0].click()")
-
-        3.times{|i|
-            get_title_text(driver)
-            driver.execute_script("document.getElementById('pnnext').click()")
-            sleep 2
-        }
-        get_title_text(driver)
-    end
-end
-
-Crawler.new.main
-</code></pre><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 16px; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255);">bundle installする</p><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 16px; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255);"><code style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 0.85em; break-inside: avoid; direction: ltr; margin: 0px; padding: 0.2em; border: none; color: inherit; background-color: rgb(247, 247, 247);">$ bundle install --path .bundle</code></p><h2 id="実行結果" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 1.75em; orphans: 3; widows: 3; break-after: avoid; margin-top: 1.275em; margin-bottom: 0.85em; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255);">実行結果</h2><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 16px; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255);">クローラーの実行</p><pre style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 16px; white-space: pre-wrap; break-inside: avoid; direction: ltr; margin-top: 0px; margin-bottom: 1.275em; padding: 0.85em 1em; border: none; color: rgb(51, 51, 51); overflow: auto; overflow-wrap: normal; background: rgb(247, 247, 247); letter-spacing: 0.2px;"><code style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 0.85em; break-inside: avoid; direction: ltr; margin: 0px; padding: 0px; border: none; color: inherit; background: 0px 0px; display: inline; max-width: initial; overflow: initial; line-height: inherit; white-space: pre;">$ bundle exec ruby google-crawler.rb
-伝説の勇者の伝説 - Wikipedia
-TVアニメ「伝説の勇者の伝説」公式サイト
-伝説の勇者の伝説 | 富士見書房
-伝説の勇者の伝説〈1〉昼寝王国の野望 (富士見ファンタジア文庫) | 鏡 貴也 ...
-大伝説の勇者の伝説 (16) 昼寝男の結婚 (ファンタジア文庫) | 鏡 貴也 ...
-大伝説の勇者の伝説17 団子娘の出す答え (ファンタジア文庫) | 鏡 貴也 ...
-Amazon.co.jp： 伝説の勇者の伝説1 昼寝王国の野望 (富士見ファンタジア ...
-伝説の勇者の伝説 - アニヲタWiki(仮) - アットウィキ
-伝説の勇者の伝説 - アニメ視聴リンク集
-・
-・
-・
-</code></pre><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 16px; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255);">上記のように、タイトルが取得できているでしょうか？</p><h2 id="解説" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 1.75em; orphans: 3; widows: 3; break-after: avoid; margin-top: 1.275em; margin-bottom: 0.85em; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255);">解説</h2><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 16px; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255);">簡単な解説をします。</p><h3 id="googleで検索を行う" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 1.5em; orphans: 3; widows: 3; break-after: avoid; margin-top: 1.275em; margin-bottom: 0.85em; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255);">Googleで検索を行う</h3><pre style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 16px; white-space: pre-wrap; break-inside: avoid; direction: ltr; margin-top: 0px; margin-bottom: 1.275em; padding: 0.85em 1em; border: none; color: rgb(51, 51, 51); overflow: auto; overflow-wrap: normal; background: rgb(247, 247, 247); letter-spacing: 0.2px;"><code style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 0.85em; break-inside: avoid; direction: ltr; margin: 0px; padding: 0px; border: none; color: inherit; background: 0px 0px; display: inline; max-width: initial; overflow: initial; line-height: inherit; white-space: pre;">#googleのトップページに移動
-driver.navigate.to "https://www.google.co.jp/"
-#google検索フォームに値を入力
-driver.execute_script("document.getElementById('lst-ib').value = '株式会社ルーター'")
-#検索ボタンをクリック
-driver.execute_script("document.getElementsByName('btnK')[0].click()")
-</code></pre><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 16px; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255);">ここでは、Googleのトップページに移動＆検索を行なっています。 2行目は、seleniumのメソッドを用いてgoogleのトップページに移動してます。 4行目,6行目は、seleniumを通じてJacaScriptを実行しています。 ※JacaScriptの内容がわからない人は、今度書くJavaScriptの記事を読んでください。</p><h3 id="htmlのパースを行う" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 1.5em; orphans: 3; widows: 3; break-after: avoid; margin-top: 1.275em; margin-bottom: 0.85em; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255);">HTMLのパースを行う</h3><pre style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 16px; white-space: pre-wrap; break-inside: avoid; direction: ltr; margin-top: 0px; margin-bottom: 1.275em; padding: 0.85em 1em; border: none; color: rgb(51, 51, 51); overflow: auto; overflow-wrap: normal; background: rgb(247, 247, 247); letter-spacing: 0.2px;"><code style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 0.85em; break-inside: avoid; direction: ltr; margin: 0px; padding: 0px; border: none; color: inherit; background: 0px 0px; display: inline; max-width: initial; overflow: initial; line-height: inherit; white-space: pre;">#Nokogiriを用いてHTMLをパースする
-doc = Nokogiri::HTML.parse(driver.page_source, nil, 'utf-8')
-#ユーザー名を取得
-doc.css('h3.r').each do |h3|
-  puts h3.text
-end
-</code></pre><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 16px; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255);">ここでは、検索後のページ情報をパースして取得しています。 2行目は、HTMLのパースでおなじみのNokogiriを使用しています。今まではここに「open-uri」等で取得したHTMLを渡していたと思いますが、今回はchrome ヘッドレスが開いているページのHTMLを渡したいので、driver.page_sourceメソッドを用いています。 4行目〜6行目は、selenium関係なくNokogiriでHTMLのパースを行なっています。 ※seleniumにも、HTMLから特定の要素の取得ができますが、Nokogiriを使った方が比較的簡単に実装できます。</p><h3 id="「次へ」ボタンを押して、次のページを取得する" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 1.5em; orphans: 3; widows: 3; break-after: avoid; margin-top: 1.275em; margin-bottom: 0.85em; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255);">「次へ」ボタンを押して、次のページを取得する</h3><pre style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 16px; white-space: pre-wrap; break-inside: avoid; direction: ltr; margin-top: 0px; margin-bottom: 1.275em; padding: 0.85em 1em; border: none; color: rgb(51, 51, 51); overflow: auto; overflow-wrap: normal; background: rgb(247, 247, 247); letter-spacing: 0.2px;"><code style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; font-size: 0.85em; break-inside: avoid; direction: ltr; margin: 0px; padding: 0px; border: none; color: inherit; background: 0px 0px; display: inline; max-width: initial; overflow: initial; line-height: inherit; white-space: pre;">3.times{|i|
-  get_title_text(driver)
-  driver.execute_script("document.getElementById('pnnext').click()")
-  sleep 2
-}
-get_title_text(driver)
-</code></pre><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 16px; orphans: 3; widows: 3; margin-top: 0px; margin-bottom: 0.85em; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255);">ここでは、ページングを行なっています。googleのサイトのhtmlコードを見ると、「次へ」というボタンはリンク要素になっています。そのため、これをクリックすることで次のページに移動することができます。 クリックをするにはJavaScriptを用います。</p><h3 id="注意点" style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 1.5em; orphans: 3; widows: 3; break-after: avoid; margin-top: 1.275em; margin-bottom: 0.85em; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255);">注意点</h3><p style="box-sizing: border-box; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; font-size: 16px; orphans: 3; widows: 3; margin-top: 0px; color: rgb(51, 51, 51); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; letter-spacing: 0.2px; background-color: rgb(255, 255, 255); margin-bottom: 0px !important;">今回に限らずクローラーは相手のサーバーに対して負荷をかけてしまいます。 Googleの場合は、あまりクローリングしすぎるとブロックされ、しばらく情報が取得できなくなってしまいます。 クローラーを開発する際には、sleepを挟むこと、過度に取得しすぎないことは心に留めておきましょう。</p>
+<h2 id="概要">概要</h2>
+<p>PlacesAPIで電話番号での検索を実現する方法を記載。</p>
+<h2 id="前提">前提</h2>
+<p>検索でよく使うPlacesAPIだが、特定の電話番号で検索をしたい場合一見できないように見える。
+実際、nearbysearchではパラメータとしてlocation情報を必要とするためこちらではできない。</p>
+<p>https://developers.google.com/maps/documentation/places/web-service/search-nearby</p>
+<h2 id="やり方">やり方</h2>
+<p>使うのはこちらの「textsearch」である。
+https://developers.google.com/maps/documentation/places/web-service/search-text</p>
+<p>こちらでは自由にテキストを入力として受け取ることができるので、</p>
+<pre><code>https://maps.googleapis.com/maps/api/place/textsearch/json?query=03-3886-3388&amp;key=APIキー</code></pre>
+<p>といった形でリクエストすると、下記のように電話番号とマッチしたお店の情報などが取得できるのである。</p>
+<pre><code>{
+   &quot;html_attributions&quot; : [],
+   &quot;results&quot; : [
+      {
+         &quot;business_status&quot; : &quot;OPERATIONAL&quot;,
+         &quot;formatted_address&quot; : &quot;日本、〒120-0011 東京都足立区中央本町２丁目２４−１８&quot;,
+         &quot;geometry&quot; : {
+            &quot;location&quot; : {
+               &quot;lat&quot; : 35.767735,
+               &quot;lng&quot; : 139.809392
+            },
+            &quot;viewport&quot; : {
+               &quot;northeast&quot; : {
+                  &quot;lat&quot; : 35.76907192989272,
+                  &quot;lng&quot; : 139.8107874798928
+               },
+               &quot;southwest&quot; : {
+                  &quot;lat&quot; : 35.76637227010728,
+                  &quot;lng&quot; : 139.8080878201073
+               }
+            }
+         },
+         &quot;icon&quot; : &quot;https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png&quot;,
+         &quot;icon_background_color&quot; : &quot;#FF9E67&quot;,
+         &quot;icon_mask_base_uri&quot; : &quot;https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet&quot;,
+         &quot;name&quot; : &quot;珍來 五反野駅前店&quot;,
+         &quot;opening_hours&quot; : {
+            &quot;open_now&quot; : true
+         },
+         &quot;photos&quot; : [
+            {
+               &quot;height&quot; : 2769,
+               &quot;html_attributions&quot; : [
+                  &quot;\u003ca href=\&quot;https://maps.google.com/maps/contrib/109670828805592726830\&quot;\u003eA Google User\u003c/a\u003e&quot;
+               ],
+               &quot;photo_reference&quot; : &quot;ARywPAKG3PBTBUB6xQc5mQPQ3P6TnNLa8DkY2Pligu0sEGEb0UQTJ9cB-_SstuxuDrG4hsd_fTUauZ9wifJOU6lSio1JZlOpKRGOzCpOohdKMwUn8tLB0hoD_NrL8zX-9OudQbji9acWAlHfeL2sDMLeZ50l7ZVClRqkthUv3G_3veKAPjo&quot;,
+               &quot;width&quot; : 3693
+            }
+         ],
+         &quot;place_id&quot; : &quot;ChIJPSmg9y2OGGARU4R1l_aY-zM&quot;,
+         &quot;plus_code&quot; : {
+            &quot;compound_code&quot; : &quot;QR95+3Q 足立区、東京都&quot;,
+            &quot;global_code&quot; : &quot;8Q7XQR95+3Q&quot;
+         },
+         &quot;price_level&quot; : 2,
+         &quot;rating&quot; : 3.9,
+         &quot;reference&quot; : &quot;ChIJPSmg9y2OGGARU4R1l_aY-zM&quot;,
+         &quot;types&quot; : [
+            &quot;meal_takeaway&quot;,
+            &quot;restaurant&quot;,
+            &quot;food&quot;,
+            &quot;point_of_interest&quot;,
+            &quot;establishment&quot;
+         ],
+         &quot;user_ratings_total&quot; : 315
+      }
+   ],
+   &quot;status&quot; : &quot;OK&quot;
+}</code></pre>
+  </div>
 </body>
 </html>
