@@ -39,3 +39,4 @@ title: トップページ
 - [Rails is not currently installed on this system. To get the latest version, simply type: | 昼寝王子のエンジニアブログ](./article33.html)
 - [Could not find gem 'sprockets-rails' in any of the gem sources listed in your Gemfile. | 昼寝王子のエンジニアブログ](./article34.html)
 - [Google Map Place APIをJavaScriptで利用する(nearbysearch編) | 昼寝王子のエンジニアブログ](./article35.html)
+- [【裏技】GoogleのPlaces APIで電話番号検索を行う方法 | 昼寝王子のエンジニアブログ](./article36.html)
