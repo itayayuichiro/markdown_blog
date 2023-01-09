@@ -41,3 +41,4 @@ title: トップページ
 - [Google Map Place APIをJavaScriptで利用する(nearbysearch編) | 昼寝王子のエンジニアブログ](./article35.html)
 - [【裏技】GoogleのPlaces APIで電話番号検索を行う方法 | 昼寝王子のエンジニアブログ](./article36.html)
 - [Cannot read properties of undefined (reading ‘install’)の解決方法 | 昼寝王子のエンジニアブログ](./article38.html)
+- [【2022年】Vue2でvue-routerを使う際の注意点 | 昼寝王子のエンジニアブログ](./article39.html)
