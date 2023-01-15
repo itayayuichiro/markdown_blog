@@ -42,3 +42,4 @@ title: トップページ
 - [【裏技】GoogleのPlaces APIで電話番号検索を行う方法 | 昼寝王子のエンジニアブログ](./article36.html)
 - [Cannot read properties of undefined (reading ‘install’)の解決方法 | 昼寝王子のエンジニアブログ](./article38.html)
 - [【2022年】Vue2でvue-routerを使う際の注意点 | 昼寝王子のエンジニアブログ](./article39.html)
+- [Nokogiriで次の要素の情報を取得する方法 | 昼寝王子のエンジニアブログ](./article40.html)
