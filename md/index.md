@@ -47,3 +47,5 @@ title: トップページ
 - [export ‘default’ (imported as ‘router’) was not found in ‘vue-router’ | 昼寝王子のエンジニアブログ](./article42.html)
 - [export ‘default’ (imported as ‘Router’) was not found in ’vue-route vue2 | 昼寝王子のエンジニアブログ](./article43.html)
 - [cannot read properties of undefined (reading ‘install’) vue router | 昼寝王子のエンジニアブログ](./article44.html)
+- [Capistranoで開始、成功、失敗の通知をする方法 | 昼寝王子のエンジニアブログ](./article45.html)
+- [How to notify start, success and failure in Capistrano | 昼寝王子のエンジニアブログ](./article46.html)
