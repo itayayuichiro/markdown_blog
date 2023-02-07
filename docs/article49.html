@@ -375,9 +375,33 @@ pre {
 <p>Railsでバックエンドの設計をしていて、resoucesではうまく表現できないルーティングがありそれが解決できたので共有</p>
 <h2 id="問題">問題</h2>
 <p>設定画面があり、そこでは一覧表示、更新ができるようにするというものであった。
-設定は下記のような感じでユーザーに対しては1対1のテーブルとなってます。
-|name|type| |-|-| |id|int| |user_id|int| |setting1|boolean|
-|setting2|boolean|</p>
+設定は下記のような感じでユーザーに対しては1対1のテーブルとなってます。</p>
+<table>
+<thead>
+<tr class="header">
+<th>name</th>
+<th>type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>id</td>
+<td>int</td>
+</tr>
+<tr class="even">
+<td>user_id</td>
+<td>int</td>
+</tr>
+<tr class="odd">
+<td>setting1</td>
+<td>boolean</td>
+</tr>
+<tr class="even">
+<td>setting2</td>
+<td>boolean</td>
+</tr>
+</tbody>
+</table>
 <p>一覧と更新であればRailsのresoucesを使えばいいじゃないか！と思ったのですがそうすると</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode rb"><code class="sourceCode ruby"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>resources <span class="wa">:settings</span>, <span class="wa">only: </span><span class="ot">%</span>i<span class="ot">[</span><span class="st">index update</span><span class="ot">]</span></span></code></pre></div>
 <table>
