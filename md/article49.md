@@ -54,4 +54,5 @@ resource :settings, only: %i[show update]
 resourceはindexはないですが、他のアクションは全て持っているので汎用性も高いかなと思います！
 
 参考文献
-https://railsguides.jp/routing.html#%E5%8D%98%E6%95%B0%E5%BD%A2%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9
+2.5 単数形リソース
+[Rails のルーティング - Railsガイド](https://railsguides.jp/routing.html#%E5%8D%98%E6%95%B0%E5%BD%A2%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9)

@@ -316,9 +316,10 @@ fi</code></pre>
 <p>下記のようなエラーが表示されてしまったのでその解決策</p>
 <pre><code>そのようなファイルやディレクトリはありません</code></pre>
 <h2 id="解決法">解決法</h2>
-<p>bashのif文で&lt;&gt;(大なり小なり)は使えないみたいでして
-https://qiita.com/egawa_kun/items/196cd354c0d8e4e0fefc#%E6%95%B0%E5%80%A4%E6%AF%94%E8%BC%83%E6%BC%94%E7%AE%97%E5%AD%90
-上記の記事を参考にして下記のように書き換えたら動きました！！</p>
+<p>bashのif文で&lt;&gt;(大なり小なり)は使えないみたいでして</p>
+<p><a
+href="https://qiita.com/egawa_kun/items/196cd354c0d8e4e0fefc#%E6%95%B0%E5%80%A4%E6%AF%94%E8%BC%83%E6%BC%94%E7%AE%97%E5%AD%90">シェルスクリプト（bash）のif文やwhile文で使う演算子について</a></p>
+<p>上記の記事を参考にして下記のように書き換えたら動きました！！</p>
 <pre><code>if [ $# -lt 1 ] ; then
   echo &quot;引数がありません&quot;
   exit
