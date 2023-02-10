@@ -53,3 +53,4 @@ title: トップページ
 - [bashのif文で大小比較する時の注意点 そのようなファイルやディレクトリはありません | 昼寝王子のエンジニアブログ](./article48.html)
 - [Railsのルーティングでresoucesだけでなくresouceもとても便利だった話 | 昼寝王子のエンジニアブログ](./article49.html)
 - [SlimからVueへの書き換える際のチートシート | 昼寝王子のエンジニアブログ](./article50.html)
+- [Qiita Advent Calendar 2022で完走賞をとった話 | 昼寝王子のエンジニアブログ](./article51.html)
