@@ -54,3 +54,4 @@ title: トップページ
 - [Railsのルーティングでresoucesだけでなくresouceもとても便利だった話 | 昼寝王子のエンジニアブログ](./article49.html)
 - [SlimからVueへの書き換える際のチートシート | 昼寝王子のエンジニアブログ](./article50.html)
 - [Qiita Advent Calendar 2022で完走賞をとった話 | 昼寝王子のエンジニアブログ](./article51.html)
+- [【2023年】世界一やさしいCypress環境構築手順 | 昼寝王子のエンジニアブログ](./article52.html)
