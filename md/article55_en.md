@@ -1,5 +1,5 @@
 ---
-title: make: gawk: No such file or directory
+title: "make: gawk: No such file or directory"
 ---
 
 ## overview

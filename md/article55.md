@@ -1,5 +1,5 @@
 ---
-title: make: gawk: No such file or directoryの対処法
+title: "make: gawk: No such file or directoryの対処法"
 ---
 
 ## 概要
