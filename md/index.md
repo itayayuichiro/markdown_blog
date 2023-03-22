@@ -62,4 +62,4 @@ title: トップページ
 - [make: gawk: No such file or directory | 昼寝王子のエンジニアブログ](./article55_en.html)
 - [uninitialized constant HTTP (NameError) | 昼寝王子のエンジニアブログ](./article56.html)
 - [【裏技】github actionでmarkdownファイルからhtmlファイルを自動生成する | 昼寝王子のエンジニアブログ](./article57.html)
-- [article58 | 昼寝王子のエンジニアブログ](./article58.html)
+- [自動化のためのGithub Actions: MarkdownからHTMLファイルを生成する方法 | 昼寝王子のエンジニアブログ](./article58.html)
