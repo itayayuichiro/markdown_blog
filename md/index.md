@@ -3,7 +3,6 @@ title: トップページ
 ---
 
 ## リンク一覧
-
 - [Markdownから見やすいHTMLを出力する | 昼寝王子のエンジニアブログ](./article1.html)
 - [Laravelを始めよう | 昼寝王子のエンジニアブログ](./article2.html)
 - [seleniumでgoogleの検索結果を取得してみよう！ | 昼寝王子のエンジニアブログ](./article3.html)
@@ -56,4 +55,8 @@ title: トップページ
 - [Qiita Advent Calendar 2022で完走賞をとった話 | 昼寝王子のエンジニアブログ](./article51.html)
 - [【2023年】世界一やさしいCypress環境構築手順 | 昼寝王子のエンジニアブログ](./article52.html)
 - [rbenvを用いて最新のRubyをインストールする方法 | 昼寝王子のエンジニアブログ](./article53.html)
+- [How to install the latest Ruby using rbenv | 昼寝王子のエンジニアブログ](./article53_en.html)
 - [BUILD FAILED (macOS 11.4 using ruby-build 20230208.1)対処法 | 昼寝王子のエンジニアブログ](./article54.html)
+- [BUILD FAILED (macOS 11.4 using ruby-build 20230208.1) Workaround | 昼寝王子のエンジニアブログ](./article54_en.html)
+- [make: gawk: No such file or directoryの対処法 | 昼寝王子のエンジニアブログ](./article55.html)
+- [make: gawk: No such file or directory | 昼寝王子のエンジニアブログ](./article55_en.html)

@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <link rel="icon" href="../favicon.ico" />
-  <title>rbenvを用いて最新のRubyをインストールする方法 | 昼寝王子のエンジニアブログ</title>
+  <title>uninitialized constant HTTP (NameError) | 昼寝王子のエンジニアブログ</title>
   <style type="text/css">code{white-space: pre;}</style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
      crossorigin="anonymous"></script>
@@ -313,71 +313,17 @@ pre {
 <body>
   <div class="md2html-container">
 <header>
-<h1 class="title">rbenvを用いて最新のRubyをインストールする方法</h1>
+<h1 class="title">uninitialized constant HTTP (NameError)</h1>
 </header>
 <h2 id="概要">概要</h2>
-<p>rbenvを用いて最新のRubyをインストールする方法</p>
-<h2 id="手順">手順</h2>
-<pre><code>rbenv install --list-all</code></pre>
-<p>現在のバージョン一覧を確認
-ここですでに最新バージョンがある人は最後のアップデートは不要です。</p>
-<h3 id="最新バージョンがない場合">最新バージョンがない場合</h3>
-<p>brewをアップデート</p>
-<pre><code>brew update</code></pre>
-<p>ruby-buildをアップデート</p>
-<pre><code>brew upgrade ruby-build</code></pre>
-<h3 id="最新バージョンのインストール">最新バージョンのインストール</h3>
-<p>現時点で最新の安定版は3.2.1だった</p>
-<pre><code>rbenv install 3.2.1</code></pre>
-<h3 id="エラー発生した場合">エラー発生した場合</h3>
-<pre><code>To follow progress, use &#39;tail -f /var/folders/19/c1__d35d5jg150mc700fgfm80000gn/T/ruby-build.20230212124132.58816.log&#39; or pass --verbose
-Downloading openssl-3.0.8.tar.gz...
--&gt; https://dqw8nmjcqpjn7.cloudfront.net/6c13d2bf38fdf31eac3ce2a347073673f5d63263398f1f69d0df4a41253e4b3e
-Installing openssl-3.0.8...
-Installed openssl-3.0.8 to /Users/xxx/.rbenv/versions/3.2.1
+<pre><code>crawler_selenium.rb:68:in `block (2 levels) in &lt;main&gt;&#39;: uninitialized constant HTTP (NameError)
 
-Downloading ruby-3.2.1.tar.gz...
--&gt; https://cache.ruby-lang.org/pub/ruby/3.2/ruby-3.2.1.tar.gz
-Installing ruby-3.2.1...
-ruby-build: using readline from homebrew
-ruby-build: using gmp from homebrew
-
-BUILD FAILED (macOS 11.4 using ruby-build 20230208.1)
-
-Inspect or clean up the working tree at /var/folders/19/c1__d35d5jg150mc700fgfm80000gn/T/ruby-build.20230212124132.58816.7pCUnp
-Results logged to /var/folders/19/c1__d35d5jg150mc700fgfm80000gn/T/ruby-build.20230212124132.58816.log
-
-Last 10 log lines:
-    Check ext/psych/mkmf.log for more details.
-*** Fix the problems, then remove these directories and try again if you want.
-Generating RDoc documentation
-/private/var/folders/19/c1__d35d5jg150mc700fgfm80000gn/T/ruby-build.20230212124132.58816.7pCUnp/ruby-3.2.1/lib/yaml.rb:3: warning: It seems your ruby installation is missing psych (for YAML output).
-To eliminate this warning, please install libyaml and reinstall your ruby.
-uh-oh! RDoc had a problem:
-cannot load such file -- psych</code></pre>
-<p>上記のようなエラーが出た場合</p>
-<pre><code>brew install libyaml</code></pre>
-<p>を行ってから</p>
-<pre><code>rbenv install 3.2.1</code></pre>
-<p>再実行するとインストールできます</p>
-<h3 id="他の記事">他の記事</h3>
-<ul>
-<li><a
-href="./article49.html">Railsのルーティングでresoucesだけでなくresouceもとても便利だった話
-| 昼寝王子のエンジニアブログ</a></li>
-<li><a href="./article50.html">SlimからVueへの書き換える際のチートシート
-| 昼寝王子のエンジニアブログ</a></li>
-<li><a href="./article51.html">Qiita Advent Calendar
-2022で完走賞をとった話 | 昼寝王子のエンジニアブログ</a></li>
-<li><a
-href="./article52.html">【2023年】世界一やさしいCypress環境構築手順 |
-昼寝王子のエンジニアブログ</a></li>
-<li><a
-href="./article53.html">rbenvを用いて最新のRubyをインストールする方法 |
-昼寝王子のエンジニアブログ</a></li>
-<li><a href="./article54.html">BUILD FAILED (macOS 11.4 using ruby-build
-20230208.1)対処法 | 昼寝王子のエンジニアブログ</a></li>
-</ul>
+  http_cookies = driver.manage.all_cookies.each{ |e| e[:expires]=e[:expires].to_s }.map{ |e| HTTP::Cookie.new(e) }
+                                                                                                 ^^^^^^^^
+    from crawler_selenium.rb:68:in `map&#39;
+    from crawler_selenium.rb:68:in `block in &lt;main&gt;&#39;
+    from crawler_selenium.rb:67:in `open&#39;
+    from crawler_selenium.rb:67:in `&lt;main&gt;&#39;</code></pre>
   </div>
 </body>
 </html>

@@ -6,16 +6,23 @@ require 'mechanize'
 class Crawler
   def main
     agent = Mechanize.new
+    f = File.open("./md/index.md", mode = "w")
+    f.write("---\n")
+    f.write("title: トップページ\n")
+    f.write("---\n\n")
+    f.write("## リンク一覧\n")
     100.times { |i|
       begin
-        page = agent.get("file:///Users/itayayuuichirou/Documents/src/markdown_blog/docs/article#{i+1}.html")
-        doc = Nokogiri::HTML.parse(page.body.toutf8, nil, 'utf-8')
-        puts "- [#{doc.title}](./article#{i+1}.html)"
-        page = agent.get("file:///Users/itayayuuichirou/Documents/src/markdown_blog/docs/article#{i+1}_en.html")
-        doc = Nokogiri::HTML.parse(page.body.toutf8, nil, 'utf-8')
-        puts "- [#{doc.title}](./article#{i+1}_en.html)"
-      rescue
-        # handle the exception here
+        page = open("./docs/article#{i+1}.html")
+        doc = Nokogiri::HTML.parse(page, nil, 'utf-8')
+        text = "- [#{doc.title}](./article#{i+1}.html)"
+        f.write("#{text}\n")
+        page = open("./docs/article#{i+1}_en.html")
+        doc = Nokogiri::HTML.parse(page, nil, 'utf-8')
+        text = "- [#{doc.title}](./article#{i+1}_en.html)"
+        f.write("#{text}\n")
+      rescue => e
+        p e
       end
     }
   end
