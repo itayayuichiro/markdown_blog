@@ -1,5 +1,5 @@
 ---
-title: 【裏技】github actionでmarkdownファイルからhtmlファイルを自動生成する
+title: [Trick] Automatically generate html file from markdown file with github action
 ---
 
 ## overview
