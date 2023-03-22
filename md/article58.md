@@ -1,5 +1,5 @@
 ---
-title: 自動化のためのGithub Actions: MarkdownからHTMLファイルを生成する方法
+title: "自動化のためのGithub Actions: MarkdownからHTMLファイルを生成する方法"
 ---
 
 ## 概要
