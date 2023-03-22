@@ -1,14 +1,14 @@
 ---
-title: 【裏技】github actionでmarkdownファイルからhtmlファイルを自動生成する
+title: How to configure GitHub Actions to generate HTML files from Markdown files
 ---
 
-## 概要
+## overview
 
-[pandoc](https://pandoc-doc-ja.readthedocs.io/ja/latest/users-guide.html)を用いることでmarkdown->htmlへの変換は可能だが毎回手作業でやるのが手間だったのでgithub actionでmarkdownファイルをpushしたら勝手にhtmlが生成されてpushされるように変更してみた。
+It is possible to convert to markdown->html by using [pandoc](https://pandoc-doc-ja.readthedocs.io/ja/latest/users-guide.html), but it was troublesome to do it manually every time. .
 
-## 手順
+## procedure
 
-下記のような設定ファイルを作成します
+Create a configuration file like below
 .github/workflows/md-to-html.yml
 
 ```
@@ -43,9 +43,9 @@ jobs:
           git push
 ```
 
-上記のファイルをpushすれば完成です。
+Just push the above file and you're done.
 
-## 解説
+## Commentary
 
 ```
 on: push
@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
 ```
 
-今回はベーシックなubuntuのコンテナを使います。
+This time we will use a basic ubuntu container.
 
 ```
     permissions:
@@ -69,7 +69,9 @@ jobs:
       security-events: write
       statuses: write
 ```
-こちらは、github actionからgitでcommitするために必要な記述だったので追記します。
+
+This is a necessary description to commit with git from github action, so I will add it.
+
 
 ```
     steps:
@@ -78,7 +80,7 @@ jobs:
           sudo apt-get install -y pandoc
 ```
 
-pandocを利用するためにインストールします。
+Install to use pandoc.
 
 ```
 		  for i in $(seq 1 100); do
@@ -86,8 +88,8 @@ pandocを利用するためにインストールします。
 		  done
 ```
 
-mdファイルを予め命名を規則的にしておきループするようにします。
-(ただ、ディレクトリにあるファイルにすべて処理するとかのほうがホントは良さそう)
+Name the md files regularly in advance and loop.
+(However, it seems better to process all the files in the directory)
 
 
 ```
@@ -97,6 +99,7 @@ mdファイルを予め命名を規則的にしておきループするように
           git commit -m "generated"
           git push
 ```
-最後に生成されたファイルをコミットします。
 
-以上
+Commit the last generated file.
+
+that's all

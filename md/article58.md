@@ -9,7 +9,7 @@ title: "自動化のためのGithub Actions: MarkdownからHTMLファイルを�
 ## 手順
 
 下記のような設定ファイルを作成します
-.github/md-to-html.yml
+.github/workflows/md-to-html.yml
 
 ```
 on: push

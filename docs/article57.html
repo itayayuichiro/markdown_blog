@@ -318,7 +318,7 @@ pre {
 <h2 id="概要">概要</h2>
 <p><a href="https://pandoc-doc-ja.readthedocs.io/ja/latest/users-guide.html">pandoc</a>を用いることでmarkdown-&gt;htmlへの変換は可能だが毎回手作業でやるのが手間だったのでgithub actionでmarkdownファイルをpushしたら勝手にhtmlが生成されてpushされるように変更してみた。</p>
 <h2 id="手順">手順</h2>
-<p>下記のような設定ファイルを作成します .github/md-to-html.yml</p>
+<p>下記のような設定ファイルを作成します .github/workflows/md-to-html.yml</p>
 <pre><code>on: push
 jobs:
   build:
