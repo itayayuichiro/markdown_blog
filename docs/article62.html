@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <link rel="icon" href="../favicon.ico" />
-  <title>【JavaScript】Tricks for easily sorting character strings in a hash array | 昼寝王子のエンジニアブログ</title>
+  <title>Rails5からRails6へのバージョンアップでエラーが発生！？ normalize_filter対応のカンタンな方法 | 昼寝王子のエンジニアブログ</title>
   <style type="text/css">code{white-space: pre;}</style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
      crossorigin="anonymous"></script>
@@ -313,29 +313,22 @@ pre {
 <body>
   <div class="md2html-container">
 <header>
-<h1 class="title">【JavaScript】Tricks for easily sorting character strings in a hash array</h1>
+<h1 class="title">Rails5からRails6へのバージョンアップでエラーが発生！？ normalize_filter対応のカンタンな方法</h1>
 </header>
-<p>How to sort hash strings in javascript sorting</p>
-<h2 id="overview">overview</h2>
-<ol type="1">
-<li>Prepare an array whose elements are objects</li>
-</ol>
-<pre><code>const array = [
-{ id: 1, text: &#39;text5&#39; },
-{ id: 2, text: &#39;text3&#39; },
-{ id: 5, text: &#39;text2&#39; },
-{ id: 3, text: &#39;text4&#39; },
-{ id: 4, text: &#39;text1&#39; },</code></pre>
-<ol start="2" type="1">
-<li>Sort the array</li>
-</ol>
-<pre><code>array.sort((a, b) =&gt; b.text &gt; a.text ? -1 : 1)</code></pre>
-<ol start="3" type="1">
-<li>Display the sorted array</li>
-</ol>
-<pre><code>console.log(array);</code></pre>
-<p>As above, when sorting an array, use the sort() method and pass the comparison function. A comparison function takes two arguments and defines a sorting criterion. In the above example, it sorts in ascending order of text based on the condition b.text &gt; a.text. It also uses the ternary operator to determine ascending or descending order.</p>
-<p>Note that this example sorts strings in hashes, but basically you can sort based on the properties of the objects in the array.</p>
+<h2 id="問題">問題</h2>
+<p>Rails 5で自動生成されたルーティング周りの処理が、Rails 6にバージョンアップしたことにより動かなくなった。</p>
+<pre><code>NoMethodError: undefined method `[]&#39; for nil:NilClass
+/xxxx/.bundle/ruby/2.7.0/gems/actionpack-6.0.6.1/lib/action_dispatch/routing/inspector.rb:85:in `normalize_filter&#39;
+/xxxx/.bundle/ruby/2.7.0/gems/actionpack-6.0.6.1/lib/action_dispatch/routing/inspector.rb:65:in `format&#39;
+/xxxx/lib/tasks/routes_convert_vue.rake:35:in `block (2 levels) in &lt;top (required)&gt;&#39;
+/xxxx/.bundle/ruby/2.7.0/gems/sentry-ruby-5.4.2/lib/sentry/rake.rb:26:in `execute&#39;
+/xxxx/.bundle/ruby/2.7.0/gems/rake-12.3.3/exe/rake:27:in `&lt;top (required)&gt;&#39;</code></pre>
+<h2 id="解決方法">解決方法</h2>
+<p>以下のようにコードを書き換える。</p>
+<pre><code>all_routes = Rails.application.routes.routes
+inspector = ActionDispatch::Routing::RoutesInspector.new(all_routes)
+routes = inspector.format(Formatter.new, {})</code></pre>
+<p>変更前のコードは、normalize_filterメソッドの引数にENV[‘CONTROLLER’]が渡されていた。しかし、Rails 6ではnormalize_filterメソッドの引数はハッシュ形式でなければならないため、空のハッシュ {} を引数に渡すように変更する必要がある。</p>
   </div>
 </body>
 </html>
