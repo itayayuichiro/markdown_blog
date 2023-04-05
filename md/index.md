@@ -69,3 +69,5 @@ title: トップページ
 - [Automatically generate HTML files from Markdown files using Github Actions | 昼寝王子のエンジニアブログ](./article59_en.html)
 - [MarkdownファイルからHTMLファイルを生成するためのGitHub Actionsの設定方法 | 昼寝王子のエンジニアブログ](./article60.html)
 - [How to configure GitHub Actions to generate HTML files from Markdown files | 昼寝王子のエンジニアブログ](./article60_en.html)
+- [【JavaScript】ハッシュ配列の文字列を手軽にソートする裏技 | 昼寝王子のエンジニアブログ](./article61.html)
+- [article61_en | 昼寝王子のエンジニアブログ](./article61_en.html)
