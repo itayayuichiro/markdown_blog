@@ -35,41 +35,44 @@ Generating RDoc documentation
 To eliminate this warning, please install libyaml and reinstall your ruby.
 uh-oh! RDoc had a problem:
 cannot load such file -- psych
-```
+``''
 
 I wrote an article because I didn't understand the solution at all even after reading the error statement
 
 ## How it didn't work
 The two methods below didn't work.
 
-```
+``''
 RUBY_CFLAGS=-DUSE_FFI_CLOSURE_ALLOC rbenv install 3.2.1
 
-or
+Or
 
 RUBY_CFLAGS="-w" rbenv install 3.2.1
-```
+``''
 
 ## How it worked
 
-```
+``''
 brew install libyaml
-```
+``''
 
 after doing
 
-```
+``''
 rbenv install 3.2.1
-```
+``''
 run
 
 
 
 
 ### other articles
-- [Railsのルーティングでresoucesだけでなくresouceもとても便利だった話 | 昼寝王子のエンジニアブログ](./article49.html)
-- [SlimからVueへの書き換える際のチートシート | 昼寝王子のエンジニアブログ](./article50.html)
-- [Qiita Advent Calendar 2022で完走賞をとった話 | 昼寝王子のエンジニアブログ](./article51.html)
-- [【2023年】世界一やさしいCypress環境構築手順 | 昼寝王子のエンジニアブログ](./article52.html)
-- [rbenvを用いて最新のRubyをインストールする方法 | 昼寝王子のエンジニアブログ](./article53.html)
-- [BUILD FAILED (macOS 11.4 using ruby-build 20230208.1)対処法 | 昼寝王子のエンジニアブログ](./article54.html)
+- [Docker-compose volumes and copy story (very beginner) | Nap Prince's engineer blog] (./article12.html)
+- [Gtk: cannot open display: The story that escaped (Docker + Alpine + Headless Chrome) | Nap Prince's Engineer Blog] (./article13.html)
+- [About the question "I want to be an engineer, but what should I do?" | Nap Prince's Engineer Blog](./article14.html)
+- [Notes on using Ruby + AWS Lambda | Nap Prince's Engineer Blog](./article15.html)
+- [Regarding the question "I can't continue the conversation, what should I do...?" | Nap Prince's Engineer Blog](./article16.html)
+- [Things I think are important as a newcomer to the web | Nap Prince's Engineer Blog](./article17.html)
+- [Creating code to scrape trends in qiita | Nap Prince's Engineer Blog] (./article18.html)
+- [The story that yum could not be used at all when CentOS was started with Mac + Docker | Nap Prince's Engineer Blog] (./article19.html)
+- [Error: Cannot find module './build/Release/diskusage.node' on Mac | Nap Prince's Engineer Blog] (./article20.html)
