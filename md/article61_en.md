@@ -14,6 +14,7 @@ const array = [
 { id: 5, text: 'text2' },
 { id: 3, text: 'text4' },
 { id: 4, text: 'text1' },
+]
 ```
 
 2. Sort the array
