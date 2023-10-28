@@ -69,7 +69,7 @@ title: トップページ
 - [Automatically generate HTML files from Markdown files using Github Actions | 昼寝王子のエンジニアブログ](./article59_en.html)
 - [MarkdownファイルからHTMLファイルを生成するためのGitHub Actionsの設定方法 | 昼寝王子のエンジニアブログ](./article60.html)
 - [How to configure GitHub Actions to generate HTML files from Markdown files | 昼寝王子のエンジニアブログ](./article60_en.html)
-- [【JavaScript】ハッシュ配列の文字列を手軽にソートする裏技 | 昼寝王子のエンジニアブログ](./article61.html)
+- [jsでハッシュの配列をソートする裏技 | 昼寝王子のエンジニアブログ](./article61.html)
 - [【JavaScript】Tricks for easily sorting character strings in a hash array | 昼寝王子のエンジニアブログ](./article61_en.html)
 - [Rails5からRails6へのバージョンアップでエラーが発生！？ normalize_filter対応のカンタンな方法 | 昼寝王子のエンジニアブログ](./article62.html)
 - [An error occurred when upgrading from Rails5 to Rails6! A simple way to deal with normalize_filter | 昼寝王子のエンジニアブログ](./article62_en.html)
