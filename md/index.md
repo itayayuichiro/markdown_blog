@@ -75,3 +75,4 @@ title: トップページ
 - [An error occurred when upgrading from Rails5 to Rails6! A simple way to deal with normalize_filter | 昼寝王子のエンジニアブログ](./article62_en.html)
 - [Rails + punditで既存のアクションの全て認可を全てdenyにする | 昼寝王子のエンジニアブログ](./article63.html)
 - [もっと手軽にChatGPTを扱うためのCLIハック | 昼寝王子のエンジニアブログ](./article64.html)
+- [article65 | 昼寝王子のエンジニアブログ](./article65.html)
