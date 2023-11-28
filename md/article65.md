@@ -1,5 +1,5 @@
 ---
-title: Ruby on Rails: ActiveRecordデータを効果的にHashに変換する方法
+title: "Ruby on Rails: ActiveRecordデータを効果的にHashに変換する方法"
 ---
 
 Ruby on Railsの開発で、ActiveRecordやクラスのデータをHashにする方法を紹介します。
