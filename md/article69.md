@@ -49,7 +49,9 @@ Traceback (most recent call last):
 (irb):3:in `block in <main>': undefined method `sum' for 1:Integer (NoMethodError)
 Did you mean?  succ
 ```
+
 上記のようなエラーになる。
+
 理由は修正のコメントにも記載があるが、ブロックの中での判定で配列が来ることが考慮されておらず、それによって不具合が起きているとのこと。
 
 #### rails7.0.6

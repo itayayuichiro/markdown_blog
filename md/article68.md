@@ -9,7 +9,9 @@ https://github.com/rails/rails/pull/48557
 
 ### 前提
 前提として「ActiveSupport::InheritableOptions.new」という機能がある。
+
 これはハッシュをメソッドのように呼び出せるようにするものである。
+
 例)
 ```ruby
 hash = ActiveSupport::InheritableOptions.new({a: 1})
@@ -19,7 +21,9 @@ hash.a
 ### 今回との関係
 
 これがEncryptedConfiguration でも使われていた。
+
 ただ、これが処理の中で複数回呼ばれるような形になってしまっていた。
+
 その結果値に対してkeysなどを使うと正しい値を返さないような状態になってしまっていた。
 
 ## コードベースでの解説&実例
