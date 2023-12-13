@@ -49,7 +49,7 @@ brew install imagemagick
 指摘されているようにImageMagickを入れます。
 
 ## 出来上がったQRコード
-<img src="./pr.png">
+<img src="./qr.png">
 
 ## 参考文献
 https://github.com/whomwah/rqrcode/issues/49#issuecomment-1262535284
