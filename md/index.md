@@ -76,3 +76,5 @@ title: トップページ
 - [Rails + punditで既存のアクションの全て認可を全てdenyにする | 昼寝王子のエンジニアブログ](./article63.html)
 - [もっと手軽にChatGPTを扱うためのCLIハック | 昼寝王子のエンジニアブログ](./article64.html)
 - [Ruby on Rails: ActiveRecordデータを効果的にHashに変換する方法 | 昼寝王子のエンジニアブログ](./article65.html)
+- [rubyでMiniMagick::Imageを使ってpng画像が白黒になってしまう | 昼寝王子のエンジニアブログ](./article66.html)
+- [rubyで真ん中にロゴがあるQRコードを生成する方法 | 昼寝王子のエンジニアブログ](./article67.html)
