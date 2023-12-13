@@ -1,5 +1,5 @@
 ---
-title: "rails7.0.6で変更されたFix humanize for strings ending with idについての解説"
+title: "Rails7.0.6で変更されたFix humanize for strings ending with idについての解説"
 ---
 
 ## よく分かる解説
@@ -29,13 +29,13 @@ https://github.com/rails/rails/pull/48348
 空白でidという文字列をつけた状態でメソッドを実行する
 
 ### 結果
-#### rails7.0.5
+#### Rails7.0.5
 ```
 => "Itaya"
 ```
 上記のようにIDが省略された形になる
 
-#### rails7.0.6
+#### Rails7.0.6
 ```
 => "Itaya id"
 ```

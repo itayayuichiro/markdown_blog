@@ -1,5 +1,5 @@
 ---
-title: "rails7.0.6で変更されたFix EncryptedConfiguration not behaving like Hash [7-0-stable]についての解説"
+title: "Rails7.0.6で変更されたFix EncryptedConfiguration not behaving like Hash [7-0-stable]についての解説"
 ---
 
 ## よく分かる解説
@@ -46,7 +46,7 @@ p @credentials.keys
 ```
 
 ### 結果
-rails7.0.5では`[]`という空配列が返却され、rails7.0.6では`[:something]`といった形でちゃんとkeyが返ってくる
+Rails7.0.5では`[]`という空配列が返却され、Rails7.0.6では`[:something]`といった形でちゃんとkeyが返ってくる
 
 
 ### まとめ

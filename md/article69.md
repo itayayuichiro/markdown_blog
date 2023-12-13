@@ -1,5 +1,5 @@
 ---
-title: "rails7.0.6で変更されたFix defect in Enumerable#many introduced in rails/rails@d862dffについての解説"
+title: "Rails7.0.6で変更されたFix defect in Enumerable#many introduced in rails/rails@d862dffについての解説"
 ---
 
 ## よく分かる解説
@@ -43,7 +43,7 @@ end
 コードとしては配列の中の配列の合計が3以上のものが複数あるかというのを検証するものだ。
 
 ### 結果
-#### rails7.0.5
+#### Rails7.0.5
 ```
 Traceback (most recent call last):
 (irb):3:in `block in <main>': undefined method `sum' for 1:Integer (NoMethodError)
@@ -54,7 +54,7 @@ Did you mean?  succ
 
 理由は修正のコメントにも記載があるが、ブロックの中での判定で配列が来ることが考慮されておらず、それによって不具合が起きているとのこと。
 
-#### rails7.0.6
+#### Rails7.0.6
 ```
 => true
 ```
