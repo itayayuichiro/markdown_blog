@@ -383,11 +383,15 @@ pre {
 <h3 id="修正pr">修正PR</h3>
 <p>https://github.com/rails/rails/pull/48557</p>
 <h3 id="前提">前提</h3>
-<p>前提として「ActiveSupport::InheritableOptions.new」という機能がある。 これはハッシュをメソッドのように呼び出せるようにするものである。 例)</p>
+<p>前提として「ActiveSupport::InheritableOptions.new」という機能がある。</p>
+<p>これはハッシュをメソッドのように呼び出せるようにするものである。</p>
+<p>例)</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>hash = <span class="dt">ActiveSupport</span>::<span class="dt">InheritableOptions</span>.new({<span class="st">a: </span><span class="dv">1</span>})</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>hash.a</span></code></pre></div>
 <h3 id="今回との関係">今回との関係</h3>
-<p>これがEncryptedConfiguration でも使われていた。 ただ、これが処理の中で複数回呼ばれるような形になってしまっていた。 その結果値に対してkeysなどを使うと正しい値を返さないような状態になってしまっていた。</p>
+<p>これがEncryptedConfiguration でも使われていた。</p>
+<p>ただ、これが処理の中で複数回呼ばれるような形になってしまっていた。</p>
+<p>その結果値に対してkeysなどを使うと正しい値を返さないような状態になってしまっていた。</p>
 <h2 id="コードベースでの解説実例">コードベースでの解説&amp;実例</h2>
 <h3 id="検証用コード">検証用コード</h3>
 <p>試すコードは下記のもの</p>
