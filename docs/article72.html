@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <link rel="icon" href="../favicon.ico" />
-  <title>Rails7.0.6で変更されたFix defect in Enumerable#many introduced in rails/rails@d862dffについての解説 | 昼寝王子のエンジニアブログ</title>
+  <title>サイトマップを超簡単に自動生成する方法(Ruby) | 昼寝王子のエンジニアブログ</title>
   <style type="text/css">code{white-space: pre;}</style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
      crossorigin="anonymous"></script>
@@ -377,54 +377,44 @@ pre {
 <body>
   <div class="md2html-container">
 <header>
-<h1 class="title">Rails7.0.6で変更されたFix defect in Enumerable#many introduced in rails/rails@d862dffについての解説</h1>
+<h1 class="title">サイトマップを超簡単に自動生成する方法(Ruby)</h1>
 </header>
-<h2 id="よく分かる解説">よく分かる解説</h2>
-<h3 id="修正pr">修正PR</h3>
-<p>https://github.com/rails/rails/pull/48412</p>
-<h3 id="前提">前提</h3>
-<ul>
-<li>many?という関数は複数あるかを真偽値で返すメソッドである。</li>
-<li>例えば
-<ul>
-<li><code>[1,2].many?</code>は<code>true</code></li>
-<li><code>[1].many?</code>は<code>false</code></li>
-</ul></li>
-<li>many?は下記のようにブロックを受け取ることもできる</li>
-</ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>[<span class="dv">1</span>,<span class="dv">2</span>].many? <span class="kw">do</span> |a|</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>  a &gt; <span class="dv">1</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="kw">end</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="co"># =&gt; false</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>[<span class="dv">2</span>,<span class="dv">3</span>].many? <span class="kw">do</span> |a|</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>  a &gt; <span class="dv">1</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="kw">end</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="co"># =&gt; true</span></span></code></pre></div>
-<p>ブロック配下の条件にマッチするものが複数個あるかをチェックできる。</p>
-<h3 id="今回との関係">今回との関係</h3>
-<ul>
-<li>今回はこのmany?のブロック側の挙動に不具合があったので変更された</li>
-<li>具体的なシーンとしては配列の中に配列があった場合にの挙動がおかしかったので修正された</li>
-</ul>
-<h2 id="コードベースでの解説実例">コードベースでの解説&amp;実例</h2>
-<h3 id="検証用コード">検証用コード</h3>
-<p>検証するコードはこちら</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>[[<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">1</span>,<span class="dv">2</span>]].many? <span class="kw">do</span> |a|</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>  a.sum == <span class="dv">3</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="kw">end</span></span></code></pre></div>
-<p>コードとしては配列の中の配列の合計が3以上のものが複数あるかというのを検証するものだ。</p>
-<h3 id="結果">結果</h3>
-<h4 id="rails7.0.5">Rails7.0.5</h4>
-<pre><code>Traceback (most recent call last):
-(irb):3:in `block in &lt;main&gt;&#39;: undefined method `sum&#39; for 1:Integer (NoMethodError)
-Did you mean?  succ</code></pre>
-<p>上記のようなエラーになる。</p>
-<p>理由は修正のコメントにも記載があるが、ブロックの中での判定で配列が来ることが考慮されておらず、それによって不具合が起きているとのこと。</p>
-<h4 id="rails7.0.6">Rails7.0.6</h4>
-<pre><code>=&gt; true</code></pre>
-<p>trueが返される</p>
-<h3 id="まとめ">まとめ</h3>
-<p>今まで不具合で動かなかったものが動くようになるということなので、バージョンを上げたことで不具合が起きたりすることはなさそう</p>
+<h2 id="概要">概要</h2>
+<p>サイトマップを超簡単に自動生成する方法を紹介</p>
+<h2 id="環境">環境</h2>
+<p>Ruby</p>
+<h2 id="手順">手順</h2>
+<ol type="1">
+<li><p>gemのインストール</p></li>
+<li><p>コード記述 ```rb require ‘sitemap_generator’ SitemapGenerator::Sitemap.default_host = ‘https://example.com’ SitemapGenerator::Sitemap.public_path = “./” # sitemapを配置する場所(デフォルトはpublic配下) SitemapGenerator::Sitemap.compress = false #圧縮するかどうか</p>
+<p>SitemapGenerator::Sitemap.create do add ‘/article1.html’ # ここに追加したいパスを追加していく end ```</p></li>
+<li><p>実行</p></li>
+</ol>
+<h2 id="結果">結果</h2>
+<p>カレントディレクトリにsitemap.xmlが生成される</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="kw">&lt;urlset</span><span class="ot"> xmlns:xsi=</span><span class="st">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="ot">    xsi:schemaLocation=</span><span class="st">&quot;http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd&quot;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="ot">    xmlns=</span><span class="st">&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="ot">    xmlns:image=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-image/1.1&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="ot">    xmlns:video=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-video/1.1&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="ot">    xmlns:news=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-news/0.9&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="ot">    xmlns:mobile=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-mobile/1.0&quot;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="ot">    xmlns:pagemap=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-pagemap/1.0&quot;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="ot">    xmlns:xhtml=</span><span class="st">&quot;http://www.w3.org/1999/xhtml&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>    <span class="kw">&lt;url&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>        <span class="kw">&lt;loc&gt;</span>https://example.com<span class="kw">&lt;/loc&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>        <span class="kw">&lt;lastmod&gt;</span>2023-12-09T15:24:06+09:00<span class="kw">&lt;/lastmod&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a>        <span class="kw">&lt;changefreq&gt;</span>weekly<span class="kw">&lt;/changefreq&gt;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a>        <span class="kw">&lt;priority&gt;</span>1.0<span class="kw">&lt;/priority&gt;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a>    <span class="kw">&lt;/url&gt;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a>    <span class="kw">&lt;url&gt;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a>        <span class="kw">&lt;loc&gt;</span>https://example.com/article1.html<span class="kw">&lt;/loc&gt;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a>        <span class="kw">&lt;lastmod&gt;</span>2023-12-09T15:24:06+09:00<span class="kw">&lt;/lastmod&gt;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a>        <span class="kw">&lt;changefreq&gt;</span>weekly<span class="kw">&lt;/changefreq&gt;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a>        <span class="kw">&lt;priority&gt;</span>0.5<span class="kw">&lt;/priority&gt;</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a>    <span class="kw">&lt;/url&gt;</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true"></a><span class="kw">&lt;/urlset&gt;</span></span></code></pre></div>
   </div>
 </body>
 </html>

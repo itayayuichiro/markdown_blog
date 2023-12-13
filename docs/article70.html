@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <link rel="icon" href="../favicon.ico" />
-  <title>rails7.0.6で変更されたFix humanize for strings ending with idについての解説 | 昼寝王子のエンジニアブログ</title>
+  <title>Rails7.0.6で変更されたFix humanize for strings ending with idについての解説 | 昼寝王子のエンジニアブログ</title>
   <style type="text/css">code{white-space: pre;}</style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
      crossorigin="anonymous"></script>
@@ -377,7 +377,7 @@ pre {
 <body>
   <div class="md2html-container">
 <header>
-<h1 class="title">rails7.0.6で変更されたFix humanize for strings ending with idについての解説</h1>
+<h1 class="title">Rails7.0.6で変更されたFix humanize for strings ending with idについての解説</h1>
 </header>
 <h2 id="よく分かる解説">よく分かる解説</h2>
 <h3 id="修正pr">修正PR</h3>
@@ -398,10 +398,10 @@ pre {
 <div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="st">&#39;itaya id&#39;</span>.humanize</span></code></pre></div>
 <p>空白でidという文字列をつけた状態でメソッドを実行する</p>
 <h3 id="結果">結果</h3>
-<h4 id="rails7.0.5">rails7.0.5</h4>
+<h4 id="rails7.0.5">Rails7.0.5</h4>
 <pre><code>=&gt; &quot;Itaya&quot;</code></pre>
 <p>上記のようにIDが省略された形になる</p>
-<h4 id="rails7.0.6">rails7.0.6</h4>
+<h4 id="rails7.0.6">Rails7.0.6</h4>
 <pre><code>=&gt; &quot;Itaya id&quot;</code></pre>
 <p>上記のようにIDも一緒に表示される</p>
 <h3 id="まとめ">まとめ</h3>
