@@ -78,3 +78,6 @@ title: トップページ
 - [Ruby on Rails: ActiveRecordデータを効果的にHashに変換する方法 | 昼寝王子のエンジニアブログ](./article65.html)
 - [rubyでMiniMagick::Imageを使ってpng画像が白黒になってしまう | 昼寝王子のエンジニアブログ](./article66.html)
 - [rubyで真ん中にロゴがあるQRコードを生成する方法 | 昼寝王子のエンジニアブログ](./article67.html)
+- [rails7.0.6で変更されたFix EncryptedConfiguration not behaving like Hash [7-0-stable]についての解説 | 昼寝王子のエンジニアブログ](./article68.html)
+- [rails7.0.6で変更されたFix defect in Enumerable#many introduced in rails/rails@d862dffについての解説 | 昼寝王子のエンジニアブログ](./article69.html)
+- [rails7.0.6で変更されたFix humanize for strings ending with idについての解説 | 昼寝王子のエンジニアブログ](./article70.html)
