@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <link rel="icon" href="../favicon.ico" />
-  <title>jsでハッシュの配列をソートする裏技 | 昼寝王子のエンジニアブログ</title>
+  <title>Ruby on Rails: ActiveRecordデータを効果的にHashに変換する方法 | 昼寝王子のエンジニアブログ</title>
   <style type="text/css">code{white-space: pre;}</style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
      crossorigin="anonymous"></script>
@@ -18,6 +18,70 @@
 
     gtag('config', 'G-GV53GJEY2E');
   </script>
+  <style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
   <!-- Style for Markdown -->
   <style>
   .md2html-container {
@@ -313,29 +377,48 @@ pre {
 <body>
   <div class="md2html-container">
 <header>
-<h1 class="title">jsでハッシュの配列をソートする裏技</h1>
+<h1 class="title">Ruby on Rails: ActiveRecordデータを効果的にHashに変換する方法</h1>
 </header>
-<h2 id="概要">概要</h2>
-<ol type="1">
-<li>オブジェクトを要素とする配列を用意する</li>
-</ol>
-<pre><code>const array = [
-  { id: 1, text: &#39;text5&#39; },
-  { id: 2, text: &#39;text3&#39; },
-  { id: 5, text: &#39;text2&#39; },
-  { id: 3, text: &#39;text4&#39; },
-  { id: 4, text: &#39;text1&#39; },
-]</code></pre>
-<ol start="2" type="1">
-<li>配列をソートする</li>
-</ol>
-<pre><code>array.sort((a, b) =&gt; b.text &gt; a.text ? -1 : 1)</code></pre>
-<ol start="3" type="1">
-<li>ソートされた配列を表示する</li>
-</ol>
-<pre><code>console.log(array);</code></pre>
-<p>上記のように、配列をソートする際には、sort()メソッドを使用し、比較関数を渡します。比較関数は、2つの要素を引数に取り、並び替えの基準を定義するものです。上記の例では、b.text &gt; a.textという条件に基づいて、textの昇順でソートされます。また、三項演算子を使用して、昇順または降順を決定します。</p>
-<p>なお、この例ではハッシュの文字列をソートしていますが、基本的には配列内のオブジェクトのプロパティに基づいてソートすることができます。</p>
+<p>Ruby on Railsの開発で、ActiveRecordやクラスのデータをHashにする方法を紹介します。</p>
+<h2 id="attributesメソッド">1. attributesメソッド</h2>
+<p>基本的な使い方:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>user = <span class="dt">User</span>.first</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>user.attributes</span></code></pre></div>
+<ul>
+<li>特徴
+<ul>
+<li>ActiveRecordオブジェクトの属性をHashに変換する。</li>
+</ul></li>
+</ul>
+<h2 id="as_jsonメソッド">2. as_jsonメソッド</h2>
+<p>基本的な使い方:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>user = <span class="dt">User</span>.first</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>user.as_json</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="co"># 特定のキーのみ取得</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>user = <span class="dt">User</span>.first</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>user.as_json(<span class="st">only: :name</span>)</span></code></pre></div>
+<ul>
+<li>特徴
+<ul>
+<li>JSON形式でHashに変換する。</li>
+<li>出力を変更することができる</li>
+</ul></li>
+</ul>
+<h2 id="to_hメソッド">3. to_hメソッド</h2>
+<p>基本的な使い方:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>friends_list = [[<span class="st">:alice</span>, <span class="dv">8</span>], [<span class="st">:bob</span>, <span class="dv">9</span>], [<span class="st">:charlie</span>, <span class="dv">8</span>]]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>friends_hash = friends_list.to_h</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="co"># =&gt; {:alice=&gt;8, :bob=&gt;9, :charlie=&gt;8}</span></span></code></pre></div>
+<ul>
+<li>特徴
+<ul>
+<li><strong>ActiveRecordオブジェクトは変換できない</strong></li>
+<li>配列をHashに変換する。</li>
+</ul></li>
+</ul>
+<h2 id="まとめ">まとめ</h2>
+<p>to_hはActiveRecordオブジェクトには使えないので、attributesメソッドかas_jsonメソッドを使うと良いでしょう。</p>
   </div>
 </body>
 </html>
