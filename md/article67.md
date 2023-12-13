@@ -4,6 +4,7 @@ title: rubyで真ん中にロゴがあるQRコードを生成する方法
 
 ## 用意するもの
 用意するのは下記の2つのgemです。
+
 - mini_magick
 - rqrcode
 
