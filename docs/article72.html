@@ -386,35 +386,42 @@ pre {
 <h2 id="手順">手順</h2>
 <ol type="1">
 <li><p>gemのインストール</p></li>
-<li><p>コード記述 ```rb require ‘sitemap_generator’ SitemapGenerator::Sitemap.default_host = ‘https://example.com’ SitemapGenerator::Sitemap.public_path = “./” # sitemapを配置する場所(デフォルトはpublic配下) SitemapGenerator::Sitemap.compress = false #圧縮するかどうか</p>
-<p>SitemapGenerator::Sitemap.create do add ‘/article1.html’ # ここに追加したいパスを追加していく end ```</p></li>
+<li><p>コード記述</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode rb"><code class="sourceCode ruby"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>require <span class="st">&#39;sitemap_generator&#39;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="dt">SitemapGenerator</span>::<span class="dt">Sitemap</span>.default_host = <span class="st">&#39;https://example.com&#39;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="dt">SitemapGenerator</span>::<span class="dt">Sitemap</span>.public_path = <span class="st">&quot;./&quot;</span> <span class="co"># sitemapを配置する場所(デフォルトはpublic配下)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="dt">SitemapGenerator</span>::<span class="dt">Sitemap</span>.compress = <span class="dv">false</span> <span class="co">#圧縮するかどうか</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="dt">SitemapGenerator</span>::<span class="dt">Sitemap</span>.create <span class="kw">do</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>  add <span class="st">&#39;/article1.html&#39;</span> <span class="co"># ここに追加したいパスを追加していく</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="kw">end</span></span></code></pre></div></li>
 <li><p>実行</p></li>
 </ol>
 <h2 id="結果">結果</h2>
 <p>カレントディレクトリにsitemap.xmlが生成される</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="kw">&lt;urlset</span><span class="ot"> xmlns:xsi=</span><span class="st">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="ot">    xsi:schemaLocation=</span><span class="st">&quot;http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd&quot;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="ot">    xmlns=</span><span class="st">&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="ot">    xmlns:image=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-image/1.1&quot;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="ot">    xmlns:video=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-video/1.1&quot;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="ot">    xmlns:news=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-news/0.9&quot;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="ot">    xmlns:mobile=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-mobile/1.0&quot;</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="ot">    xmlns:pagemap=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-pagemap/1.0&quot;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="ot">    xmlns:xhtml=</span><span class="st">&quot;http://www.w3.org/1999/xhtml&quot;</span><span class="kw">&gt;</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>    <span class="kw">&lt;url&gt;</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>        <span class="kw">&lt;loc&gt;</span>https://example.com<span class="kw">&lt;/loc&gt;</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>        <span class="kw">&lt;lastmod&gt;</span>2023-12-09T15:24:06+09:00<span class="kw">&lt;/lastmod&gt;</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a>        <span class="kw">&lt;changefreq&gt;</span>weekly<span class="kw">&lt;/changefreq&gt;</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a>        <span class="kw">&lt;priority&gt;</span>1.0<span class="kw">&lt;/priority&gt;</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a>    <span class="kw">&lt;/url&gt;</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a>    <span class="kw">&lt;url&gt;</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a>        <span class="kw">&lt;loc&gt;</span>https://example.com/article1.html<span class="kw">&lt;/loc&gt;</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a>        <span class="kw">&lt;lastmod&gt;</span>2023-12-09T15:24:06+09:00<span class="kw">&lt;/lastmod&gt;</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a>        <span class="kw">&lt;changefreq&gt;</span>weekly<span class="kw">&lt;/changefreq&gt;</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a>        <span class="kw">&lt;priority&gt;</span>0.5<span class="kw">&lt;/priority&gt;</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a>    <span class="kw">&lt;/url&gt;</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true"></a><span class="kw">&lt;/urlset&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="kw">&lt;urlset</span><span class="ot"> xmlns:xsi=</span><span class="st">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="ot">    xsi:schemaLocation=</span><span class="st">&quot;http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="ot">    xmlns=</span><span class="st">&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="ot">    xmlns:image=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-image/1.1&quot;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="ot">    xmlns:video=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-video/1.1&quot;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a><span class="ot">    xmlns:news=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-news/0.9&quot;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a><span class="ot">    xmlns:mobile=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-mobile/1.0&quot;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="ot">    xmlns:pagemap=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-pagemap/1.0&quot;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a><span class="ot">    xmlns:xhtml=</span><span class="st">&quot;http://www.w3.org/1999/xhtml&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>    <span class="kw">&lt;url&gt;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a>        <span class="kw">&lt;loc&gt;</span>https://example.com<span class="kw">&lt;/loc&gt;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a>        <span class="kw">&lt;lastmod&gt;</span>2023-12-09T15:24:06+09:00<span class="kw">&lt;/lastmod&gt;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a>        <span class="kw">&lt;changefreq&gt;</span>weekly<span class="kw">&lt;/changefreq&gt;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a>        <span class="kw">&lt;priority&gt;</span>1.0<span class="kw">&lt;/priority&gt;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a>    <span class="kw">&lt;/url&gt;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a>    <span class="kw">&lt;url&gt;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a>        <span class="kw">&lt;loc&gt;</span>https://example.com/article1.html<span class="kw">&lt;/loc&gt;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true"></a>        <span class="kw">&lt;lastmod&gt;</span>2023-12-09T15:24:06+09:00<span class="kw">&lt;/lastmod&gt;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true"></a>        <span class="kw">&lt;changefreq&gt;</span>weekly<span class="kw">&lt;/changefreq&gt;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true"></a>        <span class="kw">&lt;priority&gt;</span>0.5<span class="kw">&lt;/priority&gt;</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true"></a>    <span class="kw">&lt;/url&gt;</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true"></a><span class="kw">&lt;/urlset&gt;</span></span></code></pre></div>
   </div>
 </body>
 </html>
