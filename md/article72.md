@@ -11,6 +11,7 @@ Ruby
 ## 手順
 1. gemのインストール
 1. コード記述
+
     ```rb
     require 'sitemap_generator'
     SitemapGenerator::Sitemap.default_host = 'https://example.com'
@@ -21,6 +22,7 @@ Ruby
       add '/article1.html' # ここに追加したいパスを追加していく
     end
     ```
+
 3. 実行
 
 ## 結果
