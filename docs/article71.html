@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <link rel="icon" href="../favicon.ico" />
-  <title>Rails7.0.6で変更されたFix defect in Enumerable#many introduced in rails/rails@d862dffについての解説 | 昼寝王子のエンジニアブログ</title>
+  <title>Rails7.0.5.1で変更された[CVE-2023-28362] Possible XSS via User Supplied Values to redirect_toについての解説 | 昼寝王子のエンジニアブログ</title>
   <style type="text/css">code{white-space: pre;}</style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
      crossorigin="anonymous"></script>
@@ -377,54 +377,25 @@ pre {
 <body>
   <div class="md2html-container">
 <header>
-<h1 class="title">Rails7.0.6で変更されたFix defect in Enumerable#many introduced in rails/rails@d862dffについての解説</h1>
+<h1 class="title">Rails7.0.5.1で変更された[CVE-2023-28362] Possible XSS via User Supplied Values to redirect_toについての解説</h1>
 </header>
-<h2 id="よく分かる解説">よく分かる解説</h2>
-<h3 id="修正pr">修正PR</h3>
-<p>https://github.com/rails/rails/pull/48412</p>
-<h3 id="前提">前提</h3>
+<h2 id="対象">対象</h2>
+<p>Railsのバージョンを<strong>7.0.5</strong>から<strong>7.0.5.1</strong>に変更する人</p>
+<h2 id="情報ソース">情報ソース</h2>
+<p>Rails Versions 7.0.5.1, 6.1.7.4 have been released! https://rubyonrails.org/2023/6/26/Rails-Versions-7-0-5-1-6-1-7-4-have-been-released</p>
+<h2 id="変更点">変更点</h2>
 <ul>
-<li>many?という関数は複数あるかを真偽値で返すメソッドである。</li>
-<li>例えば
-<ul>
-<li><code>[1,2].many?</code>は<code>true</code></li>
-<li><code>[1].many?</code>は<code>false</code></li>
-</ul></li>
-<li>many?は下記のようにブロックを受け取ることもできる</li>
+<li><code>redirect_to</code>による脆弱性の対応</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>[<span class="dv">1</span>,<span class="dv">2</span>].many? <span class="kw">do</span> |a|</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>  a &gt; <span class="dv">1</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="kw">end</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="co"># =&gt; false</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>[<span class="dv">2</span>,<span class="dv">3</span>].many? <span class="kw">do</span> |a|</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>  a &gt; <span class="dv">1</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="kw">end</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="co"># =&gt; true</span></span></code></pre></div>
-<p>ブロック配下の条件にマッチするものが複数個あるかをチェックできる。</p>
-<h3 id="今回との関係">今回との関係</h3>
-<ul>
-<li>今回はこのmany?のブロック側の挙動に不具合があったので変更された</li>
-<li>具体的なシーンとしては配列の中に配列があった場合にの挙動がおかしかったので修正された</li>
-</ul>
-<h2 id="コードベースでの解説実例">コードベースでの解説&amp;実例</h2>
-<h3 id="検証用コード">検証用コード</h3>
-<p>検証するコードはこちら</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>[[<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">1</span>,<span class="dv">2</span>]].many? <span class="kw">do</span> |a|</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>  a.sum == <span class="dv">3</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="kw">end</span></span></code></pre></div>
-<p>コードとしては配列の中の配列の合計が3以上のものが複数あるかというのを検証するものだ。</p>
-<h3 id="結果">結果</h3>
-<h4 id="rails7.0.5">Rails7.0.5</h4>
-<pre><code>Traceback (most recent call last):
-(irb):3:in `block in &lt;main&gt;&#39;: undefined method `sum&#39; for 1:Integer (NoMethodError)
-Did you mean?  succ</code></pre>
-<p>上記のようなエラーになる。</p>
-<p>理由は修正のコメントにも記載があるが、ブロックの中での判定で配列が来ることが考慮されておらず、それによって不具合が起きているとのこと。</p>
-<h4 id="rails7.0.6">Rails7.0.6</h4>
-<pre><code>=&gt; true</code></pre>
-<p>trueが返される</p>
-<h3 id="まとめ">まとめ</h3>
-<p>今まで不具合で動かなかったものが動くようになるということなので、バージョンを上げたことで不具合が起きたりすることはなさそう</p>
+<h2 id="詳細">詳細</h2>
+<p><code>redirect_to</code>を使っている場合にクロスサイトスクリプティング（XSS）の攻撃が発生する可能性がある模様。</p>
+<p>ただし、<code>redirect_to</code>を使っている場所全てで発生するということではなく、<strong>外部のホストにリダイレクトを許可している場合</strong>に発生しうるというものです。</p>
+<p>外部ホストにリダイレクトを許可する設定は</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode rb"><code class="sourceCode ruby"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>redirect_to <span class="st">&#39;https://example.com&#39;</span>, <span class="st">allow_other_host: </span><span class="dv">true</span></span></code></pre></div>
+<p>こんな形でallow_other_hostをtrueに意図的にする必要があります。</p>
+<p>逆に言えばこの設定を意図的にしなければRails側でエラーになるようになっています。</p>
+<p>なので、これらを使っていない場合は特に影響はありません。</p>
+<p>また使っていた場合もバージョンをあげることで解消されるので気付いた時にあげましょう。</p>
   </div>
 </body>
 </html>
