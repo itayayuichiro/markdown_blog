@@ -7,6 +7,7 @@ Railsのバージョンを**7.0.5**から**7.0.5.1**に変更する人
 
 ## 情報ソース
 Rails Versions 7.0.5.1, 6.1.7.4 have been released!
+
 https://rubyonrails.org/2023/6/26/Rails-Versions-7-0-5-1-6-1-7-4-have-been-released
 
 
