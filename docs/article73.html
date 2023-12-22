@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <link rel="icon" href="../favicon.ico" />
-  <title>Rails7.0.5.1で変更された[CVE-2023-28362] Possible XSS via User Supplied Values to redirect_toについての解説 | 昼寝王子のエンジニアブログ</title>
+  <title>Rails7.0.6で変更されたFix autosave associations with validations added on :base of the associated objectsについての解説 | 昼寝王子のエンジニアブログ</title>
   <style type="text/css">code{white-space: pre;}</style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
      crossorigin="anonymous"></script>
@@ -377,26 +377,50 @@ pre {
 <body>
   <div class="md2html-container">
 <header>
-<h1 class="title">Rails7.0.5.1で変更された[CVE-2023-28362] Possible XSS via User Supplied Values to redirect_toについての解説</h1>
+<h1 class="title">Rails7.0.6で変更されたFix autosave associations with validations added on :base of the associated objectsについての解説</h1>
 </header>
-<h2 id="対象">対象</h2>
-<p>Railsのバージョンを<strong>7.0.5</strong>から<strong>7.0.5.1</strong>に変更する人</p>
-<h2 id="情報ソース">情報ソース</h2>
-<p>Rails Versions 7.0.5.1, 6.1.7.4 have been released!</p>
-<p>https://rubyonrails.org/2023/6/26/Rails-Versions-7-0-5-1-6-1-7-4-have-been-released</p>
-<h2 id="変更点">変更点</h2>
+<h2 id="よく分かる解説">よく分かる解説</h2>
+<h3 id="修正pr">修正PR</h3>
+<p><a href="https://github.com/rails/rails/pull/48413/files">https://github.com/rails/rails/pull/48413/</a></p>
+<h3 id="概要">概要</h3>
 <ul>
-<li><code>redirect_to</code>による脆弱性の対応</li>
+<li>7.0.5と7.0.6で:baseというところにエラーを入れた場合の挙動がことなる</li>
 </ul>
-<h2 id="詳細">詳細</h2>
-<p><code>redirect_to</code>を使っている場合にクロスサイトスクリプティング（XSS）の攻撃が発生する可能性がある模様。</p>
-<p>ただし、<code>redirect_to</code>を使っている場所全てで発生するということではなく、<strong>外部のホストにリダイレクトを許可している場合</strong>に発生しうるというものです。</p>
-<p>外部ホストにリダイレクトを許可する設定は</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode rb"><code class="sourceCode ruby"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>redirect_to <span class="st">&#39;https://example.com&#39;</span>, <span class="st">allow_other_host: </span><span class="dv">true</span></span></code></pre></div>
-<p>こんな形でallow_other_hostをtrueに意図的にする必要があります。</p>
-<p>逆に言えばこの設定を意図的にしなければRails側でエラーになるようになっています。</p>
-<p>なので、これらを使っていない場合は特に影響はありません。</p>
-<p>また使っていた場合もバージョンをあげることで解消されるので気付いた時にあげましょう。</p>
+<h2 id="コードベースでの解説実例">コードベースでの解説&amp;実例</h2>
+<h3 id="検証用コード">検証用コード</h3>
+<p>検証するコードはこちら</p>
+<p>モデルを２つ用意する</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="co"># User.rb</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="kw">class</span> <span class="dt">User</span> &lt; <span class="dt">ActiveRecord</span>::<span class="dt">Base</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>  has_many <span class="st">:posts</span>, <span class="st">autosave: </span><span class="dv">true</span>, <span class="st">index_errors: </span><span class="dv">true</span>, <span class="st">anonymous_class: </span><span class="dt">Post</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="kw">end</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="co"># Post.rb</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="kw">class</span> <span class="dt">Post</span> &lt; <span class="dt">ActiveRecord</span>::<span class="dt">Base</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>  validate <span class="st">:should_be_not_null</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>  <span class="kw">private</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>    <span class="kw">def</span> should_be_not_null</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>      errors.add(<span class="st">:base</span>, <span class="st">&quot;should be not null&quot;</span>) <span class="kw">if</span> user_id.nil?</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>      errors.add(<span class="st">:test</span>, <span class="st">&quot;should be not null&quot;</span>) <span class="kw">if</span> user_id.nil?</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a>    <span class="kw">end</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a><span class="kw">end</span></span></code></pre></div>
+<p>その上で下記の処理を実行する</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>user = <span class="dt">User</span>.new</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>post = <span class="dt">Post</span>.new</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>user.posts = [post]</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>user.valid?</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>user.errors</span></code></pre></div>
+<h3 id="結果">結果</h3>
+<h4 id="rails7.0.5">Rails7.0.5</h4>
+<pre><code>=&gt; #&lt;ActiveModel::Errors [#&lt;ActiveModel::NestedError attribute=posts[0].base, type=should be not null, options={}&gt;, #&lt;ActiveModel::NestedError attribute=posts[0].test, type=should be not null, options={}&gt;]&gt;</code></pre>
+<p>上記のようにbaseも他のキーと同じように.baseの中にエラーが有ることになる</p>
+<h4 id="rails7.0.6">Rails7.0.6</h4>
+<pre><code>=&gt; #&lt;ActiveModel::Errors [#&lt;ActiveModel::NestedError attribute=posts[0], type=should be not null, options={}&gt;, #&lt;ActiveModel::NestedError attribute=posts[0].test, type=should be not null, options={}&gt;]&gt;</code></pre>
+<p>上記のようにbaseは他のキーとは違い直接オブジェクトに紐づく形になる</p>
+<h3 id="まとめ">まとめ</h3>
+<p>リレーションしている「:base」にエラーを入れた際の挙動が異なる。</p>
+<p>baseにエラーを入れてハンドリングしている場合関係がありそう。</p>
   </div>
 </body>
 </html>
