@@ -84,3 +84,5 @@ title: トップページ
 - [Rails7.0.5.1で変更された[CVE-2023-28362] Possible XSS via User Supplied Values to redirect_toについての解説 | 昼寝王子のエンジニアブログ](./article71.html)
 - [サイトマップを超簡単に自動生成する方法(Ruby) | 昼寝王子のエンジニアブログ](./article72.html)
 - [Rails7.0.6で変更されたFix autosave associations with validations added on :base of the associated objectsについての解説 | 昼寝王子のエンジニアブログ](./article73.html)
+- [Rails7.0.6で変更された[AR] Fix result with anonymous PG columns of different type from json についての解説 | 昼寝王子のエンジニアブログ](./article74.html)
+- [Rails7.0.6で変更されたPreserve timestamp when setting an ActiveSupport::TimeWithZone value to timestamptz attribute についての解説 | 昼寝王子のエンジニアブログ](./article75.html)
