@@ -313,12 +313,10 @@ pre {
 <body>
   <div class="md2html-container">
 <header>
-<h1 class="title">An error occurred when upgrading from Rails5 to
-Rails6! A simple way to deal with normalize_filter</h1>
+<h1 class="title">An error occurred when upgrading from Rails5 to Rails6! A simple way to deal with normalize_filter</h1>
 </header>
 <h2 id="problem">Problem</h2>
-<p>The processing around routing automatically generated in Rails 5
-stopped working due to the version upgrade to Rails 6.</p>
+<p>The processing around routing automatically generated in Rails 5 stopped working due to the version upgrade to Rails 6.</p>
 <pre><code>NoMethodError: undefined method `[]&#39; for nil:NilClass
 /xxxx/.bundle/ruby/2.7.0/gems/actionpack-6.0.6.1/lib/action_dispatch/routing/inspector.rb:85:in `normalize_filter&#39;
 /xxxx/.bundle/ruby/2.7.0/gems/actionpack-6.0.6.1/lib/action_dispatch/routing/inspector.rb:65:in `format&#39;
@@ -330,10 +328,7 @@ stopped working due to the version upgrade to Rails 6.</p>
 <pre><code>all_routes = Rails.application.routes.routes
 inspector = ActionDispatch::Routing::RoutesInspector.new(all_routes)
 routes = inspector.format(Formatter.new, {})</code></pre>
-<p>In the code before the change, ENV[‘CONTROLLER’] was passed as an
-argument of the normalize_filter method. However, in Rails 6, the
-argument of the normalize_filter method must be in hash format, so we
-need to change it to pass an empty hash {} as the argument.</p>
+<p>In the code before the change, ENV[‘CONTROLLER’] was passed as an argument of the normalize_filter method. However, in Rails 6, the argument of the normalize_filter method must be in hash format, so we need to change it to pass an empty hash {} as the argument.</p>
   </div>
 </body>
 </html>

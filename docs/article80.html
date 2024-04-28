@@ -313,21 +313,16 @@ pre {
 <body>
   <div class="md2html-container">
 <header>
-<h1 class="title">「bin/rails
-server」は、ローカルサーバーを起動するはずのところ、テキストファイルを開いてしまう</h1>
+<h1 class="title">「bin/rails server」は、ローカルサーバーを起動するはずのところ、テキストファイルを開いてしまう</h1>
 </header>
 <h2 id="概要">概要</h2>
-<p>Railsのチュートリアルを始めたんだけど、このページに書いてある手順に従ったの。
-でも、bin/rails
-serverというコマンドを実行すると、サーバーが起動するはずなのに、下に書かれているテキストファイルが開いちゃうんだ。
-どうすればこのコマンドでサーバーを起動できる？</p>
+<p>Railsのチュートリアルを始めたんだけど、このページに書いてある手順に従ったの。 でも、bin/rails serverというコマンドを実行すると、サーバーが起動するはずなのに、下に書かれているテキストファイルが開いちゃうんだ。 どうすればこのコマンドでサーバーを起動できる？</p>
 <pre><code>    #!/usr/bin/env ruby.exe
     APP_PATH = File.expand_path(&quot;../config/application&quot;, __dir__)
     require_relative &quot;../config/boot&quot;
     require &quot;rails/commands&quot;</code></pre>
 <h2 id="対応法">対応法</h2>
-<p>Railsのサーバーを実行する方法として、“rails server” または “rails s”
-を使ってみてください。これはRailsサーバーを実行するよりも、より一般的な方法です。</p>
+<p>Railsのサーバーを実行する方法として、“rails server” または “rails s” を使ってみてください。これはRailsサーバーを実行するよりも、より一般的な方法です。</p>
   </div>
 </body>
 </html>

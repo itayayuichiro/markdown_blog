@@ -313,16 +313,12 @@ pre {
 <body>
   <div class="md2html-container">
 <header>
-<h1 class="title">MarkdownファイルからHTMLファイルを生成するためのGitHub
-Actionsの設定方法</h1>
+<h1 class="title">MarkdownファイルからHTMLファイルを生成するためのGitHub Actionsの設定方法</h1>
 </header>
 <h2 id="概要">概要</h2>
-<p><a
-href="https://pandoc-doc-ja.readthedocs.io/ja/latest/users-guide.html">pandoc</a>を用いることでmarkdown-&gt;htmlへの変換は可能だが毎回手作業でやるのが手間だったのでgithub
-actionでmarkdownファイルをpushしたら勝手にhtmlが生成されてpushされるように変更してみた。</p>
+<p><a href="https://pandoc-doc-ja.readthedocs.io/ja/latest/users-guide.html">pandoc</a>を用いることでmarkdown-&gt;htmlへの変換は可能だが毎回手作業でやるのが手間だったのでgithub actionでmarkdownファイルをpushしたら勝手にhtmlが生成されてpushされるように変更してみた。</p>
 <h2 id="手順">手順</h2>
-<p>下記のような設定ファイルを作成します
-.github/workflows/md-to-html.yml</p>
+<p>下記のような設定ファイルを作成します .github/workflows/md-to-html.yml</p>
 <pre><code>on: push
 jobs:
   build:
@@ -370,8 +366,7 @@ jobs:
       repository-projects: write
       security-events: write
       statuses: write</code></pre>
-<p>こちらは、github
-actionからgitでcommitするために必要な記述だったので追記します。</p>
+<p>こちらは、github actionからgitでcommitするために必要な記述だったので追記します。</p>
 <pre><code>    steps:
       - uses: actions/checkout@v3
       - run: |
@@ -380,8 +375,7 @@ actionからgitでcommitするために必要な記述だったので追記し�
 <pre><code>          for i in $(seq 1 100); do
             pandoc -f markdown -t html --template=mytemplate &quot;./md/article${i}.md&quot; &gt; &quot;./docs/article${i}.html&quot;
           done</code></pre>
-<p>mdファイルを予め命名を規則的にしておきループするようにします。
-(ただ、ディレクトリにあるファイルにすべて処理するとかのほうがホントは良さそう)</p>
+<p>mdファイルを予め命名を規則的にしておきループするようにします。 (ただ、ディレクトリにあるファイルにすべて処理するとかのほうがホントは良さそう)</p>
 <pre><code>          git config user.name  &quot;github-action&quot;
           git config user.email &quot;github-action@example.com&quot;
           git add ./docs
