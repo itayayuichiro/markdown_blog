@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <link rel="icon" href="../favicon.ico" />
-  <title>Markdownから見やすいHTMLを出力する | 昼寝王子のエンジニアブログ</title>
+  <title>最後に作成された レコードを検索する | 昼寝王子のエンジニアブログ</title>
   <style type="text/css">code{white-space: pre;}</style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
      crossorigin="anonymous"></script>
@@ -313,15 +313,22 @@ pre {
 <body>
   <div class="md2html-container">
 <header>
-<h1 class="title">Markdownから見やすいHTMLを出力する</h1>
+<h1 class="title">最後に作成された レコードを検索する</h1>
 </header>
-<h1 id="見出し">見出し</h1>
-<p>インストール</p>
-<pre><code>brew cask install wkhtltopdf</code></pre>
-<pre><code>brew install pandoc
+<h2 id="概要">概要</h2>
+<p>created_at
+フィールドで最後のレコードを見つけるにはどうすればよいですか?</p>
+<p>Record.order(“created_at”).last</p>
+<p>または</p>
+<p>Record.where(:created_at).last</p>
+<p>または</p>
+<p>どちらでもないし、もっと良い方法はないでしょうか？</p>
+<h2 id="解決策">解決策</h2>
+<p>それは正当な要求です</p>
+<pre><code>Record.order(created_at: :desc).first
 </code></pre>
-<h2 id="見出し2">見出し2</h2>
-<h3 id="見出し3">見出し3</h3>
+<p>ただし、パフォーマンスを向上させるために、このフィールドのツリー
+インデックスに注意してください。</p>
   </div>
 </body>
 </html>

@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <link rel="icon" href="../favicon.ico" />
-  <title>Markdownから見やすいHTMLを出力する | 昼寝王子のエンジニアブログ</title>
+  <title>Ruby で Linux システム情報を取得するにはどうすればよいですか? | 昼寝王子のエンジニアブログ</title>
   <style type="text/css">code{white-space: pre;}</style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
      crossorigin="anonymous"></script>
@@ -313,15 +313,20 @@ pre {
 <body>
   <div class="md2html-container">
 <header>
-<h1 class="title">Markdownから見やすいHTMLを出力する</h1>
+<h1 class="title">Ruby で Linux
+システム情報を取得するにはどうすればよいですか?</h1>
 </header>
-<h1 id="見出し">見出し</h1>
-<p>インストール</p>
-<pre><code>brew cask install wkhtltopdf</code></pre>
-<pre><code>brew install pandoc
-</code></pre>
-<h2 id="見出し2">見出し2</h2>
-<h3 id="見出し3">見出し3</h3>
+<h2 id="概要">概要</h2>
+<p>Ruby で Linux システム (これは Fedora、Ubuntu
+などで動作する必要があります)
+のソフトウェア/ハードウェア情報を取得するにはどうすればよいですか?</p>
+<h2 id="対応法">対応法</h2>
+<p>Chef
+の背後にある素晴らしい人々は、OS、カーネル、スペック、FQDN、ディスク、スペース、メモリ、ユーザー、インターフェイス、SSH
+キーなどのシステム情報を返す Ohai https://github.com/opscode/ohai
+という優れた gem を開発しています。
+.ハッシュとして。かなり完成度が高くとても良いです。また、コマンド ライン
+バイナリ (ohai とも呼ばれます) もインストールされます。</p>
   </div>
 </body>
 </html>

@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <link rel="icon" href="../favicon.ico" />
-  <title>Markdownから見やすいHTMLを出力する | 昼寝王子のエンジニアブログ</title>
+  <title>どの gem が特定の gem をバンドルしたのかを特定するにはどうすればよいですか? | 昼寝王子のエンジニアブログ</title>
   <style type="text/css">code{white-space: pre;}</style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
      crossorigin="anonymous"></script>
@@ -313,15 +313,25 @@ pre {
 <body>
   <div class="md2html-container">
 <header>
-<h1 class="title">Markdownから見やすいHTMLを出力する</h1>
+<h1 class="title">どの gem が特定の gem
+をバンドルしたのかを特定するにはどうすればよいですか?</h1>
 </header>
-<h1 id="見出し">見出し</h1>
-<p>インストール</p>
-<pre><code>brew cask install wkhtltopdf</code></pre>
-<pre><code>brew install pandoc
-</code></pre>
-<h2 id="見出し2">見出し2</h2>
-<h3 id="見出し3">見出し3</h3>
+<h2 id="概要">概要</h2>
+<p>どの gem が特定の gem をバンドルして Gemfile.lock
+に追加したかを判断する簡単な (バンドル?) コマンドはありますか?</p>
+<p>同様の質問が 1 つまたは 2 つありますが、それらは、特定の gem
+に依存する gem
+を把握するという一般的な問題のみを扱っているようです。</p>
+<p>別の質問はこれに最も近いものですが、あまりにも具体的であり、一般的な良い回答が得られませんでした。</p>
+<p>最終的に、bundle viz
+を使用し、結果の画像を見つけてその親まで追跡するまで観察した結果、必要な情報を見つけました。しかし、bundle
+が 1 行のコマンドで何かを教えてくれるようです。</p>
+<p>grep -rrest-client ~/.rbenv/versions/2.5.3/lib/ruby/gems/2.5.0
+も試してみましたが、結果はめちゃくちゃで、他の宝石も含まれていました。この特定のアプリからではありません。</p>
+<p>次回はもっと簡単な方法はありますか？</p>
+<h2 id="解決策">解決策</h2>
+<p>通常、Gemfile.lock
+は他の依存関係からどの依存関係が生成されたかを文書化し、大まかなツリー形式でリストされますが、正しい場所にたどり着くには多少の調査が必要な場合があります。</p>
   </div>
 </body>
 </html>

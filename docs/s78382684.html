@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <link rel="icon" href="../favicon.ico" />
-  <title>Markdownから見やすいHTMLを出力する | 昼寝王子のエンジニアブログ</title>
+  <title>Ruby 3.1: コードを単純化するために &amp;method(:name) を使用すると、不可解にも失敗します | 昼寝王子のエンジニアブログ</title>
   <style type="text/css">code{white-space: pre;}</style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
      crossorigin="anonymous"></script>
@@ -313,15 +313,67 @@ pre {
 <body>
   <div class="md2html-container">
 <header>
-<h1 class="title">Markdownから見やすいHTMLを出力する</h1>
+<h1 class="title">Ruby 3.1: コードを単純化するために &amp;method(:name)
+を使用すると、不可解にも失敗します</h1>
 </header>
-<h1 id="見出し">見出し</h1>
-<p>インストール</p>
-<pre><code>brew cask install wkhtltopdf</code></pre>
-<pre><code>brew install pandoc
+<h2 id="概要">概要</h2>
+<p>ルビー3.1.2 クブントゥ 22.04</p>
+<p>URI からベース ドメイン名 (サブドメインを除く) を抽出する方法:</p>
+<pre><code>def host_name(a)
+  URI(a).host.sub(/\Awww\./, &#39;&#39;)
+end
 </code></pre>
-<h2 id="見出し2">見出し2</h2>
-<h3 id="見出し3">見出し3</h3>
+<p>使用：</p>
+<pre><code>uri_array = [&#39;https://www.example.org&#39;, &#39;http://www.example.net/posts?a=1&#39;, &#39;www.example.com&#39;]
+uri_array.map!(&amp;method(:host_name))
+</code></pre>
+<p>期待される出力: =&gt;</p>
+<pre><code>[&#39;example.org&#39;, &#39;example.net&#39;, &#39;example.com&#39;]
+</code></pre>
+<p>代わりに次のものが生成されます。</p>
+<pre><code>(irb):14:in `host_name&#39;: undefined method `sub&#39; for nil:NilClass (NoMethodError)
+</code></pre>
+<p>結果の配列は次のように変更されます。</p>
+<pre><code>[
+    [0] &quot;example.org&quot;,
+    [1] &quot;example.net&quot;,
+    [2] &quot;www.example.com&quot;
+]
+</code></pre>
+<p>配列の 3 番目の要素で失敗する理由。</p>
+<h2 id="解決策">解決策</h2>
+<p>ここでの問題は、&amp;method の使用ではなく、URI に渡される URI
+にあります。解析される URI にスキーム (http、https など)
+が含まれていない場合、URI はホスト プロパティを抽出できません。</p>
+<pre><code>irb(main):001&gt; require &#39;uri&#39;
+=&gt; true
+irb(main):002&gt; uri = URI(&#39;www.example.com&#39;)
+=&gt; #&lt;URI::Generic www.example.com&gt;
+irb(main):003&gt; uri.host
+=&gt; nil
+irb(main):004&gt; uri.path
+=&gt; &quot;www.example.com&quot;
+irb(main):005&gt; uri.host.sub(/\Awww\./, &#39;&#39;)
+(irb):5:in `&lt;main&gt;&#39;: undefined method `sub&#39; for nil (NoMethodError)
+
+uri.host.sub(/\Awww\./, &#39;&#39;)
+        ^^^^
+        from &lt;internal:kernel&gt;:187:in `loop&#39;
+        from /Users/jason/.gem/ruby/3.3.0/gems/irb-1.12.0/exe/irb:9:in `&lt;top (required)&gt;&#39;
+        from /Users/jason/.gem/ruby/3.3.0/bin/irb:25:in `load&#39;
+        from /Users/jason/.gem/ruby/3.3.0/bin/irb:25:in `&lt;main&gt;&#39;
+irb(main):006&gt;
+</code></pre>
+<p>ただし、この状況では、代わりにアドレス指定可能な gem、特に
+Addressable::URI.heuristic_parse を使用できます。</p>
+<pre><code>irb(main):001&gt; require &#39;addressable&#39;
+=&gt; true
+irb(main):002&gt; uri = Addressable::URI.heuristic_parse(&#39;www.example.com&#39;)
+=&gt; #&lt;Addressable::URI:0x2ee0 URI:http://www.example.com&gt;
+irb(main):003&gt; uri.host
+=&gt; &quot;www.example.com&quot;
+irb(main):004&gt;
+</code></pre>
   </div>
 </body>
 </html>

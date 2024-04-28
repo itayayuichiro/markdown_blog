@@ -11,20 +11,12 @@ class Crawler
     f.write("title: トップページ\n")
     f.write("---\n\n")
     f.write("## リンク一覧\n")
-    100.times { |i|
-      begin
-        page = open("./docs/article#{i+1}.html")
-        doc = Nokogiri::HTML.parse(page, nil, 'utf-8')
-        text = "- [#{doc.title}](./article#{i+1}.html)"
-        f.write("#{text}\n")
-        page = open("./docs/article#{i+1}_en.html")
-        doc = Nokogiri::HTML.parse(page, nil, 'utf-8')
-        text = "- [#{doc.title}](./article#{i+1}_en.html)"
-        f.write("#{text}\n")
-      rescue => e
-        p e
-      end
-    }
+    Dir.glob("./docs/*.html").each do |file_path|
+      page = open(file_path)
+      doc = Nokogiri::HTML.parse(page, nil, 'utf-8')
+      text = "- [#{doc.title}](#{file_path.gsub(/\/docs/, '')})"
+      f.write("#{text}\n")
+    end
   end
 end
 
