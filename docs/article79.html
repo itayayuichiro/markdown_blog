@@ -325,53 +325,33 @@ pre {
 <p>このサイトを訪れてみてください。あなたの役に立つかもしれません。</p>
 <p>https://shopify.dev/docs/themes/tools/cli</p>
 <p>CLIの以下の手順に従ってください。</p>
-<h3
-id="ステップ1新しい要件のインストール">ステップ1：新しい要件のインストール</h3>
-<p>Shopify CLI 2.xの要件に加えて、Shopify CLI 3.xにはNode.js
-14.17.0以上が必要です。macOSを使用している場合は、Shopify
-CLIの最新バージョンにアップグレードするときに、HomebrewがNode.jsを自動的にインストールします。</p>
-<p>要件の完全なリストについては、「Shopify
-CLIのインストール」を参照してください。</p>
-<h3 id="ステップ2shopify-cli-2.xのアンインストール">ステップ2：Shopify
-CLI 2.xのアンインストール</h3>
-<p>前のバージョンのShopify
-CLIをアンインストールすることを検討してください。前のバージョンをアンインストールすることで、2つのバージョンの間での衝突を回避できます。</p>
-<p>Shopify CLIの両方のバージョンをインストールしたい場合は、「Shopify
-CLI
-2.xと3.xの両方を使用する方法」を参照して、同じ環境で両方のバージョンを使用する方法を学んでください。</p>
-<p>Shopify
-CLIは、インストールしたパッケージマネージャーを使用してシステムから削除できます：</p>
+<h3 id="ステップ1新しい要件のインストール">ステップ1：新しい要件のインストール</h3>
+<p>Shopify CLI 2.xの要件に加えて、Shopify CLI 3.xにはNode.js 14.17.0以上が必要です。macOSを使用している場合は、Shopify CLIの最新バージョンにアップグレードするときに、HomebrewがNode.jsを自動的にインストールします。</p>
+<p>要件の完全なリストについては、「Shopify CLIのインストール」を参照してください。</p>
+<h3 id="ステップ2shopify-cli-2.xのアンインストール">ステップ2：Shopify CLI 2.xのアンインストール</h3>
+<p>前のバージョンのShopify CLIをアンインストールすることを検討してください。前のバージョンをアンインストールすることで、2つのバージョンの間での衝突を回避できます。</p>
+<p>Shopify CLIの両方のバージョンをインストールしたい場合は、「Shopify CLI 2.xと3.xの両方を使用する方法」を参照して、同じ環境で両方のバージョンを使用する方法を学んでください。</p>
+<p>Shopify CLIは、インストールしたパッケージマネージャーを使用してシステムから削除できます：</p>
 <p>ターミナル</p>
 <pre><code>gem uninstall shopify-cli</code></pre>
-<p>Shopify
-CLIのレガシーバージョン（0.9.0未満）を使用している場合は、手動でアンインストールする必要があります。</p>
-<h3 id="ステップ3shopify-cli-3.xのインストール">ステップ3：Shopify CLI
-3.xのインストール</h3>
+<p>Shopify CLIのレガシーバージョン（0.9.0未満）を使用している場合は、手動でアンインストールする必要があります。</p>
+<h3 id="ステップ3shopify-cli-3.xのインストール">ステップ3：Shopify CLI 3.xのインストール</h3>
 <p>Shopify CLIは、一連のNode.jsパッケージとして管理されています：</p>
-<p><span class="citation" data-cites="shopify/cli">@shopify/cli</span>
-<span class="citation" data-cites="shopify/theme">@shopify/theme</span>
-macOSではHomebrewを使用してこれらのパッケージをインストールできます。WindowsやLinuxでは、パッケージをグローバルにインストールすることもできます。</p>
+<p><span class="citation" data-cites="shopify/cli">@shopify/cli</span> <span class="citation" data-cites="shopify/theme">@shopify/theme</span> macOSではHomebrewを使用してこれらのパッケージをインストールできます。WindowsやLinuxでは、パッケージをグローバルにインストールすることもできます。</p>
 <p>注意：apt、Yum、およびRubyGemsのインストールはもはやサポートされていません。</p>
 <p>MacOS</p>
 <p>Homebrewを使用してmacOSにShopify CLIをインストールできます。</p>
-<p>Shopify
-CLIをインストールする前に、HomebrewにShopifyのサードパーティーリポジトリを追加する必要があります。</p>
+<p>Shopify CLIをインストールする前に、HomebrewにShopifyのサードパーティーリポジトリを追加する必要があります。</p>
 <p>ターミナル</p>
 <pre><code>brew tap shopify/shopify
 brew install shopify-cli</code></pre>
-<p>注意：Homebrewは、Ruby、Node.js、Gitなど、Shopify
-CLIを実行するためのすべての要件を自動的にインストールします。</p>
+<p>注意：Homebrewは、Ruby、Node.js、Gitなど、Shopify CLIを実行するためのすべての要件を自動的にインストールします。</p>
 <p>WindowsおよびLinux</p>
-<p>テーマ用のShopify
-CLIをインストールするには、コマンドラインを使用して、<span
-class="citation" data-cites="shopify/cliと">@shopify/cliと</span><span
-class="citation"
-data-cites="shopify/themeのNode.jsパッケージをグローバルにインストールします">@shopify/themeのNode.jsパッケージをグローバルにインストールします</span>。</p>
+<p>テーマ用のShopify CLIをインストールするには、コマンドラインを使用して、<span class="citation" data-cites="shopify/cliと">@shopify/cliと</span><span class="citation" data-cites="shopify/themeのNode.jsパッケージをグローバルにインストールします">@shopify/themeのNode.jsパッケージをグローバルにインストールします</span>。</p>
 <p>ターミナル</p>
 <pre><code>npm install -g @shopify/cli @shopify/theme</code></pre>
 <h3 id="ステップ4インストールの確認">ステップ4：インストールの確認</h3>
-<p>Shopify
-CLIが正しくインストールされているかを確認するには、次のコマンドを実行してください：</p>
+<p>Shopify CLIが正しくインストールされているかを確認するには、次のコマンドを実行してください：</p>
 <pre><code>shopify version</code></pre>
   </div>
 </body>

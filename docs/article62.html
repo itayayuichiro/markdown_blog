@@ -313,12 +313,10 @@ pre {
 <body>
   <div class="md2html-container">
 <header>
-<h1 class="title">Rails5からRails6へのバージョンアップでエラーが発生！？
-normalize_filter対応のカンタンな方法</h1>
+<h1 class="title">Rails5からRails6へのバージョンアップでエラーが発生！？ normalize_filter対応のカンタンな方法</h1>
 </header>
 <h2 id="問題">問題</h2>
-<p>Rails 5で自動生成されたルーティング周りの処理が、Rails
-6にバージョンアップしたことにより動かなくなった。</p>
+<p>Rails 5で自動生成されたルーティング周りの処理が、Rails 6にバージョンアップしたことにより動かなくなった。</p>
 <pre><code>NoMethodError: undefined method `[]&#39; for nil:NilClass
 /xxxx/.bundle/ruby/2.7.0/gems/actionpack-6.0.6.1/lib/action_dispatch/routing/inspector.rb:85:in `normalize_filter&#39;
 /xxxx/.bundle/ruby/2.7.0/gems/actionpack-6.0.6.1/lib/action_dispatch/routing/inspector.rb:65:in `format&#39;
@@ -330,9 +328,7 @@ normalize_filter対応のカンタンな方法</h1>
 <pre><code>all_routes = Rails.application.routes.routes
 inspector = ActionDispatch::Routing::RoutesInspector.new(all_routes)
 routes = inspector.format(Formatter.new, {})</code></pre>
-<p>変更前のコードは、normalize_filterメソッドの引数にENV[‘CONTROLLER’]が渡されていた。しかし、Rails
-6ではnormalize_filterメソッドの引数はハッシュ形式でなければならないため、空のハッシュ
-{} を引数に渡すように変更する必要がある。</p>
+<p>変更前のコードは、normalize_filterメソッドの引数にENV[‘CONTROLLER’]が渡されていた。しかし、Rails 6ではnormalize_filterメソッドの引数はハッシュ形式でなければならないため、空のハッシュ {} を引数に渡すように変更する必要がある。</p>
   </div>
 </body>
 </html>

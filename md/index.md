@@ -86,3 +86,8 @@ title: トップページ
 - [Rails7.0.6で変更されたFix autosave associations with validations added on :base of the associated objectsについての解説 | 昼寝王子のエンジニアブログ](./article73.html)
 - [Rails7.0.6で変更された[AR] Fix result with anonymous PG columns of different type from json についての解説 | 昼寝王子のエンジニアブログ](./article74.html)
 - [Rails7.0.6で変更されたPreserve timestamp when setting an ActiveSupport::TimeWithZone value to timestamptz attribute についての解説 | 昼寝王子のエンジニアブログ](./article75.html)
+- [Railsモデルが定義されているかどうかを確認する方法 | 昼寝王子のエンジニアブログ](./article76.html)
+- [Requirements installation failed with status: 1.の対応法 | 昼寝王子のエンジニアブログ](./article77.html)
+- [IRBコンソールをリセットする方法 | 昼寝王子のエンジニアブログ](./article78.html)
+- [WindowsでShopify-cliをインストールする方法 | 昼寝王子のエンジニアブログ](./article79.html)
+- [「bin/rails server」は、ローカルサーバーを起動するはずのところ、テキストファイルを開いてしまう | 昼寝王子のエンジニアブログ](./article80.html)

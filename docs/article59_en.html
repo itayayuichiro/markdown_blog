@@ -313,16 +313,12 @@ pre {
 <body>
   <div class="md2html-container">
 <header>
-<h1 class="title">Automatically generate HTML files from Markdown files
-using Github Actions</h1>
+<h1 class="title">Automatically generate HTML files from Markdown files using Github Actions</h1>
 </header>
 <h2 id="overview">overview</h2>
-<p>It is possible to convert to markdown-&gt;html by using <a
-href="https://pandoc-doc-ja.readthedocs.io/ja/latest/users-guide.html">pandoc</a>,
-but it was troublesome to do it manually every time. .</p>
+<p>It is possible to convert to markdown-&gt;html by using <a href="https://pandoc-doc-ja.readthedocs.io/ja/latest/users-guide.html">pandoc</a>, but it was troublesome to do it manually every time. .</p>
 <h2 id="procedure">procedure</h2>
-<p>Create a configuration file like below
-.github/workflows/md-to-html.yml</p>
+<p>Create a configuration file like below .github/workflows/md-to-html.yml</p>
 <pre><code>on: push
 jobs:
   build:
@@ -370,8 +366,7 @@ jobs:
       repository-projects: write
       security-events: write
       statuses: write</code></pre>
-<p>This is a necessary description to commit with git from github
-action, so I will add it.</p>
+<p>This is a necessary description to commit with git from github action, so I will add it.</p>
 <pre><code>    steps:
       - uses: actions/checkout@v3
       - run: |
@@ -380,8 +375,7 @@ action, so I will add it.</p>
 <pre><code>          for i in $(seq 1 100); do
             pandoc -f markdown -t html --template=mytemplate &quot;./md/article${i}.md&quot; &gt; &quot;./docs/article${i}.html&quot;
           done</code></pre>
-<p>Name the md files regularly in advance and loop. (However, it seems
-better to process all the files in the directory)</p>
+<p>Name the md files regularly in advance and loop. (However, it seems better to process all the files in the directory)</p>
 <pre><code>          git config user.name  &quot;github-action&quot;
           git config user.email &quot;github-action@example.com&quot;
           git add ./docs
