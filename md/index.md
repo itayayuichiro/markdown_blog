@@ -46,7 +46,7 @@ title: トップページ
 - [Laravelで作ったアプリをHerokuで動かそうと思ったら画像が表示されなかった話 | 昼寝王子のエンジニアブログ](./article8.html)
 - [Ruby + AWS Lambdaを使ってみて思った注意点 | 昼寝王子のエンジニアブログ](./article15.html)
 - [export ‘default’ (imported as ‘router’) was not found in ‘vue-router’ | 昼寝王子のエンジニアブログ](./article42.html)
-- [article57_en | 昼寝王子のエンジニアブログ](./article57_en.html)
+- [](./article57_en.html)
 - [BUILD FAILED (macOS 11.4 using ruby-build 20230208.1)対処法 | 昼寝王子のエンジニアブログ](./article54.html)
 - [Rails7.0.6で変更された[AR] Fix result with anonymous PG columns of different type from json についての解説 | 昼寝王子のエンジニアブログ](./article74.html)
 - [Playframework + Javaでyyyy-MM-ddのフォーマットバリデーションエラーを設定する。 | 昼寝王子のエンジニアブログ](./article23.html)
