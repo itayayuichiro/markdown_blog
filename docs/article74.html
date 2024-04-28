@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <link rel="icon" href="../favicon.ico" />
-  <title>Rails7.0.6で変更されたFix EncryptedConfiguration not behaving like Hash [7-0-stable]についての解説 | 昼寝王子のエンジニアブログ</title>
+  <title>Rails7.0.6で変更された[AR] Fix result with anonymous PG columns of different type from json についての解説 | 昼寝王子のエンジニアブログ</title>
   <style type="text/css">code{white-space: pre;}</style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
      crossorigin="anonymous"></script>
@@ -378,42 +378,47 @@ pre {
 <body>
   <div class="md2html-container">
 <header>
-<h1 class="title">Rails7.0.6で変更されたFix EncryptedConfiguration not
-behaving like Hash [7-0-stable]についての解説</h1>
+<h1 class="title">Rails7.0.6で変更された[AR] Fix result with anonymous
+PG columns of different type from json についての解説</h1>
 </header>
 <h2 id="よく分かる解説">よく分かる解説</h2>
 <h3 id="修正pr">修正PR</h3>
-<p>https://github.com/rails/rails/pull/48557</p>
-<h3 id="前提">前提</h3>
-<p>前提として「ActiveSupport::InheritableOptions.new」という機能がある。</p>
-<p>これはハッシュをメソッドのように呼び出せるようにするものである。</p>
-<p>例)</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>hash <span class="kw">=</span> <span class="dt">ActiveSupport</span><span class="kw">::</span><span class="dt">InheritableOptions</span><span class="at">.new</span>(<span class="kw">{</span><span class="wa">a: </span><span class="dv">1</span><span class="kw">}</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>hash<span class="at">.a</span></span></code></pre></div>
-<h3 id="今回との関係">今回との関係</h3>
-<p>これがEncryptedConfiguration でも使われていた。</p>
-<p>ただ、これが処理の中で複数回呼ばれるような形になってしまっていた。</p>
-<p>その結果値に対してkeysなどを使うと正しい値を返さないような状態になってしまっていた。</p>
+<p><a
+href="https://github.com/rails/rails/pull/45783">https://github.com/rails/rails/pull/45783</a></p>
+<h3 id="概要">概要</h3>
+<ul>
+<li>7.0.5と7.0.6でPostgreSQLの-&gt;と-&gt;&gt;を両方使った際の挙動に変更が加わった模様</li>
+</ul>
 <h2 id="コードベースでの解説実例">コードベースでの解説&amp;実例</h2>
 <h3 id="検証用コード">検証用コード</h3>
-<p>試すコードは下記のもの</p>
+<p>検証するコードはこちら</p>
+<p>PostgreSQLでテーブルを用意してデータを入れる</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">ActiveRecord</span><span class="kw">::</span><span class="dt">Base</span><span class="at">.connection.create_table</span>(<span class="st">&quot;json_data_type&quot;</span>) <span class="cf">do</span> <span class="kw">|</span>t<span class="kw">|</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>       t<span class="at">.public_send</span> <span class="wa">:json</span>, <span class="st">&quot;payload&quot;</span>, <span class="wa">default: </span><span class="kw">{}</span> <span class="co"># t.json &#39;payload&#39;, default: {}</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>       t<span class="at">.public_send</span> <span class="wa">:json</span>, <span class="st">&quot;settings&quot;</span>             <span class="co"># t.json &#39;settings&#39;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>       t<span class="at">.public_send</span> <span class="wa">:json</span>, <span class="st">&quot;objects&quot;</span>, <span class="wa">array: </span><span class="dv">true</span> <span class="co"># t.json &#39;objects&#39;, array: true</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">def</span> insert_statement_per_database(values)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;insert into json_data_type (payload) VALUES (&#39;</span><span class="sc">#{</span>values<span class="sc">}</span><span class="st">&#39;)&quot;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="dt">ActiveRecord</span><span class="kw">::</span><span class="dt">Base</span><span class="at">.connection.execute</span>(insert_statement_per_database(<span class="vs">&#39;{&quot;a&quot;:{},&quot;b&quot;:&quot;b&quot;}&#39;</span>))</span></code></pre></div>
+<p>その上で下記の処理を実行する</p>
 <div class="sourceCode" id="cb2"><pre
-class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">@tmpdir</span> <span class="kw">=</span> <span class="dt">Dir</span><span class="at">.mktmpdir</span>(<span class="st">&quot;config-&quot;</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ot">@credentials_config_path</span> <span class="kw">=</span> <span class="dt">File</span><span class="at">.join</span>(<span class="ot">@tmpdir</span>, <span class="st">&quot;credentials.yml.enc&quot;</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ot">@credentials_key_path</span> <span class="kw">=</span> <span class="dt">File</span><span class="at">.join</span>(<span class="ot">@tmpdir</span>, <span class="st">&quot;master.key&quot;</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dt">File</span><span class="at">.write</span>(<span class="ot">@credentials_key_path</span>, <span class="dt">ActiveSupport</span><span class="kw">::</span><span class="dt">EncryptedConfiguration</span><span class="at">.generate_key</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ot">@credentials</span> <span class="kw">=</span> <span class="dt">ActiveSupport</span><span class="kw">::</span><span class="dt">EncryptedConfiguration</span><span class="at">.new</span>(</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="wa">config_path: </span><span class="ot">@credentials_config_path</span>, <span class="wa">key_path: </span><span class="ot">@credentials_key_path</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="wa">env_key: </span><span class="st">&quot;RAILS_MASTER_KEY&quot;</span>, <span class="wa">raise_if_missing_key: </span><span class="dv">true</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="ot">@credentials</span><span class="at">.write</span>(<span class="kw">{</span> <span class="wa">something: </span><span class="kw">{</span> <span class="wa">good: </span><span class="dv">true</span>, <span class="wa">bad: </span><span class="dv">false</span>, <span class="wa">nested: </span><span class="kw">{</span> <span class="wa">foo: </span><span class="st">&quot;bar&quot;</span> <span class="kw">}</span> <span class="kw">}</span> <span class="kw">}</span><span class="at">.to_yaml</span>)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">p</span> <span class="ot">@credentials</span><span class="at">.keys</span></span></code></pre></div>
+class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">JsonDataType</span><span class="at">.class.pluck</span>(<span class="dt">Arel</span><span class="at">.sql</span>(<span class="st">&quot;payload-&gt;&#39;a&#39;, payload-&gt;&gt;&#39;b&#39;&quot;</span>))</span></code></pre></div>
 <h3 id="結果">結果</h3>
-<p>Rails7.0.5では<code>[]</code>という空配列が返却され、Rails7.0.6では<code>[:something]</code>といった形でちゃんとkeyが返ってくる</p>
+<h4 id="rails7.0.5">Rails7.0.5</h4>
+<pre><code>  JsonDataType Pluck (3.0ms)  SELECT payload-&gt;&#39;a&#39;, payload-&gt;&gt;&#39;b&#39; FROM &quot;json_data_type&quot;
+=&gt; [[&quot;{}&quot;, &quot;b&quot;]]</code></pre>
+<p>上記のように{}にダブルクオーテーションがついた形になる</p>
+<h4 id="rails7.0.6">Rails7.0.6</h4>
+<pre><code>  JsonDataType Pluck (1.4ms)  SELECT payload-&gt;&#39;a&#39;, payload-&gt;&gt;&#39;b&#39; FROM &quot;json_data_type&quot;
+=&gt; [[{}, &quot;b&quot;]]</code></pre>
+<p>一方こちらでは上記のように{}にはダブルクオーテーションがつかない形になっている</p>
 <h3 id="まとめ">まとめ</h3>
-<p>こちらの県は、ちゃんと情報が返ってこなかったものが返ってくるようになったという修正なので7.0.6にして際に不具合が起きるようになるということはなさそうです。</p>
+<p>PostgreSQLを使っていて-&gt;と-&gt;&gt;を併用している部分がある場合は気にしたほうが良さそう。</p>
   </div>
 </body>
 </html>

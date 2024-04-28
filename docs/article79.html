@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <link rel="icon" href="../favicon.ico" />
-  <title>BUILD FAILED (macOS 11.4 using ruby-build 20230208.1) Workaround | 昼寝王子のエンジニアブログ</title>
+  <title>WindowsでShopify-cliをインストールする方法 | 昼寝王子のエンジニアブログ</title>
   <style type="text/css">code{white-space: pre;}</style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
      crossorigin="anonymous"></script>
@@ -313,68 +313,66 @@ pre {
 <body>
   <div class="md2html-container">
 <header>
-<h1 class="title">BUILD FAILED (macOS 11.4 using ruby-build 20230208.1)
-Workaround</h1>
+<h1 class="title">WindowsでShopify-cliをインストールする方法</h1>
 </header>
-<h2 id="overview">overview</h2>
-<pre><code>rbenv install 3.2.1</code></pre>
-<p>I got the following error when running</p>
-<p>``` To follow progress, use ’tail -f
-/var/folders/19/c1__d35d5jg150mc700fgfm80000gn/T/ruby-build.20230212124132.58816.log’
-or pass –verbose Downloading openssl-3.0.8.tar.gz… -&gt;
-https://dqw8nmjcqpjn7.cloudfront.net/6c13d2bf38fdf31eac3ce2a347073673f5d63263398f1f69d0df4a41253e4b3e
-Installing openssl-3.0.8… Installed openssl-3.0.8 to
-/Users/xxx/.rbenv/versions/3.2.1</p>
-<p>Downloading ruby-3.2.1.tar.gz… -&gt;
-https://cache.ruby-lang.org/pub/ruby/3.2/ruby-3.2.1.tar.gz Installing
-ruby-3.2.1… ruby-build: using readline from homebrew ruby-build: using
-gmp from homebrew</p>
-<p>BUILD FAILED (macOS 11.4 using ruby-build 20230208.1)</p>
-<p>Inspect or clean up the working tree at
-/var/folders/19/c1__d35d5jg150mc700fgfm80000gn/T/ruby-build.20230212124132.58816.7pCUnp
-Results logged to
-/var/folders/19/c1__d35d5jg150mc700fgfm80000gn/T/ruby-build.20230212124132.58816.log</p>
-<p>Last 10 log lines: Check ext/psych/mkmf.log for more details. *** Fix
-the problems, then remove these directories and try again if you want.
-Generating RDoc documentation
-/private/var/folders/19/c1__d35d5jg150mc700fgfm80000gn/T/ruby-build.20230212124132.58816.7pCUnp/ruby-3.2.1/lib/yaml.rb:3:
-warning: It seems your ruby installation is missing psych (for YAML
-output) . To eliminate this warning, please install libyaml and
-reinstall your ruby. uh-oh! RDoc had a problem: cannot load such file –
-psych ``’’</p>
-<p>I wrote an article because I didn’t understand the solution at all
-even after reading the error statement</p>
-<h2 id="how-it-didnt-work">How it didn’t work</h2>
-<p>The two methods below didn’t work.</p>
-<p>``’’ RUBY_CFLAGS=-DUSE_FFI_CLOSURE_ALLOC rbenv install 3.2.1</p>
-<p>Or</p>
-<p>RUBY_CFLAGS=“-w” rbenv install 3.2.1 ``’’</p>
-<h2 id="how-it-worked">How it worked</h2>
-<p><code>'' brew install libyaml</code>’’</p>
-<p>after doing</p>
-<p><code>'' rbenv install 3.2.1</code>’’ run</p>
-<h3 id="other-articles">other articles</h3>
-<ul>
-<li>[Docker-compose volumes and copy story (very beginner) | Nap
-Prince’s engineer blog] (./article12.html)</li>
-<li>[Gtk: cannot open display: The story that escaped (Docker + Alpine +
-Headless Chrome) | Nap Prince’s Engineer Blog] (./article13.html)</li>
-<li><a href="./article14.html">About the question “I want to be an
-engineer, but what should I do?” | Nap Prince’s Engineer Blog</a></li>
-<li><a href="./article15.html">Notes on using Ruby + AWS Lambda | Nap
-Prince’s Engineer Blog</a></li>
-<li><a href="./article16.html">Regarding the question “I can’t continue
-the conversation, what should I do…?” | Nap Prince’s Engineer
-Blog</a></li>
-<li><a href="./article17.html">Things I think are important as a
-newcomer to the web | Nap Prince’s Engineer Blog</a></li>
-<li>[Creating code to scrape trends in qiita | Nap Prince’s Engineer
-Blog] (./article18.html)</li>
-<li>[The story that yum could not be used at all when CentOS was started
-with Mac + Docker | Nap Prince’s Engineer Blog] (./article19.html)</li>
-<li>[Error: Cannot find module ‘./build/Release/diskusage.node’ on Mac |
-Nap Prince’s Engineer Blog] (./article20.html)</li>
-</ul>
+<h2 id="概要">概要</h2>
+<p>私は次のコマンドを使用してShopifyアプリCLIをインストールしようとしたところ</p>
+<pre><code>gem install shopify-cli</code></pre>
+<p>下記のようなエラーになりますした</p>
+<pre><code>ERROR:  Error installing shopify-cli:
+        &quot;theme-check-language-server.bat&quot; from theme-check conflicts with C:/Ruby27-x64/bin/theme-check-language-server.bat</code></pre>
+<h2 id="対応法">対応法</h2>
+<p>このサイトを訪れてみてください。あなたの役に立つかもしれません。</p>
+<p>https://shopify.dev/docs/themes/tools/cli</p>
+<p>CLIの以下の手順に従ってください。</p>
+<h3
+id="ステップ1新しい要件のインストール">ステップ1：新しい要件のインストール</h3>
+<p>Shopify CLI 2.xの要件に加えて、Shopify CLI 3.xにはNode.js
+14.17.0以上が必要です。macOSを使用している場合は、Shopify
+CLIの最新バージョンにアップグレードするときに、HomebrewがNode.jsを自動的にインストールします。</p>
+<p>要件の完全なリストについては、「Shopify
+CLIのインストール」を参照してください。</p>
+<h3 id="ステップ2shopify-cli-2.xのアンインストール">ステップ2：Shopify
+CLI 2.xのアンインストール</h3>
+<p>前のバージョンのShopify
+CLIをアンインストールすることを検討してください。前のバージョンをアンインストールすることで、2つのバージョンの間での衝突を回避できます。</p>
+<p>Shopify CLIの両方のバージョンをインストールしたい場合は、「Shopify
+CLI
+2.xと3.xの両方を使用する方法」を参照して、同じ環境で両方のバージョンを使用する方法を学んでください。</p>
+<p>Shopify
+CLIは、インストールしたパッケージマネージャーを使用してシステムから削除できます：</p>
+<p>ターミナル</p>
+<pre><code>gem uninstall shopify-cli</code></pre>
+<p>Shopify
+CLIのレガシーバージョン（0.9.0未満）を使用している場合は、手動でアンインストールする必要があります。</p>
+<h3 id="ステップ3shopify-cli-3.xのインストール">ステップ3：Shopify CLI
+3.xのインストール</h3>
+<p>Shopify CLIは、一連のNode.jsパッケージとして管理されています：</p>
+<p><span class="citation" data-cites="shopify/cli">@shopify/cli</span>
+<span class="citation" data-cites="shopify/theme">@shopify/theme</span>
+macOSではHomebrewを使用してこれらのパッケージをインストールできます。WindowsやLinuxでは、パッケージをグローバルにインストールすることもできます。</p>
+<p>注意：apt、Yum、およびRubyGemsのインストールはもはやサポートされていません。</p>
+<p>MacOS</p>
+<p>Homebrewを使用してmacOSにShopify CLIをインストールできます。</p>
+<p>Shopify
+CLIをインストールする前に、HomebrewにShopifyのサードパーティーリポジトリを追加する必要があります。</p>
+<p>ターミナル</p>
+<pre><code>brew tap shopify/shopify
+brew install shopify-cli</code></pre>
+<p>注意：Homebrewは、Ruby、Node.js、Gitなど、Shopify
+CLIを実行するためのすべての要件を自動的にインストールします。</p>
+<p>WindowsおよびLinux</p>
+<p>テーマ用のShopify
+CLIをインストールするには、コマンドラインを使用して、<span
+class="citation" data-cites="shopify/cliと">@shopify/cliと</span><span
+class="citation"
+data-cites="shopify/themeのNode.jsパッケージをグローバルにインストールします">@shopify/themeのNode.jsパッケージをグローバルにインストールします</span>。</p>
+<p>ターミナル</p>
+<pre><code>npm install -g @shopify/cli @shopify/theme</code></pre>
+<h3 id="ステップ4インストールの確認">ステップ4：インストールの確認</h3>
+<p>Shopify
+CLIが正しくインストールされているかを確認するには、次のコマンドを実行してください：</p>
+<pre><code>shopify version</code></pre>
   </div>
 </body>
 </html>

@@ -22,6 +22,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -56,7 +57,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -69,7 +70,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -384,84 +385,121 @@ pre {
 <h2 id="手順">手順</h2>
 <h3 id="準備">準備</h3>
 <h4 id="作業用ディレクトリ作成し移動">作業用ディレクトリ作成し移動</h4>
-<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="fu">mkdir</span> cypress</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="bu">cd</span> cypress</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> cypress</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> cypress</span></code></pre></div>
 <h4 id="cypressのインストール">Cypressのインストール</h4>
-<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="ex">yarn</span> add cypress</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">yarn</span> add cypress</span></code></pre></div>
 <p>or</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="ex">npm</span> install cypress --save-dev</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install cypress <span class="at">--save-dev</span></span></code></pre></div>
 <h4 id="初期設定起動">初期設定＆起動</h4>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="ex">yarn</span> run cypress open</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">yarn</span> run cypress open</span></code></pre></div>
 <p>or</p>
 <pre><code>npx cypress open</code></pre>
 <h4 id="初期起動画面">初期起動画面</h4>
-<p><img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/83409/a8292931-125b-248e-069c-108ce6b7c56c.png" alt="スクリーンショット 2023-02-11 1.33.48.png" /> 「Continue」を選択</p>
+<p><img
+src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/83409/a8292931-125b-248e-069c-108ce6b7c56c.png"
+alt="スクリーンショット 2023-02-11 1.33.48.png" />
+「Continue」を選択</p>
 <h4 id="e2eを選択">E2Eを選択</h4>
 <figure>
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/83409/098bfbea-4055-57ca-1282-b77a0ffd5d3e.png" alt="" /><figcaption>スクリーンショット 2023-02-11 1.34.00.png</figcaption>
+<img
+src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/83409/098bfbea-4055-57ca-1282-b77a0ffd5d3e.png"
+alt="スクリーンショット 2023-02-11 1.34.00.png" />
+<figcaption aria-hidden="true">スクリーンショット 2023-02-11
+1.34.00.png</figcaption>
 </figure>
 <h4 id="ファイルの確認">ファイルの確認</h4>
 <figure>
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/83409/e8c3e805-c7c8-bd55-c463-77d6f7f50377.png" alt="" /><figcaption>スクリーンショット 2023-02-11 1.34.11.png</figcaption>
+<img
+src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/83409/e8c3e805-c7c8-bd55-c463-77d6f7f50377.png"
+alt="スクリーンショット 2023-02-11 1.34.11.png" />
+<figcaption aria-hidden="true">スクリーンショット 2023-02-11
+1.34.11.png</figcaption>
 </figure>
 <p>Continueを選択</p>
 <h4 id="chromeを選択">Chromeを選択</h4>
 <figure>
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/83409/7f813831-05ad-0df2-1360-bcd5dc6a29b3.png" alt="" /><figcaption>スクリーンショット 2023-02-11 1.34.18.png</figcaption>
+<img
+src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/83409/7f813831-05ad-0df2-1360-bcd5dc6a29b3.png"
+alt="スクリーンショット 2023-02-11 1.34.18.png" />
+<figcaption aria-hidden="true">スクリーンショット 2023-02-11
+1.34.18.png</figcaption>
 </figure>
 <h4 id="空のspecを作成">空のspecを作成</h4>
 <figure>
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/83409/bae6c9b9-c495-30b0-429f-0a926d519430.png" alt="" /><figcaption>スクリーンショット 2023-02-11 1.41.36.png</figcaption>
+<img
+src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/83409/bae6c9b9-c495-30b0-429f-0a926d519430.png"
+alt="スクリーンショット 2023-02-11 1.41.36.png" />
+<figcaption aria-hidden="true">スクリーンショット 2023-02-11
+1.41.36.png</figcaption>
 </figure>
 <figure>
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/83409/8b6adf30-9c7c-7629-5b3f-1f1f3cd9681d.png" alt="" /><figcaption>スクリーンショット 2023-02-11 1.41.44.png</figcaption>
+<img
+src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/83409/8b6adf30-9c7c-7629-5b3f-1f1f3cd9681d.png"
+alt="スクリーンショット 2023-02-11 1.41.44.png" />
+<figcaption aria-hidden="true">スクリーンショット 2023-02-11
+1.41.44.png</figcaption>
 </figure>
 <figure>
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/83409/a421fc90-45b2-a5d8-0a8d-9a9dea2110b1.png" alt="" /><figcaption>スクリーンショット 2023-02-11 1.41.54.png</figcaption>
+<img
+src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/83409/a421fc90-45b2-a5d8-0a8d-9a9dea2110b1.png"
+alt="スクリーンショット 2023-02-11 1.41.54.png" />
+<figcaption aria-hidden="true">スクリーンショット 2023-02-11
+1.41.54.png</figcaption>
 </figure>
 <h4 id="勝手に実行される">勝手に実行される</h4>
 <figure>
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/83409/7d570dbd-562e-f628-1a49-8035d71df49b.png" alt="" /><figcaption>スクリーンショット 2023-02-11 1.42.06.png</figcaption>
+<img
+src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/83409/7d570dbd-562e-f628-1a49-8035d71df49b.png"
+alt="スクリーンショット 2023-02-11 1.42.06.png" />
+<figcaption aria-hidden="true">スクリーンショット 2023-02-11
+1.42.06.png</figcaption>
 </figure>
 <h3 id="コーディングに関して">コーディングに関して</h3>
 <h4 id="コーディング方法">コーディング方法</h4>
-<p>今まで画面上でぽちぽちしていたのですが、じゃあどうやって実際のテストとか書いてくねん？？って話なんですけど。 作成したディレクトリの中に<code>cypress/e2e/</code>というディレクトリがあり、そこを書き換えることで好きにコードが書けます。</p>
+<p>今まで画面上でぽちぽちしていたのですが、じゃあどうやって実際のテストとか書いてくねん？？って話なんですけど。
+作成したディレクトリの中に<code>cypress/e2e/</code>というディレクトリがあり、そこを書き換えることで好きにコードが書けます。</p>
 <h4 id="ターミナルでの実行方法">ターミナルでの実行方法</h4>
-<p>下記のような形でファイルを指定することで実行できます。 ただ、GUIが充実しているのでそっちで実行の方がいい気がします。 コード編集したら自動でまた流れてくれますし。</p>
+<p>下記のような形でファイルを指定することで実行できます。
+ただ、GUIが充実しているのでそっちで実行の方がいい気がします。
+コード編集したら自動でまた流れてくれますし。</p>
 <pre><code>yarn run cypress run --spec cypress/e2e/test.cy.js</code></pre>
 <p>or</p>
 <pre><code>npx cypress run --spec cypress/e2e/test.cy.js</code></pre>
 <h4 id="出力">出力</h4>
-<p>ターミナル実行の場合ログの出力をしたくなるとおもうので紹介 cypress.config.jsを下記のように書き換え</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="kw">const</span> { defineConfig } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;cypress&#39;</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> <span class="fu">defineConfig</span>({</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>  <span class="dt">e2e</span><span class="op">:</span> {</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a>    <span class="fu">setupNodeEvents</span>(on<span class="op">,</span> config) {</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a>      <span class="fu">on</span>(<span class="st">&#39;task&#39;</span><span class="op">,</span> {</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a>        <span class="fu">log</span>(message) {</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a>          <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(message)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a>          <span class="cf">return</span> <span class="kw">null</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a>        }<span class="op">,</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true"></a>      })</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true"></a>    }<span class="op">,</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true"></a>  }</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true"></a>})</span></code></pre></div>
+<p>ターミナル実行の場合ログの出力をしたくなるとおもうので紹介
+cypress.config.jsを下記のように書き換え</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> { defineConfig } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;cypress&#39;</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> <span class="fu">defineConfig</span>({</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">e2e</span><span class="op">:</span> {</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">setupNodeEvents</span>(on<span class="op">,</span> config) {</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">on</span>(<span class="st">&#39;task&#39;</span><span class="op">,</span> {</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">log</span>(message) {</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>          <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(message)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>          <span class="cf">return</span> <span class="kw">null</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        }<span class="op">,</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>      })</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
 <p>テストコードの中では</p>
 <pre><code>cy.task(&#39;log&#39;, &#39;出力したいもの&#39;)</code></pre>
 <p>という形で出力できます。</p>
 <h3 id="実例紹介">実例紹介</h3>
-<p>あとはもう、実例みて行った方が早い気がするので色々載せます #### Google 検索のコード</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="fu">describe</span>(<span class="st">&#39;empty spec&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>  <span class="fu">it</span>(<span class="st">&#39;Googleで検索&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a>    cy<span class="op">.</span><span class="fu">visit</span>(<span class="st">&#39;https://www.google.com/?hl=ja&#39;</span>)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>    cy<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;input&#39;</span>)<span class="op">.</span><span class="fu">eq</span>(<span class="dv">0</span>)<span class="op">.</span><span class="fu">type</span>(<span class="st">&#39;綾瀬 居酒屋 食べログ{enter}&#39;</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a>    <span class="co">// 見出しを出力</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a>    cy<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;h3&#39;</span>)<span class="op">.</span><span class="fu">each</span>(h3 <span class="kw">=&gt;</span> {</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a>      cy<span class="op">.</span><span class="fu">task</span>(<span class="st">&#39;log&#39;</span><span class="op">,</span> h3<span class="op">.</span><span class="fu">text</span>())</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a>    })</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a>  })</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true"></a>})</span></code></pre></div>
+<p>あとはもう、実例みて行った方が早い気がするので色々載せます ####
+Google 検索のコード</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(<span class="st">&#39;empty spec&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">it</span>(<span class="st">&#39;Googleで検索&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    cy<span class="op">.</span><span class="fu">visit</span>(<span class="st">&#39;https://www.google.com/?hl=ja&#39;</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    cy<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;input&#39;</span>)<span class="op">.</span><span class="fu">eq</span>(<span class="dv">0</span>)<span class="op">.</span><span class="fu">type</span>(<span class="st">&#39;綾瀬 居酒屋 食べログ{enter}&#39;</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 見出しを出力</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    cy<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;h3&#39;</span>)<span class="op">.</span><span class="fu">each</span>(h3 <span class="kw">=&gt;</span> {</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>      cy<span class="op">.</span><span class="fu">task</span>(<span class="st">&#39;log&#39;</span><span class="op">,</span> h3<span class="op">.</span><span class="fu">text</span>())</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
 <p>出力</p>
 <pre><code>綾瀬駅でおすすめの美味しい居酒屋をご紹介！ - 食べログ
 綾瀬で人気の居酒屋 ランキングTOP20 - 食べログ
@@ -475,13 +513,14 @@ pre {
 綾瀬のグルメ・レストランガイド - 食べログ</code></pre>
 <h4 id="google検索結果のテスト">Google検索結果のテスト</h4>
 <p>E2Eの記事なのにスクレイピングっぽいのだけでは怒られそうなので</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="fu">describe</span>(<span class="st">&#39;empty spec&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a>  <span class="fu">it</span>(<span class="st">&#39;Google検索で食べログのページが1件目に表示される&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a>    cy<span class="op">.</span><span class="fu">visit</span>(<span class="st">&#39;https://www.google.com/?hl=ja&#39;</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a>    cy<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;input&#39;</span>)<span class="op">.</span><span class="fu">eq</span>(<span class="dv">0</span>)<span class="op">.</span><span class="fu">type</span>(<span class="st">&#39;綾瀬 居酒屋 食べログ{enter}&#39;</span>)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a>    cy<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;h3&#39;</span>)<span class="op">.</span><span class="fu">eq</span>(<span class="dv">0</span>)<span class="op">.</span><span class="fu">should</span>(<span class="st">&#39;have.text&#39;</span><span class="op">,</span> <span class="st">&#39;綾瀬駅でおすすめの美味しい居酒屋をご紹介！ - 食べログ&#39;</span>)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a>  })</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(<span class="st">&#39;empty spec&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">it</span>(<span class="st">&#39;Google検索で食べログのページが1件目に表示される&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    cy<span class="op">.</span><span class="fu">visit</span>(<span class="st">&#39;https://www.google.com/?hl=ja&#39;</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    cy<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;input&#39;</span>)<span class="op">.</span><span class="fu">eq</span>(<span class="dv">0</span>)<span class="op">.</span><span class="fu">type</span>(<span class="st">&#39;綾瀬 居酒屋 食べログ{enter}&#39;</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    cy<span class="op">.</span><span class="fu">get</span>(<span class="st">&#39;h3&#39;</span>)<span class="op">.</span><span class="fu">eq</span>(<span class="dv">0</span>)<span class="op">.</span><span class="fu">should</span>(<span class="st">&#39;have.text&#39;</span><span class="op">,</span> <span class="st">&#39;綾瀬駅でおすすめの美味しい居酒屋をご紹介！ - 食べログ&#39;</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
 <p>出力</p>
 <pre><code>    ✓ Google検索で食べログのページが1件目に表示される (5587ms)
 
@@ -505,15 +544,31 @@ pre {
 <p>以上</p>
 <h3 id="他の記事">他の記事</h3>
 <ul>
-<li><a href="./article12.html">docker-composeのvoluemsとcopyの話(超初心者) | 昼寝王子のエンジニアブログ</a></li>
-<li><a href="./article13.html">Gtk: cannot open display: から抜け出した話(Docker + Alpine + Headless Chrome) | 昼寝王子のエンジニアブログ</a></li>
-<li><a href="./article14.html">「エンジニアになりたいけどどうすればいいですか？」という質問について | 昼寝王子のエンジニアブログ</a></li>
-<li><a href="./article15.html">Ruby + AWS Lambdaを使ってみて思った注意点 | 昼寝王子のエンジニアブログ</a></li>
-<li><a href="./article16.html">「会話が続かないんですけど、どうすればいいですか…？？」という質問について | 昼寝王子のエンジニアブログ</a></li>
-<li><a href="./article17.html">Web系の新人として僕が大切だと思うこと | 昼寝王子のエンジニアブログ</a></li>
-<li><a href="./article18.html">qiitaのトレンドをスクレイピングするコードを作成 | 昼寝王子のエンジニアブログ</a></li>
-<li><a href="./article19.html">Mac + DockerでCentOSを立ち上げたらyumが全く使えなかった話 | 昼寝王子のエンジニアブログ</a></li>
-<li><a href="./article20.html">MacでError: Cannot find module ’./build/Release/diskusage.node’で躓いた話 | 昼寝王子のエンジニアブログ</a></li>
+<li><a
+href="./article12.html">docker-composeのvoluemsとcopyの話(超初心者) |
+昼寝王子のエンジニアブログ</a></li>
+<li><a href="./article13.html">Gtk: cannot open display:
+から抜け出した話(Docker + Alpine + Headless Chrome) |
+昼寝王子のエンジニアブログ</a></li>
+<li><a
+href="./article14.html">「エンジニアになりたいけどどうすればいいですか？」という質問について
+| 昼寝王子のエンジニアブログ</a></li>
+<li><a href="./article15.html">Ruby + AWS Lambdaを使ってみて思った注意点
+| 昼寝王子のエンジニアブログ</a></li>
+<li><a
+href="./article16.html">「会話が続かないんですけど、どうすればいいですか…？？」という質問について
+| 昼寝王子のエンジニアブログ</a></li>
+<li><a href="./article17.html">Web系の新人として僕が大切だと思うこと |
+昼寝王子のエンジニアブログ</a></li>
+<li><a
+href="./article18.html">qiitaのトレンドをスクレイピングするコードを作成
+| 昼寝王子のエンジニアブログ</a></li>
+<li><a href="./article19.html">Mac +
+DockerでCentOSを立ち上げたらyumが全く使えなかった話 |
+昼寝王子のエンジニアブログ</a></li>
+<li><a href="./article20.html">MacでError: Cannot find module
+’./build/Release/diskusage.node’で躓いた話 |
+昼寝王子のエンジニアブログ</a></li>
 </ul>
   </div>
 </body>
