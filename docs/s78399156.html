@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <link rel="icon" href="../favicon.ico" />
-  <title>jsでハッシュの配列をソートする裏技 | 昼寝王子のエンジニアブログ</title>
+  <title>Autodesk Tandem REST API は禁止されています | 昼寝王子のエンジニアブログ</title>
   <style type="text/css">code{white-space: pre;}</style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
      crossorigin="anonymous"></script>
@@ -316,31 +316,30 @@ pre {
 <body>
   <div class="md2html-container">
 <header>
-<h1 class="title">jsでハッシュの配列をソートする裏技</h1>
+<h1 class="title">Autodesk Tandem REST API は禁止されています</h1>
 </header>
 <h2 id="概要">概要</h2>
-<ol type="1">
-<li>オブジェクトを要素とする配列を用意する</li>
-</ol>
-<pre><code>const array = [
-  { id: 1, text: &#39;text5&#39; },
-  { id: 2, text: &#39;text3&#39; },
-  { id: 5, text: &#39;text2&#39; },
-  { id: 3, text: &#39;text4&#39; },
-  { id: 4, text: &#39;text1&#39; },
-]</code></pre>
-<ol start="2" type="1">
-<li>配列をソートする</li>
-</ol>
-<pre><code>array.sort((a, b) =&gt; b.text &gt; a.text ? -1 : 1)</code></pre>
-<ol start="3" type="1">
-<li>ソートされた配列を表示する</li>
-</ol>
-<pre><code>console.log(array);</code></pre>
-<p>上記のように、配列をソートする際には、sort()メソッドを使用し、比較関数を渡します。比較関数は、2つの要素を引数に取り、並び替えの基準を定義するものです。上記の例では、b.text
-&gt;
-a.textという条件に基づいて、textの昇順でソートされます。また、三項演算子を使用して、昇順または降順を決定します。</p>
-<p>なお、この例ではハッシュの文字列をソートしていますが、基本的には配列内のオブジェクトのプロパティに基づいてソートすることができます。</p>
+<p>以下のチュートリアル レスト サンプルを使用して Autodesk Tandem
+で建築モデルのドキュメントとストリームを取得するときに問題が発生しました。(https://github.com/autodesk-tandem/tutorial-rest)。
+github の元のガイドでは、サービス タブにクライアント ID
+を追加する必要があると記載されていましたが、この新しく更新された Tandem
+では、サービス タブが削除されているようです。以下のコードでは、APS
+ポータルの ClientID とシークレットを使用しています。このアカウントは
+Tandem 上の建築モデルの所有者でもあります。しかし、GET
+リクエストを実行しようとすると、ドキュメントとストリームに対して常に {
+title: ‘Forbidden’, 詳細: ‘Forbidden’ }
+が表示されます。トークンを出力できたので、アカウントに問題はないはずです。スコープは「data:read」に設定されています。
+Javascript と REST 用の TestBed
+アプリを試してみましたが、どちらも私のアカウントで正常に動作しています。
+このコード内でどの認証ステップが欠けているかを教えてください。
+ありがとう</p>
+<p>図1</p>
+<p>図2</p>
+<h2 id="解決策">解決策</h2>
+<p>Tandem UI に最近変更がありました - API キーの追加を使用して、APS
+アプリのクライアント ID
+を入力します。また、アプリが施設データを更新できるように、正しい権限
+(つまり、編集または管理) を指定していることを確認してください。</p>
   </div>
 </body>
 </html>
