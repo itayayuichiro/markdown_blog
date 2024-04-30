@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>カートに商品を追加する | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">カートに商品を追加する</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>私のグループ プロジェクトでは、Web
+サイトの「カートに追加」機能を作成しています。アイテムをカートに追加し、ユーザーをカート
+ページにリダイレクトする「カートに追加」ボタンを追加するにはどうすればよいですか?カート
+ページ内で、追加された商品を表示する必要があります。現時点ではボタンを作成しましたが、ユーザーはカート
+ページにリダイレクトされません。商品ページに残っております。</p>
+<p>//カートコントローラー</p>
+<pre><code>class CartController &lt; ApplicationController
+  def index
+    @cart = Prebuilt.all
+    render :index
+  end
+
+  def show
+    @cart = current_cart
+   end
+
+  def add_to_cart
+    current_cart.add_item(params[:prebuilt_id])
+  end
+
+end
+</code></pre>
+<p>//カートモデル</p>
+<pre><code>class Cart &lt; ApplicationRecord
+  has_many :items
+
+  def add_item(prebuilt_id)
+    item = items.where(&#39;prebuilt_id&#39;, prebuilt_id.first)
+    save
+  end
+
+end
+</code></pre>
+<p>//アイテムモデル</p>
+<pre><code>class Item &lt; ApplicationRecord
+  belongs_to :cart
+end
+</code></pre>
+<p>//ルート</p>
+<pre><code># root to: redirect(&#39;/cart&#39;)
+
+  get &#39;cart&#39;, to: &#39;cart#index&#39;, as: &#39;cart&#39;;
+
+  post &#39;/add_to_cart/:prebuilt_id&#39; =&gt; &#39;cart#add_to_cart&#39;, :as =&gt; &#39;add_to_cart&#39;
+
+  get &#39;checkout&#39;, to: &#39;pages#checkout&#39;, as: &#39;checkout&#39;;
+
+  get &#39;confirm&#39;, to: &#39;pages#confirm&#39;, as: &#39;confirm&#39;;
+</code></pre>
+<p>// Seeds.rb</p>
+<pre><code>prebuilt1 = Prebuilt.create!(
+  name: &quot;Alfred&#39;s Artistic Jet&quot;,
+  description: &quot;Designed by Alfred&quot;,
+  manufacturer: &quot;Boeing&quot;,
+  color: &quot;Mixed&quot;,
+  size: &quot;Large&quot;,
+  price: 2999999
+)
+
+prebuilt2 = Prebuilt.create!(
+  name: &quot;Brittany&#39;s Barbie Jet&quot;,
+  description: &quot;Designed by Brittany&quot;,
+  manufacturer: &quot;Boeing&quot;,
+  color: &quot;Pink&quot;,
+  size: &quot;Large&quot;,
+  price: 4499999
+)
+
+prebuilt3 = Prebuilt.create!(
+  name: &quot;Peter&#39;s Prehistoric Jet&quot;,
+  description: &quot;Designed by Peter&quot;,
+  manufacturer: &quot;Airbus&quot;,
+  color: &quot;Blue&quot;,
+  size: &quot;Small&quot;,
+  price: 7999999
+)
+
+prebuilt4 = Prebuilt.create!(
+  name: &quot;Tianna&#39;s Tractor-Themed Jet&quot;,
+  description: &quot;Designed by Tianna&quot;,
+  manufacturer: &quot;Airbus&quot;,
+  color: &quot;Mixed&quot;,
+  size: &quot;Large&quot;,
+  price: 1999999
+)
+</code></pre>
+<p>// 商品ページ</p>
+<pre><code>&lt;table class=&quot;table table-striped table-hover&quot;&gt;
+
+  &lt;thead class=&quot;table-dark&quot;&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+      &lt;th&gt;Manufacturer&lt;/th&gt;
+      &lt;th&gt;Color&lt;/th&gt;
+      &lt;th&gt;Size&lt;/th&gt;
+      &lt;th&gt;Price&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+
+  &lt;tbody&gt;
+    &lt;% @prebuilts.each do |prebuilt| %&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;%= prebuilt.name %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= prebuilt.description %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= prebuilt.description %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= prebuilt.manufacturer %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= prebuilt.color %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= prebuilt.size %&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;%= prebuilt.price %&gt;&lt;/td&gt;
+        &lt;td class=&quot;text-nowrap&quot;&gt;
+          &lt;%= link_to &#39;show&#39;, prebuilt_path(prebuilt), class: &#39;btn btn-sm btn-outline-secondary&#39; %&gt;
+          &lt;td&gt;&lt;%= button_to &quot;add to cart&quot;, cart_path(:prebuilt_id =&gt; prebuilt), method: :post %&gt;&lt;/td&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;% end %&gt;
+  &lt;/tbody&gt;
+
+&lt;/table&gt;
+</code></pre>
+<p>// カートページ</p>
+<pre><code>&lt;table id=&quot;line_items&quot;&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Product&lt;/th&gt;
+    &lt;th&gt;Qty&lt;/th&gt;
+    &lt;th class=&quot;price&quot;&gt;Unit Price&lt;/th&gt;
+    &lt;th class=&quot;price&quot;&gt;Full Price&lt;/th&gt;
+  &lt;/tr&gt;
+
+  &lt;% for item in @cart %&gt;
+    &lt;tr class=&quot;&lt;%= cycle :odd, :even %&gt;
+       &lt;td&gt;&lt;%=h item.name %&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+   &lt;% end %&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+</code></pre>
+<h2 id="解決策">解決策</h2>
+<pre><code>class CartController &lt; ApplicationController
+  def add_to_cart
+    current_cart.add_item(params[:prebuilt_id])
+    redirect_to cart_path(current_cart.id)
+  end
+end
+</code></pre>
+<p>項目はおそらく Prebuild にも属しているはずです</p>
+<pre><code>class Item &lt; ApplicationRecord
+  belongs_to :cart
+  belongs_to :prebuild
+end
+</code></pre>
+<p>アイテムの追加は、既存のアイテムを検索して更新したり、新しいアイテムを作成したりすることに似ています。</p>
+<pre><code>class Cart &lt; ApplicationRecord
+  has_many :items
+
+  def add_item(prebuilt_id)
+    item = items.find_by(prebuilt_id: prebuilt_id)
+    if item
+      item.update(count: item.count + 1)
+    else
+      items.create(prebuilt_id: prebuilt_id, count: 1)
+    end
+  end
+end
+</code></pre>
+<p>または、カウントがなく、各位置が 1 だけの場合</p>
+<pre><code>  def add_item(prebuilt_id)
+    items.find_or_create_by(prebuilt_id: prebuilt_id)
+  end
+</code></pre>
+  </div>
+</body>
+</html>

@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>istio がインストールされている Azure Kubernetes クラスターがイングレス リソースを処理しない | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">istio がインストールされている Azure Kubernetes
+クラスターがイングレス リソースを処理しない</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>istio とその外部イングレスゲートウェイがインストールされた aks
+クラスターがあります。イングレス リソースを作成すると、ロード バランサー
+IP
+を介してリソースにアクセスできません。リクエストはしばらくするとタイムアウトになります。仮想サービスとゲートウェイ
+リソースを作成すると、すべてが正常に機能します。それはなぜですか？</p>
+<p>curl -vvvv -H “ホスト:demo-app-deployment.localdev.me” :</p>
+<p>Ingress とアプリのデプロイ:</p>
+<pre><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: demo-nginx
+  name: demo-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-nginx
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: demo-nginx
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: 80
+          name: web
+        resources: 
+          limits:
+            cpu: 1000m
+            memory: 200Mi
+          requests:
+            cpu: 10m
+            memory: 200Mi
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: demo-nginx
+  name: demo-nginx
+spec:
+  ports:
+  - port: 80
+    name: &quot;web&quot;
+    protocol: TCP
+    targetPort: &quot;web&quot;
+  selector:
+    app: demo-nginx
+status:
+  loadBalancer: {}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: demo-nginx
+  annotations:
+    kubernetes.io/ingress.class: istio
+spec:
+  ingressClassName: istio
+  rules:
+  - host: demo-app-deployment.localdev.me
+    http:
+      paths:
+      - backend:
+          service:
+            name: demo-nginx
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+</code></pre>
+<p>Ingressgateway ポッドのログ:</p>
+<pre><code>kubectl logs aks-istio-ingressgateway-external-asm-1-21-848779b5b7-2jjdq  -n aks-istio-ingress 
+2024-04-28T14:21:39.798546Z     info    FLAG: --concurrency=&quot;0&quot;
+2024-04-28T14:21:39.798569Z     info    FLAG: --domain=&quot;aks-istio-ingress.svc.cluster.local&quot;
+2024-04-28T14:21:39.798574Z     info    FLAG: --help=&quot;false&quot;
+2024-04-28T14:21:39.798576Z     info    FLAG: --log_as_json=&quot;false&quot;
+2024-04-28T14:21:39.798579Z     info    FLAG: --log_caller=&quot;&quot;
+2024-04-28T14:21:39.798581Z     info    FLAG: --log_output_level=&quot;default:info&quot;
+2024-04-28T14:21:39.798583Z     info    FLAG: --log_rotate=&quot;&quot;
+2024-04-28T14:21:39.798585Z     info    FLAG: --log_rotate_max_age=&quot;30&quot;
+2024-04-28T14:21:39.798588Z     info    FLAG: --log_rotate_max_backups=&quot;1000&quot;
+2024-04-28T14:21:39.798590Z     info    FLAG: --log_rotate_max_size=&quot;104857600&quot;
+2024-04-28T14:21:39.798592Z     info    FLAG: --log_stacktrace_level=&quot;default:none&quot;
+2024-04-28T14:21:39.798597Z     info    FLAG: --log_target=&quot;[stdout]&quot;
+2024-04-28T14:21:39.798599Z     info    FLAG: --meshConfig=&quot;./etc/istio/config/mesh&quot;
+2024-04-28T14:21:39.798613Z     info    FLAG: --outlierLogPath=&quot;&quot;
+2024-04-28T14:21:39.798615Z     info    FLAG: --profiling=&quot;true&quot;
+2024-04-28T14:21:39.798618Z     info    FLAG: --proxyComponentLogLevel=&quot;misc:error&quot;
+2024-04-28T14:21:39.798620Z     info    FLAG: --proxyLogLevel=&quot;warning&quot;
+2024-04-28T14:21:39.798623Z     info    FLAG: --serviceCluster=&quot;istio-proxy&quot;
+2024-04-28T14:21:39.798625Z     info    FLAG: --stsPort=&quot;0&quot;
+2024-04-28T14:21:39.798628Z     info    FLAG: --templateFile=&quot;&quot;
+2024-04-28T14:21:39.798630Z     info    FLAG: --tokenManagerPlugin=&quot;GoogleTokenExchange&quot;
+2024-04-28T14:21:39.798634Z     info    FLAG: --vklog=&quot;0&quot;
+2024-04-28T14:21:39.798637Z     info    Version 1.21-dev-ee6e9f6a314224fd9bcb808ca1d74d1dc66adba8-Clean
+2024-04-28T14:21:39.798848Z     warn    failed running ulimit command: 
+2024-04-28T14:21:39.799033Z     info    Proxy role      ips=[10.244.1.13] type=router id=aks-istio-ingressgateway-external-asm-1-21-848779b5b7-2jjdq.aks-istio-ingress domain=aks-istio-ingress.svc.cluster.local
+2024-04-28T14:21:39.799097Z     info    Apply proxy config from env {&quot;discoveryAddress&quot;:&quot;istiod-asm-1-21.aks-istio-system.svc:15012&quot;,&quot;tracing&quot;:{&quot;zipkin&quot;:{&quot;address&quot;:&quot;zipkin.aks-istio-system:9411&quot;}},&quot;gatewayTopology&quot;:{&quot;numTrustedProxies&quot;:1},&quot;image&quot;:{&quot;imageType&quot;:&quot;distroless&quot;}}
+
+2024-04-28T14:21:39.800779Z     info    cpu limit detected as 2, setting concurrency
+2024-04-28T14:21:39.801054Z     info    Effective config: binaryPath: /usr/local/bin/envoy
+concurrency: 2
+configPath: ./etc/istio/proxy
+controlPlaneAuthPolicy: MUTUAL_TLS
+discoveryAddress: istiod-asm-1-21.aks-istio-system.svc:15012
+drainDuration: 45s
+gatewayTopology:
+  numTrustedProxies: 1
+image:
+  imageType: distroless
+proxyAdminPort: 15000
+serviceCluster: istio-proxy
+statNameLength: 189
+statusPort: 15020
+terminationDrainDuration: 5s
+tracing:
+  zipkin:
+    address: zipkin.aks-istio-system:9411
+
+2024-04-28T14:21:39.801079Z     info    JWT policy is third-party-jwt
+2024-04-28T14:21:39.801086Z     info    using credential fetcher of JWT type in cluster.local trust domain
+2024-04-28T14:21:39.801289Z     info    platform detected is Azure
+2024-04-28T14:21:39.808311Z     warn    HTTP request unsuccessful with status: 400 Bad Request
+2024-04-28T14:21:39.818317Z     info    Workload SDS socket not found. Starting Istio SDS Server
+2024-04-28T14:21:39.818345Z     info    CA Endpoint istiod-asm-1-21.aks-istio-system.svc:15012, provider Citadel
+2024-04-28T14:21:39.818369Z     info    Using CA istiod-asm-1-21.aks-istio-system.svc:15012 cert with certs: var/run/secrets/istio/root-cert.pem
+2024-04-28T14:21:39.818890Z     info    Opening status port 15020
+2024-04-28T14:21:39.826844Z     info    ads     All caches have been synced up in 28.703074ms, marking server ready
+2024-04-28T14:21:39.827082Z     info    xdsproxy        Initializing with upstream address &quot;istiod-asm-1-21.aks-istio-system.svc:15012&quot; and cluster &quot;Kubernetes&quot;
+2024-04-28T14:21:39.829173Z     info    Pilot SAN: [istiod-asm-1-21.aks-istio-system.svc]
+2024-04-28T14:21:39.830220Z     info    sds     Starting SDS grpc server
+2024-04-28T14:21:39.831508Z     info    starting Http service at 127.0.0.1:15004
+2024-04-28T14:21:39.831793Z     info    Starting proxy agent
+2024-04-28T14:21:39.832055Z     info    Envoy command: [-c etc/istio/proxy/envoy-rev.json --drain-time-s 45 --drain-strategy immediate --local-address-ip-version v4 --file-flush-interval-msec 1000 --disable-hot-restart --allow-unknown-static-fields --log-format %Y-%m-%dT%T.%fZ        %l      envoy %n %g:%#  %v      thread=%t -l warning --component-log-level misc:error --concurrency 2]
+2024-04-28T14:21:39.913967Z     info    xdsproxy        connected to upstream XDS server[1]: istiod-asm-1-21.aks-istio-system.svc:15012
+2024-04-28T14:21:39.933163Z     info    ads     ADS: new connection for node:aks-istio-ingressgateway-external-asm-1-21-848779b5b7-2jjdq.aks-istio-ingress-1
+2024-04-28T14:21:39.934344Z     info    ads     ADS: new connection for node:aks-istio-ingressgateway-external-asm-1-21-848779b5b7-2jjdq.aks-istio-ingress-2
+2024-04-28T14:21:39.987458Z     info    cache   generated new workload certificate      latency=158.869015ms ttl=23h59m59.012546407s
+2024-04-28T14:21:39.987650Z     info    cache   Root cert has changed, start rotating root cert
+2024-04-28T14:21:39.987740Z     info    ads     XDS: Incremental Pushing ConnectedEndpoints:2 Version:
+2024-04-28T14:21:39.987861Z     info    cache   returned workload trust anchor from cache       ttl=23h59m59.012140303s
+2024-04-28T14:21:39.988000Z     info    cache   returned workload certificate from cache        ttl=23h59m59.012001502s
+2024-04-28T14:21:39.988384Z     info    ads     SDS: PUSH request for node:aks-istio-ingressgateway-external-asm-1-21-848779b5b7-2jjdq.aks-istio-ingress resources:1 size:4.0kB resource:default
+2024-04-28T14:21:39.988477Z     info    cache   returned workload trust anchor from cache       ttl=23h59m59.011525197s
+2024-04-28T14:21:39.988781Z     info    ads     SDS: PUSH request for node:aks-istio-ingressgateway-external-asm-1-21-848779b5b7-2jjdq.aks-istio-ingress resources:1 size:1.1kB resource:ROOTCA
+2024-04-28T14:21:39.988932Z     info    cache   returned workload trust anchor from cache       ttl=23h59m59.011069593s
+2024-04-28T14:21:40.839485Z     info    Readiness succeeded in 1.049696312s
+2024-04-28T14:21:40.839824Z     info    Envoy proxy is ready
+2024-04-28T14:49:45.370889Z     info    xdsproxy        connected to upstream XDS server[2]: istiod-asm-1-21.aks-istio-system.svc:15012
+2024-04-28T15:21:34.608757Z     info    xdsproxy        connected to upstream XDS server[3]: istiod-asm-1-21.aks-istio-system.svc:15012
+2024-04-28T15:49:47.486824Z     info    xdsproxy        connected to upstream XDS server[4]: istiod-asm-1-21.aks-istio-system.svc:15012
+2024-04-28T16:22:08.624015Z     info    xdsproxy        connected to upstream XDS server[5]: istiod-asm-1-21.aks-istio-system.svc:15012
+2024-04-28T16:49:38.978403Z     info    xdsproxy        connected to upstream XDS server[6]: istiod-asm-1-21.aks-istio-system.svc:15012
+2024-04-28T17:16:57.062446Z     info    xdsproxy        connected to upstream XDS server[7]: istiod-asm-1-21.aks-istio-system.svc:15012
+</code></pre>
+<h2 id="解決策">解決策</h2>
+<p>Istio は主に、ゲートウェイや仮想サービスなどの独自のカスタム
+リソースのセットに依存して、イングレス
+トラフィックを管理します。したがって、Istio は一部の Ingress
+構成を正しく処理できず、ロード バランサー IP
+経由でアプリケーションにアクセスしようとするとタイムアウトが発生する可能性があります。
+Istio を使用した AKS クラスターでイングレス
+リソースを処理できるようにするには、Istio
+がインストールされており、イングレス
+ゲートウェイがクラスターにデプロイされていることを確認してください。</p>
+<pre><code>kubectl get pods -n &lt;istio-system-namespace&gt;
+kubectl get svc -n &lt;istio-system-namespace&gt;
+</code></pre>
+<p>istio-ingressgateway サービスが表示されます。これは通常、ロード
+バランサー タイプです。</p>
+<p>この例では、サンプルの Nginx アプリケーションがデプロイされます。</p>
+<p>導入例 -</p>
+<pre><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-demo
+  namespace: yournamespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-demo
+  template:
+    metadata:
+      labels:
+        app: nginx-demo
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:stable
+        ports:
+        - containerPort: 80
+</code></pre>
+<p>Nginx デプロイメントを指すサービスを作成する必要があります。
+サービス例</p>
+<pre><code>apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-demo-service
+  namespace: yournamespace
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: nginx-demo
+</code></pre>
+<p>次に、Istio ゲートウェイと VirtualService を作成して、Nginx
+サービスを公開します。 ゲートウェイの例</p>
+<pre><code>apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: nginx-gateway
+  namespace: yournamespace
+spec:
+  selector:
+    istio: ingressgateway-external-asm-1-20 # This should match the label of your external gateway.
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - &quot;*&quot;
+</code></pre>
+<p>次に、nginx-virtualservice を作成します。 仮想サービスの例</p>
+<pre><code>apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: nginx-virtualservice
+  namespace: yournamespace
+spec:
+  hosts:
+  - &quot;*&quot;
+  gateways:
+  - nginx-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: nginx-demo-service
+        port:
+          number: 80
+</code></pre>
+<p>それらを適用します kubectl apply -f &lt;filename.yaml&gt;</p>
+<p>サービスにアクセスするには、Istio Ingress Gateway の外部 IP
+が必要です。</p>
+<pre><code>kubectl get svc -n &lt;youristionamespace&gt;
+</code></pre>
+<p>http://<EXTERNAL_IP> をカールできるようになりました。
+または、ホスト名 (この場合は、demo-app-deployment.localdev.me) が Istio
+Ingress Gateway の外部 IP に正しく解決されていることを確認してください。
+/etc/hosts ファイルに一時的に追加できます。</p>
+<pre><code>57.151.36.51 demo-app-deployment.localdev.me
+</code></pre>
+<p>そしてそれをテストしてください。curl
+http://demo-app-deployment.localdev.me</p>
+<p>その他の確認事項 - サービス
+エンドポイントをチェックして、準備が整っていること、およびポッド IP
+が一致していることを確認します。</p>
+<pre><code>kubectl get endpoints nginx-demo-service -n &lt;yournamespace&gt;
+</code></pre>
+<p>Ingress ゲートウェイ
+ポッドのログをチェックして、エラーがあるかどうかを確認します。kubectl
+logs <ingress-gateway-pod-name> -n <namespace>。さらに、Ingress
+リソースが正しい Istio Gateway および VirtualService
+に関連付けられていることを確認することが重要です。</p>
+<p>参考文献:</p>
+  </div>
+</body>
+</html>
