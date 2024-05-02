@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>jsonデータを含むcsvファイルを2番目のcsvファイルの列、行テーブルに変換します | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">jsonデータを含むcsvファイルを2番目のcsvファイルの列、行テーブルに変換します</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>ルビーのニューバードがここにいます…</p>
+<p>「メッセージ」列のある CSV ファイル (logevents.csv) があります。
+「メッセージ」列には、json データの行が含まれています。 Ruby
+を使用して、JSON データの名前:値のペアを 2 番目の CSV
+ファイルの列名:行値に変換したいと考えています。 CSV ファイルの 1
+行目は次のとおりです。</p>
+<p>メッセージ
+“{”“バージョン”“:”“0”“,”“id”“:”“fdd11d8a-ef17-75ae-cf50-077285bb7e15”“,”“詳細タイプ”“:”“Auth0
+ログ”“,”
+“ソース”“:”“aws.partner/auth0.com/website-dev-c36bb924-cf05-4a5b-8400-7bdfbfe0806c/auth0.logs”“,”“アカウント”“:”“654654277766”“,”“時間”“:”“2024-03-27T12:30:51Z”“,”“リージョン”“:”“us-east-2”“,”“リソース”“:[],”“詳細”“:{”
+“log_id”“:”“90020240327123051583073000000000000001223372067726119722”“,”“data”“:{”“date”“:”“2024-03-27T12:30:51.531Z”“,”“type”“:”“seacft””
+,““説明”“:”“““,”“接続ID”“:”“““,”“クライアントID”“:”“v00a8B5f1sgCDjVhneXMbMmwxlsbYoHq”“,”“クライアント名”“:”“ウェブサイト開発”“,””
+ip”“:”“32.174.36.217”“,”“user_agent”“:”“いつか
+v1.10.3”“,”“詳細”“:{”“コード”“:”“********
+**********************************5kW”“},”“ホスト名”“:”“website-dev
+.us.auth0.com”“,”“user_id”“:”“auth0|648a230ee5ad48ee2ebfb212”“,”“user_name”“:”“[email
+protected]”“,”“auth0_client”“:{”“name””
+:““omniauth-auth0”“,”“バージョン”“:”“2.6.0”“,”“env”“:{”“ruby”“:”“2.6.5”“,”“rails”“:”“6.1.7.4”“}},”“““:{”“バージョン”“:”“1.0.0”“},”“log_id”“:”“90020240327123051583073000000000000001223372067726119722”“}}}”</p>
+<p>各行について、上記を別の CSV
+ファイルに書き込む必要がありますが、名前:値のペアを列名と行の値の区切り文字として「,」（カンマ）を使用して列:行値にピボットします。</p>
+<p>バージョン、ID、詳細タイプ、ソース、アカウント ….など
+0、fdd11d8a-ef17-75ae-cf50-077285bb7e15、Auth0
+ログ、aws.partner/auth0.com/website-dev-c36bb924-cf05-4a5b-8400-7bdfbfe0806c/auth0.logs、654654277766
+….etc</p>
+<p>私はこの Ruby スクリプト (runtimetest.rb)
+を介してこれを達成しようとしています。</p>
+<pre><code>require &#39;csv&#39;
+require &#39;json&#39;
+
+CSV.open(&quot;C:/Ruby/dev/logevents2.csv&quot;, &quot;w&quot;) do |csv| #open new file for write
+  JSON.parse(File.open(&quot;C:/Ruby/dev/logevents.csv&quot;).read).each do |hash|  #open json to parse
+    csv &lt;&lt; hash.values   #write value to file
+  end
+end
+</code></pre>
+<p>ただし、実行時に CSV ファイルの内容 (logevents.csv)
+が「予期しないトークン」というメッセージとともに画面に書き込まれます。</p>
+<p>C:&gt;runtimetest.rb</p>
+<p>C:&gt;runtimetest.rb</p>
+<p>これを試してみました。私はこの Ruby スクリプト (runtimetest.rb)
+を介してこれを達成しようとしました。</p>
+<pre><code>require &#39;csv&#39;
+require &#39;json&#39;
+
+CSV.open(&quot;C:/Ruby/dev/logevents2.csv&quot;, &quot;w&quot;) do |csv| #open new file for write
+  JSON.parse(File.open(&quot;C:/Ruby/dev/logevents.csv&quot;).read).each do |hash|  #open json to parse
+    csv &lt;&lt; hash.values   #write value to file
+  end
+end
+</code></pre>
+<p>出力が2番目のCSVの列、行テーブルであることを期待していました:</p>
+<p>バージョン、ID、詳細タイプ、ソース、アカウント ….など
+0、fdd11d8a-ef17-75ae-cf50-077285bb7e15、Auth0
+ログ、aws.partner/auth0.com/trulab-dev-c36bb924-cf05-4a5b-8400-7bdfbfe0806c/auth0.logs、654654277766
+….etc</p>
+<p>私はこの件について全く間違っているかもしれない。
+ご提案をお待ちしております。</p>
+<p>よろしくお願いします、 ドナルド</p>
+<p>Ruby で単一レコードの JSON ファイルを解析して、JSON 名と値のペア
+(ネストされたペアも) をヘッダーと行 .csv ファイルとして 2
+番目のファイルに書き込むことができました。</p>
+<pre><code>require &#39;csv&#39;
+require &#39;json&#39;
+
+
+# An attempt to figure out what a row will look like
+def array_from(json)
+  queue, next_item = [], json
+  while !next_item.nil?
+
+    return next_item if next_item.is_a? Array
+
+    if next_item.is_a? Hash
+      next_item.each do |k, v|
+        queue.push next_item[k]
+      end
+    end
+
+    next_item = queue.shift
+  end
+
+  return [json]
+end
+
+
+# try to build header columns for the nested elements
+def flatten(object, path=&#39;&#39;)
+  scalars = [String, Integer, FalseClass, TrueClass]
+  columns = {}
+
+  if [Hash, Array].include? object.class
+    object.each do |k, v|
+      new_columns = flatten(v, &quot;#{path}#{k}|&quot;) if object.class == Hash
+      new_columns = flatten(k, &quot;#{path}#{k}|&quot;) if object.class == Array
+      columns = columns.merge new_columns
+    end
+
+    return columns
+  elsif scalars.include? object.class
+      # Remove trailing slash from path
+      end_path = path[0, path.length - 1]
+      columns[end_path] = object
+      return columns
+  else
+    return {}
+  end
+end
+
+
+json = JSON.parse(File.open(&#39;logevent.json&#39;).read)
+in_array = array_from json
+
+out_array = []
+in_array.each do |row|
+  out_array[out_array.length] = flatten row
+end
+
+headers_written = false
+CSV.open(&#39;logevent.csv&#39;, &#39;w&#39;) do |csv|
+  out_array.each do |row|
+    csv &lt;&lt; row.keys &amp;&amp; headers_written = true if headers_written === false
+    csv &lt;&lt; row.values
+  end
+end
+</code></pre>
+<p>入力ファイル「logevent.json」の内容は次のとおりです。</p>
+<pre><code>{
+  &quot;Message&quot;: [
+{
+    &quot;version&quot;: &quot;0&quot;,
+    &quot;id&quot;: &quot;fdd11d8a-ef17-75ae-cf50-077285bb7e15&quot;,
+    &quot;detail-type&quot;: &quot;Auth0 log&quot;,
+    &quot;source&quot;: &quot;aws.partner/auth0.com/website-c36bb924-cf05-4a5b-8400-7bdfbfe0806c/auth0.logs&quot;,
+    &quot;account&quot;: &quot;654654277766&quot;,
+    &quot;time&quot;: &quot;2024-03-27T12:30:51Z&quot;,
+    &quot;region&quot;: &quot;us-east-2&quot;,
+    &quot;resources&quot;: [],
+    &quot;detail&quot;: {
+        &quot;log_id&quot;: &quot;90020240327123051583073000000000000001223372067726119722&quot;,
+        &quot;data&quot;: {
+            &quot;date&quot;: &quot;2024-03-27T12:30:51.531Z&quot;,
+            &quot;type&quot;: &quot;seacft&quot;,
+            &quot;description&quot;: &quot;&quot;,
+            &quot;connection_id&quot;: &quot;&quot;,
+            &quot;client_id&quot;: &quot;v00a8B5f1sgCDjVhneXMbMmwxlsbYoHq&quot;,
+            &quot;client_name&quot;: &quot;Website Dev&quot;,
+            &quot;ip&quot;: &quot;3.17.36.227&quot;,
+            &quot;user_agent&quot;: &quot;JohnDoe v1.10.3&quot;,
+            &quot;details&quot;: {
+                &quot;code&quot;: &quot;******************************************5kW&quot;
+            },
+            &quot;hostname&quot;: &quot;website.us.auth0.com&quot;,
+            &quot;user_id&quot;: &quot;auth0|648a230ee5ad48ee2ebfb212&quot;,
+            &quot;user_name&quot;: &quot;[email protected]&quot;,
+            &quot;auth0_client&quot;: {
+                &quot;name&quot;: &quot;omniauth-auth0&quot;,
+                &quot;version&quot;: &quot;2.6.0&quot;,
+                &quot;env&quot;: {
+                    &quot;ruby&quot;: &quot;2.6.5&quot;,
+                    &quot;rails&quot;: &quot;6.1.7.4&quot;
+                }
+            },
+            &quot;$event_schema&quot;: {
+                &quot;version&quot;: &quot;1.0.0&quot;
+            },
+            &quot;log_id&quot;: &quot;90020240327123051583073000000000000001223372067726119722&quot;
+        }
+      }
+    }
+ ]
+}
+</code></pre>
+<h2 id="解決策">解決策</h2>
+<p>アップデート Ruby で単一レコードの JSON ファイルを解析して、JSON
+名と値のペア (ネストされたペアも) をヘッダーと行 .csv ファイルとして 2
+番目のファイルに書き込むことができました。</p>
+<p>「csv」が必要です 「json」が必要です</p>
+  </div>
+</body>
+</html>

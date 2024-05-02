@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>バンドラー エラー - rake-13.0.1 がインストールされているにもかかわらず見つかりません | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">バンドラー エラー - rake-13.0.1
+がインストールされているにもかかわらず見つかりません</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>私は、everywhere gem を介して cron ジョブ設定として実行される Rails
+インポート
+ジョブを持っています。最近アプリを更新するまでは正常に実行されていました。
+cron
+ジョブを実行しようとすると、ログに次のエラーが表示されます。タスクを手動で実行すると、インポートが正しく実行されます。</p>
+<pre><code>/usr/local/lib/ruby/2.6.0/bundler/spec_set.rb:91:in `block in materialize&#39;: Could not find rake-13.0.1 in any of the sources (Bundler::GemNotFound)
+    from /usr/local/lib/ruby/2.6.0/bundler/spec_set.rb:85:in `map!&#39;
+    from /usr/local/lib/ruby/2.6.0/bundler/spec_set.rb:85:in `materialize&#39;
+    from /usr/local/lib/ruby/2.6.0/bundler/definition.rb:170:in `specs&#39;
+    from /usr/local/lib/ruby/2.6.0/bundler/definition.rb:237:in `specs_for&#39;
+    from /usr/local/lib/ruby/2.6.0/bundler/definition.rb:226:in `requested_specs&#39;
+    from /usr/local/lib/ruby/2.6.0/bundler/runtime.rb:108:in `block in definition_method&#39;
+    from /usr/local/lib/ruby/2.6.0/bundler/runtime.rb:20:in `setup&#39;
+    from /usr/local/lib/ruby/2.6.0/bundler.rb:107:in `setup&#39;
+    from /usr/local/lib/ruby/2.6.0/bundler/setup.rb:20:in `&lt;top (required)&gt;&#39;
+    from /usr/local/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:130:in `require&#39;
+    from /usr/local/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:130:in `rescue in require&#39;
+    from /usr/local/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:34:in `require&#39;
+    from /usr/local/bundle/gems/spring-2.1.0/lib/spring/commands.rb:33:in `&lt;module:Spring&gt;&#39;
+    from /usr/local/bundle/gems/spring-2.1.0/lib/spring/commands.rb:4:in `&lt;top (required)&gt;&#39;
+    from /usr/local/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require&#39;
+    from /usr/local/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require&#39;
+    from /usr/local/bundle/gems/spring-2.1.0/lib/spring/server.rb:9:in `&lt;top (required)&gt;&#39;
+    from /usr/local/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require&#39;
+    from /usr/local/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require&#39;
+    from /usr/local/bundle/gems/spring-2.1.0/lib/spring/client/server.rb:9:in `call&#39;
+    from /usr/local/bundle/gems/spring-2.1.0/lib/spring/client/command.rb:7:in `call&#39;
+    from /usr/local/bundle/gems/spring-2.1.0/lib/spring/client.rb:30:in `run&#39;
+    from /usr/local/bundle/gems/spring-2.1.0/bin/spring:49:in `&lt;main&gt;&#39;
+/usr/local/lib/ruby/2.6.0/rubygems/dependency.rb:313:in `to_specs&#39;: Could not find &#39;bundler&#39; () required by `$BUNDLER_VERSION`. (Gem::MissingSpecVersionError)
+To update to the latest version installed on your system, run `bundle update --bundler`.
+To install the missing version, run `gem install bundler:`
+Checked in &#39;GEM_PATH=/home/sotldirectory&#39;, execute `gem env` for more information
+    from /usr/local/lib/ruby/2.6.0/rubygems/dependency.rb:323:in `to_spec&#39;
+    from /usr/local/lib/ruby/2.6.0/rubygems/core_ext/kernel_gem.rb:65:in `gem&#39;
+    from /usr/local/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:42:in `require&#39;
+    from /usr/local/bundle/gems/spring-2.1.0/lib/spring/commands.rb:33:in `&lt;module:Spring&gt;&#39;
+    from /usr/local/bundle/gems/spring-2.1.0/lib/spring/commands.rb:4:in `&lt;top (required)&gt;&#39;
+    from /usr/local/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require&#39;
+    from /usr/local/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require&#39;
+    from /usr/local/bundle/gems/spring-2.1.0/lib/spring/server.rb:9:in `&lt;top (required)&gt;&#39;
+    from /usr/local/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require&#39;
+    from /usr/local/lib/ruby/2.6.0/rubygems/core_ext/kernel_require.rb:54:in `require&#39;
+    from /usr/local/bundle/gems/spring-2.1.0/lib/spring/client/server.rb:9:in `call&#39;
+    from /usr/local/bundle/gems/spring-2.1.0/lib/spring/client/command.rb:7:in `call&#39;
+    from /usr/local/bundle/gems/spring-2.1.0/lib/spring/client.rb:30:in `run&#39;
+    from /usr/local/bundle/gems/spring-2.1.0/bin/spring:49:in `&lt;main&gt;&#39;
+</code></pre>
+<p>Docker コンテナ内に 2 つの rake バージョンが表示されます</p>
+<pre><code>*** LOCAL GEMS ***
+
+rake (13.0.1, 12.3.2)
+</code></pre>
+<p>実行中のbundle envからの出力</p>
+<pre><code>## Environment
+
+Bundler       1.17.2
+  Platforms   ruby, x86_64-linux
+Ruby          2.6.5p114 (2019-10-01 revision 67812) [x86_64-linux]
+  Full Path   /usr/local/bin/ruby
+  Config Dir  /usr/local/etc
+RubyGems      3.0.3
+  Gem Home    /usr/local/bundle
+  Gem Path    /root/.gem/ruby/2.6.0:/usr/local/lib/ruby/gems/2.6.0:/usr/local/bundle
+  User Path   /root/.gem/ruby/2.6.0
+  Bin Dir     /usr/local/bundle/bin
+Tools         
+  Git         2.20.1
+  RVM         not installed
+  rbenv       not installed
+  chruby      not installed
+</code></pre>
+<pre><code>Built At          2018-12-19
+Git SHA           3fc4de72b
+Released Version  false
+</code></pre>
+<pre><code>retry
+  Set for your local app (/usr/local/bundle/config): 3
+jobs
+  Set for your local app (/usr/local/bundle/config): 4
+app_config
+  Set via BUNDLE_APP_CONFIG: &quot;/usr/local/bundle&quot;
+silence_root_warning
+  Set via BUNDLE_SILENCE_ROOT_WARNING: true
+
+### Gemfile
+
+ruby
+source &#39;https://rubygems.org&#39;
+git_source(:github) { |repo| &quot;https://github.com/#{repo}.git&quot; }
+
+ruby &#39;2.6.5&#39;
+
+# Rails Specific 
+# =====================================================================================
+
+# Rails, MySQL, Puma
+gem &#39;rails&#39;, &#39;~&gt; 5.2.0&#39;
+gem &#39;mysql2&#39;, &#39;&gt;= 0.4.4&#39;, &#39;&lt; 0.6.0&#39;
+gem &#39;puma&#39;, &#39;~&gt; 4.3&#39;
+
+# Rails Dependencies
+gem &#39;sassc-rails&#39;
+gem &#39;uglifier&#39;, &#39;&gt;= 1.3.0&#39;
+gem &#39;coffee-rails&#39;, &#39;~&gt; 4.2&#39;
+gem &#39;turbolinks&#39;, &#39;~&gt; 5&#39;
+gem &#39;jbuilder&#39;, &#39;~&gt; 2.5&#39;
+
+# loads rails apps faster 
+gem &#39;bootsnap&#39;, &#39;&gt;= 1.1.0&#39;, require: false
+
+# Application Specific 
+# =====================================================================================
+
+# validators
+gem &#39;validate_url&#39;
+
+# security
+gem &#39;sanitize&#39;
+
+# interface items
+gem &#39;carrierwave&#39;, &#39;~&gt; 1.2&#39;, &#39;&gt;= 1.2.3&#39;
+gem &#39;mini_magick&#39;
+gem &#39;multi-select-rails&#39;
+
+# cas client
+gem &#39;rack-cas&#39;, &#39;~&gt; 0.16.0&#39;
+
+# managing cron jobs
+gem &#39;whenever&#39;, require: false
+
+# frontend
+gem &#39;normalize-scss&#39;
+gem &#39;font-awesome-sass&#39;
+gem &quot;non-stupid-digest-assets&quot; # generates assets without fingerprint for 404 and 500 errors. 
+
+# searching / indexing for speeds / pagination for elegance
+# gem &#39;kaminari&#39;
+gem &#39;elasticsearch-model&#39;
+gem &#39;elasticsearch-rails&#39;
+
+# Test Suite
+# =====================================================================================
+group :test do
+  gem &#39;rspec-rails&#39;
+  gem &#39;shoulda&#39;
+  gem &#39;shoulda-matchers&#39;
+  gem &#39;database_cleaner&#39;
+  gem &#39;simplecov&#39;, &#39;~&gt; 0.10&#39;, &#39;&lt; 0.18&#39;
+  gem &#39;simplecov-console&#39;
+  gem &#39;capybara&#39;, &#39;&gt;= 2.15&#39;, &#39;&lt; 4.0&#39;
+  gem &#39;selenium-webdriver&#39;, &#39;~&gt; 3.14&#39;
+  gem &#39;elasticsearch-extensions&#39;
+  gem &#39;executables&#39;
+  gem &#39;rspec_junit_formatter&#39;
+end
+
+# Development / Test Items (Primarily debugging)
+# =====================================================================================
+group :development, :test do
+  gem &#39;faker&#39;
+  gem &#39;byebug&#39;, platforms: [:mri, :mingw, :x64_mingw] # from rails new
+  gem &#39;pry&#39;
+  gem &#39;pry-rails&#39;
+  gem &#39;factory_bot_rails&#39;
+  gem &#39;webmock&#39;
+end
+
+group :development do
+  gem &#39;web-console&#39;, &#39;&gt;= 3.3.0&#39;
+  gem &#39;listen&#39;, &#39;&gt;= 3.0.5&#39;, &#39;&lt; 3.2&#39;
+  gem &#39;spring&#39;
+  gem &#39;spring-watcher-listen&#39;, &#39;~&gt; 2.0.0&#39;
+  # performance helper
+  gem &#39;bullet&#39; # helps to eliminate N+1 Queries 
+end
+
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem &#39;tzinfo-data&#39;, platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+### Gemfile.lock
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    actioncable (5.2.4.1)
+      actionpack (= 5.2.4.1)
+      nio4r (~&gt; 2.0)
+      websocket-driver (&gt;= 0.6.1)
+    actionmailer (5.2.4.1)
+      actionpack (= 5.2.4.1)
+      actionview (= 5.2.4.1)
+      activejob (= 5.2.4.1)
+      mail (~&gt; 2.5, &gt;= 2.5.4)
+      rails-dom-testing (~&gt; 2.0)
+    actionpack (5.2.4.1)
+      actionview (= 5.2.4.1)
+      activesupport (= 5.2.4.1)
+      rack (~&gt; 2.0, &gt;= 2.0.8)
+      rack-test (&gt;= 0.6.3)
+      rails-dom-testing (~&gt; 2.0)
+      rails-html-sanitizer (~&gt; 1.0, &gt;= 1.0.2)
+    actionview (5.2.4.1)
+      activesupport (= 5.2.4.1)
+      builder (~&gt; 3.1)
+      erubi (~&gt; 1.4)
+      rails-dom-testing (~&gt; 2.0)
+      rails-html-sanitizer (~&gt; 1.0, &gt;= 1.0.3)
+    activejob (5.2.4.1)
+      activesupport (= 5.2.4.1)
+      globalid (&gt;= 0.3.6)
+    activemodel (5.2.4.1)
+      activesupport (= 5.2.4.1)
+    activerecord (5.2.4.1)
+      activemodel (= 5.2.4.1)
+      activesupport (= 5.2.4.1)
+      arel (&gt;= 9.0)
+    activestorage (5.2.4.1)
+      actionpack (= 5.2.4.1)
+      activerecord (= 5.2.4.1)
+      marcel (~&gt; 0.3.1)
+    activesupport (5.2.4.1)
+      concurrent-ruby (~&gt; 1.0, &gt;= 1.0.2)
+      i18n (&gt;= 0.7, &lt; 2)
+      minitest (~&gt; 5.1)
+      tzinfo (~&gt; 1.1)
+    addressable (2.7.0)
+      public_suffix (&gt;= 2.0.2, &lt; 5.0)
+    ansi (1.5.0)
+    arel (9.0.0)
+    bindex (0.8.1)
+    bootsnap (1.4.6)
+      msgpack (~&gt; 1.0)
+    builder (3.2.4)
+    bullet (6.1.0)
+      activesupport (&gt;= 3.0.0)
+      uniform_notifier (~&gt; 1.11)
+    byebug (11.1.1)
+    capybara (3.31.0)
+      addressable
+      mini_mime (&gt;= 0.1.3)
+      nokogiri (~&gt; 1.8)
+      rack (&gt;= 1.6.0)
+      rack-test (&gt;= 0.6.3)
+      regexp_parser (~&gt; 1.5)
+      xpath (~&gt; 3.2)
+    carrierwave (1.3.1)
+      activemodel (&gt;= 4.0.0)
+      activesupport (&gt;= 4.0.0)
+      mime-types (&gt;= 1.16)
+    childprocess (3.0.0)
+    chronic (0.10.2)
+    coderay (1.1.2)
+    coffee-rails (4.2.2)
+      coffee-script (&gt;= 2.2.0)
+      railties (&gt;= 4.0.0)
+    coffee-script (2.4.1)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.12.2)
+    concurrent-ruby (1.1.6)
+    crack (0.4.3)
+      safe_yaml (~&gt; 1.0.0)
+    crass (1.0.6)
+    database_cleaner (1.8.3)
+    diff-lcs (1.3)
+    docile (1.3.2)
+    elasticsearch (7.5.0)
+      elasticsearch-api (= 7.5.0)
+      elasticsearch-transport (= 7.5.0)
+    elasticsearch-api (7.5.0)
+      multi_json
+    elasticsearch-extensions (0.0.31)
+      ansi
+      elasticsearch
+    elasticsearch-model (7.0.0)
+      activesupport (&gt; 3)
+      elasticsearch (&gt; 1)
+      hashie
+    elasticsearch-rails (7.0.0)
+    elasticsearch-transport (7.5.0)
+      faraday (&gt;= 0.14, &lt; 1)
+      multi_json
+    erubi (1.9.0)
+    execjs (2.7.0)
+    executables (0.1.0)
+    factory_bot (5.1.1)
+      activesupport (&gt;= 4.2.0)
+    factory_bot_rails (5.1.1)
+      factory_bot (~&gt; 5.1.0)
+      railties (&gt;= 4.2.0)
+    faker (2.10.2)
+      i18n (&gt;= 1.6, &lt; 2)
+    faraday (0.17.3)
+      multipart-post (&gt;= 1.2, &lt; 3)
+    ffi (1.12.2)
+    font-awesome-sass (5.12.0)
+      sassc (&gt;= 1.11)
+    globalid (0.4.2)
+      activesupport (&gt;= 4.2.0)
+    hashdiff (1.0.1)
+    hashie (4.1.0)
+    i18n (1.8.2)
+      concurrent-ruby (~&gt; 1.0)
+    jbuilder (2.10.0)
+      activesupport (&gt;= 5.0.0)
+    json (2.3.0)
+    listen (3.1.5)
+      rb-fsevent (~&gt; 0.9, &gt;= 0.9.4)
+      rb-inotify (~&gt; 0.9, &gt;= 0.9.7)
+      ruby_dep (~&gt; 1.2)
+    loofah (2.4.0)
+      crass (~&gt; 1.0.2)
+      nokogiri (&gt;= 1.5.9)
+    mail (2.7.1)
+      mini_mime (&gt;= 0.1.1)
+    marcel (0.3.3)
+      mimemagic (~&gt; 0.3.2)
+    method_source (0.9.2)
+    mime-types (3.3.1)
+      mime-types-data (~&gt; 3.2015)
+    mime-types-data (3.2019.1009)
+    mimemagic (0.3.4)
+    mini_magick (4.10.1)
+    mini_mime (1.0.2)
+    mini_portile2 (2.4.0)
+    minitest (5.14.0)
+    msgpack (1.3.3)
+    multi-select-rails (0.9.12)
+      railties (&gt;= 3.0)
+    multi_json (1.14.1)
+    multipart-post (2.1.1)
+    mysql2 (0.5.3)
+    nio4r (2.5.2)
+    nokogiri (1.10.9)
+      mini_portile2 (~&gt; 2.4.0)
+    nokogumbo (2.0.2)
+      nokogiri (~&gt; 1.8, &gt;= 1.8.4)
+    non-stupid-digest-assets (1.0.9)
+      sprockets (&gt;= 2.0)
+    normalize-scss (7.0.1)
+      sass (~&gt; 3.3)
+    pry (0.12.2)
+      coderay (~&gt; 1.1.0)
+      method_source (~&gt; 0.9.0)
+    pry-rails (0.3.9)
+      pry (&gt;= 0.10.4)
+    public_suffix (4.0.3)
+    puma (4.3.3)
+      nio4r (~&gt; 2.0)
+    rack (2.2.2)
+    rack-cas (0.16.1)
+      addressable (~&gt; 2.3)
+      nokogiri (~&gt; 1.5)
+      rack (&gt;= 1.3)
+    rack-test (1.1.0)
+      rack (&gt;= 1.0, &lt; 3)
+    rails (5.2.4.1)
+      actioncable (= 5.2.4.1)
+      actionmailer (= 5.2.4.1)
+      actionpack (= 5.2.4.1)
+      actionview (= 5.2.4.1)
+      activejob (= 5.2.4.1)
+      activemodel (= 5.2.4.1)
+      activerecord (= 5.2.4.1)
+      activestorage (= 5.2.4.1)
+      activesupport (= 5.2.4.1)
+      bundler (&gt;= 1.3.0)
+      railties (= 5.2.4.1)
+      sprockets-rails (&gt;= 2.0.0)
+    rails-dom-testing (2.0.3)
+      activesupport (&gt;= 4.2.0)
+      nokogiri (&gt;= 1.6)
+    rails-html-sanitizer (1.3.0)
+      loofah (~&gt; 2.3)
+    railties (5.2.4.1)
+      actionpack (= 5.2.4.1)
+      activesupport (= 5.2.4.1)
+      method_source
+      rake (&gt;= 0.8.7)
+      thor (&gt;= 0.19.0, &lt; 2.0)
+    rake (13.0.1)
+    rb-fsevent (0.10.3)
+    rb-inotify (0.10.1)
+      ffi (~&gt; 1.0)
+    regexp_parser (1.7.0)
+    rspec-core (3.9.1)
+      rspec-support (~&gt; 3.9.1)
+    rspec-expectations (3.9.0)
+      diff-lcs (&gt;= 1.2.0, &lt; 2.0)
+      rspec-support (~&gt; 3.9.0)
+    rspec-mocks (3.9.1)
+      diff-lcs (&gt;= 1.2.0, &lt; 2.0)
+      rspec-support (~&gt; 3.9.0)
+    rspec-rails (3.9.0)
+      actionpack (&gt;= 3.0)
+      activesupport (&gt;= 3.0)
+      railties (&gt;= 3.0)
+      rspec-core (~&gt; 3.9.0)
+      rspec-expectations (~&gt; 3.9.0)
+      rspec-mocks (~&gt; 3.9.0)
+      rspec-support (~&gt; 3.9.0)
+    rspec-support (3.9.2)
+    rspec_junit_formatter (0.4.1)
+      rspec-core (&gt;= 2, &lt; 4, != 2.12.0)
+    ruby_dep (1.5.0)
+    rubyzip (2.2.0)
+    safe_yaml (1.0.5)
+    sanitize (5.1.0)
+      crass (~&gt; 1.0.2)
+      nokogiri (&gt;= 1.8.0)
+      nokogumbo (~&gt; 2.0)
+    sass (3.7.4)
+      sass-listen (~&gt; 4.0.0)
+    sass-listen (4.0.0)
+      rb-fsevent (~&gt; 0.9, &gt;= 0.9.4)
+      rb-inotify (~&gt; 0.9, &gt;= 0.9.7)
+    sassc (2.2.1)
+      ffi (~&gt; 1.9)
+    sassc-rails (2.1.2)
+      railties (&gt;= 4.0.0)
+      sassc (&gt;= 2.0)
+      sprockets (&gt; 3.0)
+      sprockets-rails
+      tilt
+    selenium-webdriver (3.142.7)
+      childprocess (&gt;= 0.5, &lt; 4.0)
+      rubyzip (&gt;= 1.2.2)
+    shoulda (2.11.3)
+    shoulda-matchers (4.3.0)
+      activesupport (&gt;= 4.2.0)
+    simplecov (0.17.1)
+      docile (~&gt; 1.1)
+      json (&gt;= 1.8, &lt; 3)
+      simplecov-html (~&gt; 0.10.0)
+    simplecov-console (0.7.2)
+      ansi
+      simplecov
+      terminal-table
+    simplecov-html (0.10.2)
+    spring (2.1.0)
+    spring-watcher-listen (2.0.1)
+      listen (&gt;= 2.7, &lt; 4.0)
+      spring (&gt;= 1.2, &lt; 3.0)
+    sprockets (4.0.0)
+      concurrent-ruby (~&gt; 1.0)
+      rack (&gt; 1, &lt; 3)
+    sprockets-rails (3.2.1)
+      actionpack (&gt;= 4.0)
+      activesupport (&gt;= 4.0)
+      sprockets (&gt;= 3.0.0)
+    terminal-table (1.8.0)
+      unicode-display_width (~&gt; 1.1, &gt;= 1.1.1)
+    thor (1.0.1)
+    thread_safe (0.3.6)
+    tilt (2.0.10)
+    turbolinks (5.2.1)
+      turbolinks-source (~&gt; 5.2)
+    turbolinks-source (5.2.0)
+    tzinfo (1.2.6)
+      thread_safe (~&gt; 0.1)
+    uglifier (4.2.0)
+      execjs (&gt;= 0.3.0, &lt; 3)
+    unicode-display_width (1.6.1)
+    uniform_notifier (1.13.0)
+    validate_url (1.0.8)
+      activemodel (&gt;= 3.0.0)
+      public_suffix
+    web-console (3.7.0)
+      actionview (&gt;= 5.0)
+      activemodel (&gt;= 5.0)
+      bindex (&gt;= 0.4.0)
+      railties (&gt;= 5.0)
+    webmock (3.8.2)
+      addressable (&gt;= 2.3.6)
+      crack (&gt;= 0.3.2)
+      hashdiff (&gt;= 0.4.0, &lt; 2.0.0)
+    websocket-driver (0.7.1)
+      websocket-extensions (&gt;= 0.1.0)
+    websocket-extensions (0.1.4)
+    whenever (1.0.0)
+      chronic (&gt;= 0.6.3)
+    xpath (3.2.0)
+      nokogiri (~&gt; 1.8)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bootsnap (&gt;= 1.1.0)
+  bullet
+  byebug
+  capybara (&gt;= 2.15, &lt; 4.0)
+  carrierwave (~&gt; 1.2, &gt;= 1.2.3)
+  coffee-rails (~&gt; 4.2)
+  database_cleaner
+  elasticsearch-extensions
+  elasticsearch-model
+  elasticsearch-rails
+  executables
+  factory_bot_rails
+  faker
+  font-awesome-sass
+  jbuilder (~&gt; 2.5)
+  listen (&gt;= 3.0.5, &lt; 3.2)
+  mini_magick
+  multi-select-rails
+  mysql2 (&gt;= 0.4.4, &lt; 0.6.0)
+  non-stupid-digest-assets
+  normalize-scss
+  pry
+  pry-rails
+  puma (~&gt; 4.3)
+  rack-cas (~&gt; 0.16.0)
+  rails (~&gt; 5.2.0)
+  rspec-rails
+  rspec_junit_formatter
+  sanitize
+  sassc-rails
+  selenium-webdriver (~&gt; 3.14)
+  shoulda
+  shoulda-matchers
+  simplecov (~&gt; 0.10, &lt; 0.18)
+  simplecov-console
+  spring
+  spring-watcher-listen (~&gt; 2.0.0)
+  turbolinks (~&gt; 5)
+  tzinfo-data
+  uglifier (&gt;= 1.3.0)
+  validate_url
+  web-console (&gt;= 3.3.0)
+  webmock
+  whenever
+
+RUBY VERSION
+   ruby 2.6.5p114
+
+BUNDLED WITH
+   1.17.2
+</code></pre>
+<p>ドッカーファイル</p>
+<pre><code>FROM ruby:2.6
+
+# Install capybara-webkit deps
+RUN apt-get update \
+    &amp;&amp; apt-get install -y xvfb git cron qt5-default libqt5webkit5-dev \
+                          gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x \
+                          imagemagick
+
+# Use JEMALLOC instead
+RUN apt-get install -y libjemalloc2 libjemalloc-dev
+ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so
+
+# Node.js
+RUN curl -sL https://deb.nodesource.com/setup_13.x | bash - \
+    &amp;&amp; apt-get install -y nodejs
+
+# yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -\
+    &amp;&amp; echo &quot;deb https://dl.yarnpkg.com/debian/ stable main&quot; | tee /etc/apt/sources.list.d/yarn.list \
+    &amp;&amp; apt-get update \
+    &amp;&amp; apt-get install -y yarn
+
+# Install our dependencies and rails
+RUN mkdir -p /home/sotldirectory
+
+WORKDIR /home/sotldirectory
+ADD . /home/sotldirectory
+RUN bundle install --jobs=4 --retry=3
+
+# Copy openssl config to correct folder
+RUN cp -R openssl.cnf /etc/ssl 
+
+ADD ./startup.sh /usr/bin/
+RUN chmod -v +x /usr/bin/startup.sh
+ENTRYPOINT [&quot;/usr/bin/startup.sh&quot;]
+</code></pre>
+<p>スタートアップ.sh</p>
+<pre><code>#!/bin/bash
+
+# set terminal 
+export TERM=vt100
+
+# start cron and update whenever 
+service cron start
+whenever --update-crontab
+
+# remove PID and start the server
+file=&quot;./tmp/pids/server.pid&quot;
+[ -f $file ] &amp;&amp; rm $file
+
+bin/rails s -p 3000 -b &#39;0.0.0.0&#39;
+</code></pre>
+<p>schedule.rb - 関連セクション</p>
+<pre><code># change to the base directory of the application
+# run the file with the rails runner task 
+every 1.minutes do
+  command &#39;cd /home/sotldirectory &amp;&amp; bin/rails r import/cron_import.rb&#39;
+end
+</code></pre>
+<h2 id="解決策">解決策</h2>
+<p>Rails、Ruby、または Rake の前に ./bin/bundle exec
+を呼び出して同様の問題を解決しました。異なる Ruby バージョンの gem
+ではバンドラーが失われていると思います</p>
+  </div>
+</body>
+</html>

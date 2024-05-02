@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>SSL_connect が返されました = 1 errno=0 状態 = エラー: Ruby および Ubuntu 14.04 で証明書の検証に失敗しました | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">SSL_connect が返されました = 1 errno=0 状態 = エラー:
+Ruby および Ubuntu 14.04 で証明書の検証に失敗しました</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>サードパーティの Web サービスと統合された Rails
+アプリがあります。初期の開発以来、何年にもわたって完璧に動作しています。何らかの予期せぬ理由で、突然動作しなくなりました。コードには何も変更していないと思います。これに関連すると考えられる唯一のことは、Letsencrypt
+SSL 証明書の有効期限が切れて更新したという事実です。</p>
+<p>実際、Web サービス
+リクエストを呼び出すときに次のエラーが発生します。</p>
+<pre><code>E, [2022-02-17T19:53:25.385435 #32501] ERROR -- : SSL_connect returned=1 errno=0 state=error: certificate verify failed
+E, [2022-02-17T19:53:25.385876 #32501] ERROR -- : /Users/Rober/.rvm/gems/ruby-2.4.9/gems/httpi-2.4.4/lib/httpi/adapter/httpclient.rb:28:in `rescue in request&#39;
+E, [2022-02-17T19:53:25.386103 #32501] ERROR -- : /Users/Rober/.rvm/gems/ruby-2.4.9/gems/httpi-2.4.4/lib/httpi/adapter/httpclient.rb:24:in `request&#39;
+E, [2022-02-17T19:53:25.386358 #32501] ERROR -- : /Users/Rober/.rvm/gems/ruby-2.4.9/gems/httpi-2.4.4/lib/httpi.rb:161:in `request&#39;
+E, [2022-02-17T19:53:25.386658 #32501] ERROR -- : /Users/Rober/.rvm/gems/ruby-2.4.9/gems/httpi-2.4.4/lib/httpi.rb:127:in `get&#39;
+E, [2022-02-17T19:53:25.386909 #32501] ERROR -- : /Users/Rober/.rvm/gems/ruby-2.4.9/gems/wasabi-3.5.0/lib/wasabi/resolver.rb:43:in `load_from_remote&#39;
+E, [2022-02-17T19:53:25.387150 #32501] ERROR -- : /Users/Rober/.rvm/gems/ruby-2.4.9/gems/wasabi-3.5.0/lib/wasabi/resolver.rb:33:in `resolve&#39;
+E, [2022-02-17T19:53:25.387349 #32501] ERROR -- : /Users/Rober/.rvm/gems/ruby-2.4.9/gems/wasabi-3.5.0/lib/wasabi/document.rb:142:in `xml&#39;
+E, [2022-02-17T19:53:25.387606 #32501] ERROR -- : /Users/Rober/.rvm/gems/ruby-2.4.9/gems/wasabi-3.5.0/lib/wasabi/document.rb:160:in `parse&#39;
+E, [2022-02-17T19:53:25.387887 #32501] ERROR -- : /Users/Rober/.rvm/gems/ruby-2.4.9/gems/wasabi-3.5.0/lib/wasabi/document.rb:147:in `parser&#39;
+E, [2022-02-17T19:53:25.388162 #32501] ERROR -- : /Users/Rober/.rvm/gems/ruby-2.4.9/gems/wasabi-3.5.0/lib/wasabi/document.rb:64:in `soap_actions&#39;
+E, [2022-02-17T19:53:25.388432 #32501] ERROR -- : /Users/Rober/.rvm/gems/ruby-2.4.9/gems/savon-2.12.0/lib/savon/operation.rb:22:in `ensure_exists!&#39;
+E, [2022-02-17T19:53:25.388696 #32501] ERROR -- : /Users/Rober/.rvm/gems/ruby-2.4.9/gems/savon-2.12.0/lib/savon/operation.rb:15:in `create&#39;
+E, [2022-02-17T19:53:25.388955 #32501] ERROR -- : /Users/Rober/.rvm/gems/ruby-2.4.9/gems/savon-2.12.0/lib/savon/client.rb:32:in `operation&#39;
+E, [2022-02-17T19:53:25.389214 #32501] ERROR -- : /Users/Rober/.rvm/gems/ruby-2.4.9/gems/savon-2.12.0/lib/savon/client.rb:36:in `call&#39;
+</code></pre>
+<p>私は証明書に関してまったく専門知識がありません。それで、私はこの投稿を見つけました：SSL_connect
+returns = 1 errno = 0 state = SSLv3 read servercertificate
+B：証明書の検証に失敗しました。基本的に、表示されたことのほとんどすべてを試していますが、何も機能しません。</p>
+<p>本番環境では、Ubuntu 14.04.6 LTS (GNU/Linux 3.13.0-36-generic x86_64)
+で AWS EC2 インスタンスを実行しています。</p>
+<p>私が読んだところによると、それは Ruby の SSL
+ライブラリに関連している可能性があります。 Ruby を使用して Web
+アプリ内でリクエストするときにこのエラーが発生することに気づいたので、それは理にかなっていますが、curl
+–header “Content-Type: text/xml;charset=UTF-8” -
+のようなカールを使用してリクエストした場合-data <span class="citation"
+data-cites="request.xml">@request.xml</span>
+https://www.booking-manager.com/cbm_web_service2/services/CBM
+データ付きの成功応答が得られます。</p>
+<p>私のRuby環境については、</p>
+<pre><code>rvm info
+
+ruby-2.4.9:
+
+  system:
+    uname:        &quot;Linux ip-172-31-20-213 3.13.0-36-generic #63-Ubuntu SMP Wed Sep 3 21:30:07 UTC 2014 x86_64 x86_64 x86_64 GNU/Linux&quot;
+    name:         &quot;Ubuntu&quot;
+    version:      &quot;14.04&quot;
+    architecture: &quot;x86_64&quot;
+    bash:         &quot;/bin/bash =&gt; GNU bash, version 4.3.11(1)-release (x86_64-pc-linux-gnu)&quot;
+    zsh:          &quot; =&gt; not installed&quot;
+    remote_path:  &quot;ubuntu/14.04/x86_64&quot;
+
+  rvm:
+    version:      &quot;1.29.12 (manual)&quot;
+    updated:      &quot;2 months 20 days 19 hours 54 minutes 44 seconds ago&quot;
+    path:         &quot;/usr/share/rvm&quot;
+    autolibs:     &quot;[4] Allow RVM to use package manager if found, install missing dependencies, install package manager (only OS X).&quot;
+
+  ruby:
+    interpreter:  &quot;ruby&quot;
+    version:      &quot;2.4.9p362&quot;
+    date:         &quot;2019-10-02&quot;
+    platform:     &quot;x86_64-linux&quot;
+    patchlevel:   &quot;2019-10-02 revision 67824&quot;
+    full_version: &quot;ruby 2.4.9p362 (2019-10-02 revision 67824) [x86_64-linux]&quot;
+
+  homes:
+    gem:          &quot;/home/ubuntu/.rvm/gems/ruby-2.4.9&quot;
+    ruby:         &quot;/usr/share/rvm/rubies/ruby-2.4.9&quot;
+
+  binaries:
+    ruby:         &quot;/usr/share/rvm/rubies/ruby-2.4.9/bin/ruby&quot;
+    irb:          &quot;/usr/share/rvm/rubies/ruby-2.4.9/bin/irb&quot;
+    gem:          &quot;/usr/share/rvm/rubies/ruby-2.4.9/bin/gem&quot;
+    rake:         &quot;/home/ubuntu/.rvm/gems/ruby-2.4.9/bin/rake&quot;
+
+  environment:
+    PATH:         &quot;/home/ubuntu/.rvm/gems/ruby-2.4.9/bin:/home/ubuntu/.rvm/gems/ruby-2.4.9@global/bin:/usr/share/rvm/rubies/ruby-2.4.9/bin:/usr/share/rvm/bin:/home/ubuntu/.rbenv/plugins/ruby-build/bin:/home/ubuntu/.rbenv/shims:/home/ubuntu/.rbenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games&quot;
+    GEM_HOME:     &quot;/home/ubuntu/.rvm/gems/ruby-2.4.9&quot;
+    GEM_PATH:     &quot;/home/ubuntu/.rvm/gems/ruby-2.4.9:/home/ubuntu/.rvm/gems/ruby-2.4.9@global&quot;
+    MY_RUBY_HOME: &quot;/usr/share/rvm/rubies/ruby-2.4.9&quot;
+    IRBRC:        &quot;/usr/share/rvm/rubies/ruby-2.4.9/.irbrc&quot;
+    RUBYOPT:      &quot;&quot;
+    gemset:       &quot;&quot;
+</code></pre>
+<p>私のWebアプリはnginxフロントエンドで実行されており、Pumaで実行されているRuby
+on Railsにリクエストを送信しています。私のピューマのバージョン:</p>
+<pre><code>puma -v
+    /home/ubuntu/.rvm/gems/ruby-2.4.9/gems/puma-4.3.0/lib/puma/puma_http11.so: [BUG] Segmentation fault at 0x00000000000640
+    ruby 2.1.2p95 (2014-05-08 revision 45877) [x86_64-linux]
+    
+    -- Control frame information -----------------------------------------------
+    c:0022 p:-17524110008176 s:0109 e:000108 TOP    [FINISH]
+    c:0021 p:---- s:0107 e:000106 CFUNC  :require
+    c:0020 p:0115 s:0103 e:000102 METHOD /home/ubuntu/.rbenv/versions/2.1.2/lib/ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55
+    c:0019 p:0087 s:0093 e:000092 TOP    /home/ubuntu/.rvm/gems/ruby-2.4.9/gems/puma-4.3.0/lib/puma/server.rb:15 [FINISH]
+    c:0018 p:---- s:0091 e:000090 CFUNC  :require
+    c:0017 p:0115 s:0087 e:000086 METHOD /home/ubuntu/.rbenv/versions/2.1.2/lib/ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55
+    c:0016 p:0007 s:0077 e:000076 TOP    /home/ubuntu/.rvm/gems/ruby-2.4.9/gems/puma-4.3.0/lib/puma/runner.rb:3 [FINISH]
+    c:0015 p:---- s:0075 e:000074 CFUNC  :require
+    c:0014 p:0115 s:0071 e:000070 METHOD /home/ubuntu/.rbenv/versions/2.1.2/lib/ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55
+    c:0013 p:0007 s:0061 e:000060 TOP    /home/ubuntu/.rvm/gems/ruby-2.4.9/gems/puma-4.3.0/lib/puma/cluster.rb:3 [FINISH]
+    c:0012 p:---- s:0059 e:000058 CFUNC  :require
+    c:0011 p:0115 s:0055 e:000054 METHOD /home/ubuntu/.rbenv/versions/2.1.2/lib/ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55
+    c:0010 p:0023 s:0045 e:000044 TOP    /home/ubuntu/.rvm/gems/ruby-2.4.9/gems/puma-4.3.0/lib/puma/launcher.rb:5 [FINISH]
+    c:0009 p:---- s:0043 e:000042 CFUNC  :require
+    c:0008 p:0115 s:0039 e:000038 METHOD /home/ubuntu/.rbenv/versions/2.1.2/lib/ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55
+    c:0007 p:0039 s:0029 e:000028 TOP    /home/ubuntu/.rvm/gems/ruby-2.4.9/gems/puma-4.3.0/lib/puma/cli.rb:8 [FINISH]
+    c:0006 p:---- s:0027 e:000026 CFUNC  :require
+    c:0005 p:0115 s:0023 e:000022 METHOD /home/ubuntu/.rbenv/versions/2.1.2/lib/ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55
+    c:0004 p:0007 s:0013 e:000012 TOP    /home/ubuntu/.rvm/gems/ruby-2.4.9/gems/puma-4.3.0/bin/puma:6 [FINISH]
+    c:0003 p:---- s:0010 e:000009 CFUNC  :load
+    c:0002 p:0135 s:0006 E:001c18 EVAL   /home/ubuntu/.rbenv/versions/2.1.2/bin/puma:23 [FINISH]
+    c:0001 p:0000 s:0002 E:0019f8 TOP    [FINISH]
+    
+    -- Ruby level backtrace information ----------------------------------------
+    /home/ubuntu/.rbenv/versions/2.1.2/bin/puma:23:in `&lt;main&gt;&#39;
+    /home/ubuntu/.rbenv/versions/2.1.2/bin/puma:23:in `load&#39;
+    /home/ubuntu/.rvm/gems/ruby-2.4.9/gems/puma-4.3.0/bin/puma:6:in `&lt;top (required)&gt;&#39;
+    /home/ubuntu/.rbenv/versions/2.1.2/lib/ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in `require&#39;
+    /home/ubuntu/.rbenv/versions/2.1.2/lib/ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in `require&#39;
+    /home/ubuntu/.rvm/gems/ruby-2.4.9/gems/puma-4.3.0/lib/puma/cli.rb:8:in `&lt;top (required)&gt;&#39;
+    /home/ubuntu/.rbenv/versions/2.1.2/lib/ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in `require&#39;
+    /home/ubuntu/.rbenv/versions/2.1.2/lib/ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in `require&#39;
+    /home/ubuntu/.rvm/gems/ruby-2.4.9/gems/puma-4.3.0/lib/puma/launcher.rb:5:in `&lt;top (required)&gt;&#39;
+    /home/ubuntu/.rbenv/versions/2.1.2/lib/ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in `require&#39;
+    /home/ubuntu/.rbenv/versions/2.1.2/lib/ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in `require&#39;
+    /home/ubuntu/.rvm/gems/ruby-2.4.9/gems/puma-4.3.0/lib/puma/cluster.rb:3:in `&lt;top (required)&gt;&#39;
+    /home/ubuntu/.rbenv/versions/2.1.2/lib/ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in `require&#39;
+    /home/ubuntu/.rbenv/versions/2.1.2/lib/ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in `require&#39;
+    /home/ubuntu/.rvm/gems/ruby-2.4.9/gems/puma-4.3.0/lib/puma/runner.rb:3:in `&lt;top (required)&gt;&#39;
+    /home/ubuntu/.rbenv/versions/2.1.2/lib/ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in `require&#39;
+    /home/ubuntu/.rbenv/versions/2.1.2/lib/ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in `require&#39;
+    /home/ubuntu/.rvm/gems/ruby-2.4.9/gems/puma-4.3.0/lib/puma/server.rb:15:in `&lt;top (required)&gt;&#39;
+    /home/ubuntu/.rbenv/versions/2.1.2/lib/ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in `require&#39;
+    /home/ubuntu/.rbenv/versions/2.1.2/lib/ruby/2.1.0/rubygems/core_ext/kernel_require.rb:55:in `require&#39;
+...
+    
+    [NOTE]
+    You may have encountered a bug in the Ruby interpreter or extension libraries.
+    Bug reports are welcome.
+    For details: http://www.ruby-lang.org/bugreport.html
+    
+    Aborted (core dumped)
+</code></pre>
+<p>サードパーティの Web サービスに接続しようとしています。</p>
+<pre><code>client = Savon.client(wsdl: &quot;https://www.booking-manager.com/cbm_web_service2/services/CBM&quot;, 
+                              #log_level: :info,
+                              log_level: :debug,
+                              log: true,
+                              pretty_print_xml: true,
+                              open_timeout: 300, 
+                              read_timeout: 300)
+message = {&#39;in0&#39; =&gt; Yanpy::MMK_USER_ID, 
+               &#39;in1&#39; =&gt; Yanpy::MMK_USERNAME, 
+               &#39;in2&#39; =&gt; Yanpy::MMK_PASSWORD}
+    response = client.call(:get_regions, message: message)
+</code></pre>
+<p>アップデート
+以下の@jangarajによって提供された回答によると、開発環境で問題を修正できました：エラー証明書の検証に失敗しました（証明書の有効期限が切れました））：Mac
+OSX 11.6.1およびruby
+3.0.3。ただし、本番環境ではまだ問題を解決できませんでした。この根本的な原因は、Web
+サービス リクエストを適切な ca-certificates
+ファイルで更新する前に、このファイルがどこにあるのか、そしてそれが機能しているのかを明確にする必要があることだと思います。
+このために、開発に関する他の投稿で従った手順に従って、次を実行します。</p>
+<pre><code>openssl s_client -showcerts -host valid-isrgrootx1.letsencrypt.org -port 443
+</code></pre>
+<p>https://community.letsencrypt.org/t/help-thread-for-dst-root-ca-x3-expiration-september-2021/149190/970
+の手順に従って、ca-certificates
+構成をデバッグして修正できました。ただし、現時点ではこれはうまくいきません。
+いくつかの乱雑な ca-certs
+フォルダーとファイルが表示されます。おそらく別のインストールからのものでしょうか?私は説明しようとします:</p>
+<p>実際のところ、 openssl s_client -showcerts -host
+valid-isrgrootx1.letsencrypt.org -port 443
+を実行すると、依然として次のエラーが表示されます。</p>
+<pre><code>CONNECTED(00000003)
+depth=2 C = US, O = Internet Security Research Group, CN = ISRG Root X1
+verify error:num=20:unable to get local issuer certificate
+verify return:0
+---
+Certificate chain
+ 0 s:/CN=origin.letsencrypt.org
+   i:/C=US/O=Let&#39;s Encrypt/CN=R3
+-----BEGIN CERTIFICATE-----
+MIIFMTCCBBmgAwIBAgISAz+qxNSV9WDWFPKhpVo1EzpqMA0GCSqGSIb3DQEBCwUA
+MDIxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MQswCQYDVQQD
+EwJSMzAeFw0yMjAyMjMxNTAwMjFaFw0yMjA1MjQxNTAwMjBaMCExHzAdBgNVBAMT
+Fm9yaWdpbi5sZXRzZW5jcnlwdC5vcmcwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAw
+ggEKAoIBAQCZbsEvIzZDb5R7A/pDm4EYksNEMlQEo5uJT+CFA29bb8ldJAcsqdOj
+Fge72dr2qWcowC2azODBuS0fE0nMKpt09r+DX/k3HeF2Z9v/HW/B3ManDgpo7FfT
+F6m7zyfEowVPK82hm1aruBlBJAcMZrwOvQIfeiOG6hxkH+ScHmoiiVAlWt1v9wKK
+tgELlhn5OJkGklVX8xPY+2UlEWaSqoyPmiYnAE+tk4vi6kcAYgpcTOUOrsLnVgAW
+iy3ShTAlM8AfGnRYV5dkdzSafRmbi2bJXhoINwi2NDKboZHZY88Au8PNZlA32XBo
+E8RBI/bVaK5/rWjN0IJffvv+N5C4kSWLAgMBAAGjggJQMIICTDAOBgNVHQ8BAf8E
+BAMCBaAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMAwGA1UdEwEB/wQC
+MAAwHQYDVR0OBBYEFLIea0+W5J3EbMku+rkQSL92smpuMB8GA1UdIwQYMBaAFBQu
+sxe3WFbLrlAJQOYfr52LFMLGMFUGCCsGAQUFBwEBBEkwRzAhBggrBgEFBQcwAYYV
+aHR0cDovL3IzLm8ubGVuY3Iub3JnMCIGCCsGAQUFBzAChhZodHRwOi8vcjMuaS5s
+ZW5jci5vcmcvMCEGA1UdEQQaMBiCFm9yaWdpbi5sZXRzZW5jcnlwdC5vcmcwTAYD
+VR0gBEUwQzAIBgZngQwBAgEwNwYLKwYBBAGC3xMBAQEwKDAmBggrBgEFBQcCARYa
+aHR0cDovL2Nwcy5sZXRzZW5jcnlwdC5vcmcwggEDBgorBgEEAdZ5AgQCBIH0BIHx
+AO8AdQDfpV6raIJPH2yt7rhfTj5a6s2iEqRqXo47EsAgRFwqcwAAAX8nT+NHAAAE
+AwBGMEQCIH1xywyRde3OwoG0RZQW0xfXFEfnd5IFDuSEWHmaxaJEAiAmqTVJrTo1
+ycmg1DUrlp087WgXdE8RleCkwWLiiCI0gAB2ACl5vvCeOTkh8FZzn2Old+W+V32c
+YAr4+U1dJlwlXceEAAABfydP478AAAQDAEcwRQIgI65GyXpBqx6zYOVRu6jBNVNa
+yXR//Rvfih5E6oR8or0CIQD+GA9xLWfIsexfPpqczQgxlKrHHU7Jm9635VjotOJG
+wTANBgkqhkiG9w0BAQsFAAOCAQEAgUSK3HvXnKsR+WqNSmJvcXPzEZaTTp1sq4++
+zRK6sZ1TJsJQq00aPX1625fSOYNQa0vYDFahfEeXMQ9IceOQJ+HE7NZYgnjnKb3u
+96fhRyGBpPEY3szbtJQWk8oDQgFk3u7FS+AnxyXP88ypiC4iDk16Ab9Nip+8sz6t
+JOzo3KvVlucviS8K4vJemz6WyH8Ux7KX3r/IvPFj7Cx2aBAx6QM7lXWXgo6PHS/r
+eo+KjKo0YWZfdXm7oD7VpOlPNr4W7kAuKidmPSwOPB7RGJ/OKfbGiFCVt8Yy9cyp
+hMYLmYJ9qZtxKFGi2kR7Cl/0LuXaBNy4SximhxPUWXQZhoNL3A==
+-----END CERTIFICATE-----
+ 1 s:/C=US/O=Let&#39;s Encrypt/CN=R3
+   i:/C=US/O=Internet Security Research Group/CN=ISRG Root X1
+-----BEGIN CERTIFICATE-----
+MIIFFjCCAv6gAwIBAgIRAJErCErPDBinU/bWLiWnX1owDQYJKoZIhvcNAQELBQAw
+TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
+cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwHhcNMjAwOTA0MDAwMDAw
+WhcNMjUwOTE1MTYwMDAwWjAyMQswCQYDVQQGEwJVUzEWMBQGA1UEChMNTGV0J3Mg
+RW5jcnlwdDELMAkGA1UEAxMCUjMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
+AoIBAQC7AhUozPaglNMPEuyNVZLD+ILxmaZ6QoinXSaqtSu5xUyxr45r+XXIo9cP
+R5QUVTVXjJ6oojkZ9YI8QqlObvU7wy7bjcCwXPNZOOftz2nwWgsbvsCUJCWH+jdx
+sxPnHKzhm+/b5DtFUkWWqcFTzjTIUu61ru2P3mBw4qVUq7ZtDpelQDRrK9O8Zutm
+NHz6a4uPVymZ+DAXXbpyb/uBxa3Shlg9F8fnCbvxK/eG3MHacV3URuPMrSXBiLxg
+Z3Vms/EY96Jc5lP/Ooi2R6X/ExjqmAl3P51T+c8B5fWmcBcUr2Ok/5mzk53cU6cG
+/kiFHaFpriV1uxPMUgP17VGhi9sVAgMBAAGjggEIMIIBBDAOBgNVHQ8BAf8EBAMC
+AYYwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMBIGA1UdEwEB/wQIMAYB
+Af8CAQAwHQYDVR0OBBYEFBQusxe3WFbLrlAJQOYfr52LFMLGMB8GA1UdIwQYMBaA
+FHm0WeZ7tuXkAXOACIjIGlj26ZtuMDIGCCsGAQUFBwEBBCYwJDAiBggrBgEFBQcw
+AoYWaHR0cDovL3gxLmkubGVuY3Iub3JnLzAnBgNVHR8EIDAeMBygGqAYhhZodHRw
+Oi8veDEuYy5sZW5jci5vcmcvMCIGA1UdIAQbMBkwCAYGZ4EMAQIBMA0GCysGAQQB
+gt8TAQEBMA0GCSqGSIb3DQEBCwUAA4ICAQCFyk5HPqP3hUSFvNVneLKYY611TR6W
+PTNlclQtgaDqw+34IL9fzLdwALduO/ZelN7kIJ+m74uyA+eitRY8kc607TkC53wl
+ikfmZW4/RvTZ8M6UK+5UzhK8jCdLuMGYL6KvzXGRSgi3yLgjewQtCPkIVz6D2QQz
+CkcheAmCJ8MqyJu5zlzyZMjAvnnAT45tRAxekrsu94sQ4egdRCnbWSDtY7kh+BIm
+lJNXoB1lBMEKIq4QDUOXoRgffuDghje1WrG9ML+Hbisq/yFOGwXD9RiX8F6sw6W4
+avAuvDszue5L3sz85K+EC4Y/wFVDNvZo4TYXao6Z0f+lQKc0t8DQYzk1OXVu8rp2
+yJMC6alLbBfODALZvYH7n7do1AZls4I9d1P4jnkDrQoxB3UqQ9hVl3LEKQ73xF1O
+yK5GhDDX8oVfGKF5u+decIsH4YaTw7mP3GFxJSqv3+0lUFJoi5Lc5da149p90Ids
+hCExroL1+7mryIkXPeFM5TgO9r0rvZaBFOvV2z0gp35Z0+L4WPlbuEjN/lxPFin+
+HlUjr8gRsI3qfJOQFy/9rKIJR0Y/8Omwt/8oTWgy1mdeHmmjk7j1nYsvC9JSQ6Zv
+MldlTTKB3zhThV1+XWYp6rjd5JW1zbVWEkLNxE7GJThEUG3szgBVGP7pSWTUTsqX
+nLRbwHOoq7hHwg==
+-----END CERTIFICATE-----
+ 2 s:/C=US/O=Internet Security Research Group/CN=ISRG Root X1
+   i:/O=Digital Signature Trust Co./CN=DST Root CA X3
+-----BEGIN CERTIFICATE-----
+MIIFYDCCBEigAwIBAgIQQAF3ITfU6UK47naqPGQKtzANBgkqhkiG9w0BAQsFADA/
+MSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMT
+DkRTVCBSb290IENBIFgzMB4XDTIxMDEyMDE5MTQwM1oXDTI0MDkzMDE4MTQwM1ow
+TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
+cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwggIiMA0GCSqGSIb3DQEB
+AQUAA4ICDwAwggIKAoICAQCt6CRz9BQ385ueK1coHIe+3LffOJCMbjzmV6B493XC
+ov71am72AE8o295ohmxEk7axY/0UEmu/H9LqMZshftEzPLpI9d1537O4/xLxIZpL
+wYqGcWlKZmZsj348cL+tKSIG8+TA5oCu4kuPt5l+lAOf00eXfJlII1PoOK5PCm+D
+LtFJV4yAdLbaL9A4jXsDcCEbdfIwPPqPrt3aY6vrFk/CjhFLfs8L6P+1dy70sntK
+4EwSJQxwjQMpoOFTJOwT2e4ZvxCzSow/iaNhUd6shweU9GNx7C7ib1uYgeGJXDR5
+bHbvO5BieebbpJovJsXQEOEO3tkQjhb7t/eo98flAgeYjzYIlefiN5YNNnWe+w5y
+sR2bvAP5SQXYgd0FtCrWQemsAXaVCg/Y39W9Eh81LygXbNKYwagJZHduRze6zqxZ
+Xmidf3LWicUGQSk+WT7dJvUkyRGnWqNMQB9GoZm1pzpRboY7nn1ypxIFeFntPlF4
+FQsDj43QLwWyPntKHEtzBRL8xurgUBN8Q5N0s8p0544fAQjQMNRbcTa0B7rBMDBc
+SLeCO5imfWCKoqMpgsy6vYMEG6KDA0Gh1gXxG8K28Kh8hjtGqEgqiNx2mna/H2ql
+PRmP6zjzZN7IKw0KKP/32+IVQtQi0Cdd4Xn+GOdwiK1O5tmLOsbdJ1Fu/7xk9TND
+TwIDAQABo4IBRjCCAUIwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAQYw
+SwYIKwYBBQUHAQEEPzA9MDsGCCsGAQUFBzAChi9odHRwOi8vYXBwcy5pZGVudHJ1
+c3QuY29tL3Jvb3RzL2RzdHJvb3RjYXgzLnA3YzAfBgNVHSMEGDAWgBTEp7Gkeyxx
++tvhS5B1/8QVYIWJEDBUBgNVHSAETTBLMAgGBmeBDAECATA/BgsrBgEEAYLfEwEB
+ATAwMC4GCCsGAQUFBwIBFiJodHRwOi8vY3BzLnJvb3QteDEubGV0c2VuY3J5cHQu
+b3JnMDwGA1UdHwQ1MDMwMaAvoC2GK2h0dHA6Ly9jcmwuaWRlbnRydXN0LmNvbS9E
+U1RST09UQ0FYM0NSTC5jcmwwHQYDVR0OBBYEFHm0WeZ7tuXkAXOACIjIGlj26Ztu
+MA0GCSqGSIb3DQEBCwUAA4IBAQAKcwBslm7/DlLQrt2M51oGrS+o44+/yQoDFVDC
+5WxCu2+b9LRPwkSICHXM6webFGJueN7sJ7o5XPWioW5WlHAQU7G75K/QosMrAdSW
+9MUgNTP52GE24HGNtLi1qoJFlcDyqSMo59ahy2cI2qBDLKobkx/J3vWraV0T9VuG
+WCLKTVXkcGdtwlfFRjlBz4pYg1htmf5X6DYO8A4jqv2Il9DjXA6USbW1FzXSLr9O
+he8Y4IWS6wY7bCkjCWDcRQJMEhg76fsO3txE+FiYruq9RUWhiF1myv4Q6W+CyBFC
+Dfvp7OOGAN6dEOM4+qR9sdjoSYKEBpsr6GtPAQw4dy753ec5
+-----END CERTIFICATE-----
+---
+Server certificate
+subject=/CN=origin.letsencrypt.org
+issuer=/C=US/O=Let&#39;s Encrypt/CN=R3
+---
+No client certificate CA names sent
+---
+SSL handshake has read 4700 bytes and written 421 bytes
+---
+New, TLSv1/SSLv3, Cipher is ECDHE-RSA-AES128-GCM-SHA256
+Server public key is 2048 bit
+Secure Renegotiation IS supported
+Compression: NONE
+Expansion: NONE
+SSL-Session:
+    Protocol  : TLSv1.2
+    Cipher    : ECDHE-RSA-AES128-GCM-SHA256
+    Session-ID: 1DA772568CC98B40026497CB0013ABD22F5F2D9142370B99017A3C84EAEBC0BD
+    Session-ID-ctx: 
+    Master-Key: C0324E0CDC2FEA59C3A921E1CDCBED19DD7EF2D4785B4BC8208B18934E1E8FA646692F3AAB956CFA2646015AEB3A6AAB
+    Key-Arg   : None
+    PSK identity: None
+    PSK identity hint: None
+    SRP username: None
+    TLS session ticket lifetime hint: 86400 (seconds)
+    TLS session ticket:
+    0000 - a7 64 6c 88 3c 76 89 cf-37 95 cd b6 5f 84 c3 71   .dl.&lt;v..7..._..q
+    0010 - de ca 95 74 f3 f8 9f 08-eb bc e7 be a5 63 ca e4   ...t.........c..
+    0020 - 1e 80 c9 a6 a7 bd fe 9e-a0 ae f7 f1 64 74 b3 ff   ............dt..
+    0030 - e2 8d 1e 2a 51 0a 5a f5-77 6d 86 b6 87 28 a1 2a   ...*Q.Z.wm...(.*
+    0040 - e0 ff 79 d8 d5 89 52 99-a7 50 ca 35 62 30 97 f9   ..y...R..P.5b0..
+    0050 - 24 57 b3 e5 87 4a 60 04-c2 e9 45 c7 47 cd b9 a9   $W...J`...E.G...
+    0060 - b2 d5 f9 82 05 f6 98 5f-54 4a 5e 4a f5 06 66 da   ......._TJ^J..f.
+    0070 - e6 ba 13 ff 66 ff a3 3a-b7 1c db fa 05 ad 51 0f   ....f..:......Q.
+    0080 - ba ad fe 92 ea e7 c6 92-02 89 ec 83 06 46 06 2d   .............F.-
+    0090 - 1b 96 95 81 80 4a eb 55-b1 80 6a 5d e6 09 78 75   .....J.U..j]..xu
+    00a0 - fe a9 c2 d8 d2 e2 31 a5-77 c5 d2 e2 c9 3b d0 01   ......1.w....;..
+
+    Start Time: 1646907242
+    Timeout   : 300 (sec)
+    Verify return code: 20 (unable to get local issuer certificate)
+---
+</code></pre>
+<p>したがって、DST ルート CA X3
+はどこかに存在しているようです。この時点で行き詰まっています。</p>
+<pre><code>openssl version
+OpenSSL 1.0.1f 6 Jan 2014
+</code></pre>
+<p>私が実行した場合:</p>
+<pre><code>ubuntu@ip-172-31-9-63:~$ irb
+2.1.4 :001 &gt; require &quot;openssl&quot;
+ =&gt; true 
+2.1.4 :002 &gt; puts OpenSSL::OPENSSL_VERSION
+OpenSSL 1.0.1f 6 Jan 2014
+ =&gt; nil 
+2.1.4 :003 &gt; puts &quot;SSL_CERT_FILE: %s&quot; % OpenSSL::X509::DEFAULT_CERT_FILE
+SSL_CERT_FILE: /usr/lib/ssl/cert.pem
+ =&gt; nil 
+2.1.4 :004 &gt; puts &quot;SSL_CERT_DIR: %s&quot; % OpenSSL::X509::DEFAULT_CERT_DIR
+SSL_CERT_DIR: /usr/lib/ssl/certs
+ =&gt; nil 
+</code></pre>
+<p>ただし、/usr/lib/ssl/cert.pem は存在しません。</p>
+<p>また、私がそうする場合:</p>
+<pre><code>openssl version -d
+</code></pre>
+<p>OPENSSLDIR: “/usr/lib/ssl” が表示されます。</p>
+<p>アップデート
+問題を分離するために、現在の問題を含む新しい投稿をここに作成しました:
+古い Digital Signature Trust Co./CN=DST Root CA X3 スロー
+エラー検証エラーの削除:num=20:Ubuntu
+でローカル発行者の証明書を取得できませんパート 1
+それが修正されたら、この記事の内容も修正できると思います。</p>
+<h2 id="解決策">解決策</h2>
+<p>Ubuntu 14 と Savon 2 クライアントを使用しているようです。 Savon 2
+クライアントのドキュメント:
+https://www.savonrb.com/version2/globals.html</p>
+<p>ssl_ca_cert_file を /etc/ssl/certs/ca-certificates.crt
+に明示的に指定します。</p>
+<p>OS に有効な CA 証明書があることを確認するには:</p>
+<pre><code>apt-get update -y
+apt --only-upgrade install -y ca-certificates
+update-ca-certificates
+</code></pre>
+<p>Ruby で使用されている古い OpenSSL
+バージョンに問題がある可能性もあります。</p>
+  </div>
+</body>
+</html>

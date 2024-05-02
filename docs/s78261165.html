@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>なぜ Ruby はこれよりも遅いのか | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">なぜ Ruby はこれよりも遅いのか</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>ビット演算子は通常の演算子よりも速いはずだと常々思っていたので、Ruby
+num &gt;&gt; 1 が num/2 よりも遅いことに驚きました。</p>
+<pre><code># ruby 3.0.3
+
+require &quot;benchmark/ips&quot;
+
+Benchmark.ips do |bm|
+    num = 1000000
+
+    bm.report(&quot;num/2&quot;) do
+        num/2
+    end
+
+    bm.report(&quot;num &gt;&gt; 1&quot;) do
+        num &gt;&gt; 1
+    end
+
+    bm.compare!
+end
+# num/2:        16045584.8 i/s
+# num &gt;&gt; 1:     14591335.3 i/s - 1.10x  slower
+
+
+Benchmark.ips do |bm|
+    num = 1000000
+
+    bm.report(&quot;num * 2&quot;) do
+        num * 2
+    end
+
+    bm.report(&quot;num &lt;&lt; 1&quot;) do
+        num &lt;&lt; 1
+    end
+
+    bm.compare!
+end
+# num * 2:      18252815.2 i/s
+# num &lt;&lt; 1:     14289700.6 i/s - 1.28x  slower
+</code></pre>
+<h2 id="解決策">解決策</h2>
+<p>コメントによると、テストに実際の反復を含めることに失敗していました。これは修正され、それに応じてコードと結果が更新されました。</p>
+<p>Benchmark/ips はコア gem や Ruby
+標準ライブラリの一部ではないため、テストしませんでした。ただし、標準の
+Benchmark#bmbm
+メソッドを使用したいくつかのリファクタリングされたテストに基づくと、Ruby
+の一部のバージョンでの String
+割り当てのオーバーヘッドによって結果の一部が歪められる可能性があるようです。凍結を使用しない場合、複数の実行で若干の差異が見られることに気づきました。文字列。また、C
+Ruby で YJIT
+を有効にしないと、若干安定した結果が得られました。これは、最適化によってアプリケーション全体の速度が向上した場合でも、可変量のオーバーヘッドが追加されるようです。ただし、Ruby
+3.3.0 では、凍結文字列の有無や、YJIT
+が有効かどうかに関係なく、大きな違いはわかりませんでした。</p>
+<p>Ruby 3.3.0
+で凍結された文字列を使用する次のことを考えてみましょう。</p>
+<pre><code># frozen_string_literal: true
+
+require &quot;benchmark&quot;
+
+NUM  = 1_000_000
+ITER = 100_000_000
+
+Benchmark.bmbm do |x|
+    x.report(&quot;NUM / 2&quot;) do ITER.times { NUM / 2 } end
+    x.report(&quot;NUM &gt;&gt; 1&quot;) do ITER.times { NUM &gt;&gt; 1 } end
+
+    x.report(&quot;NUM * 2&quot;) do ITER.times { NUM * 2 } end
+    x.report(&quot;NUM &lt;&lt; 1&quot;) do ITER.times { NUM &lt;&lt; 1 } end
+end
+</code></pre>
+<p>YJIT と凍結文字列の両方を有効にした Ruby 3.3.0 で 1
+億回の反復でも、ruby –yjit shft_ops.rb を使用して 1
+億回反復すると、一貫して次のプラスまたはマイナス数ミリ秒が得られます。</p>
+<pre><code>Rehearsal --------------------------------------------
+NUM / 2    2.172535   0.000201   2.172736 (  2.176693)
+NUM &gt;&gt; 1   2.257154   0.000226   2.257380 (  2.261687)
+NUM * 2    2.078395   0.000204   2.078599 (  2.081848)
+NUM &lt;&lt; 1   2.101787   0.000122   2.101909 (  2.104296)
+----------------------------------- total: 8.610624sec
+
+               user     system      total        real
+NUM / 2    2.153104   0.000117   2.153221 (  2.156942)
+NUM &gt;&gt; 1   2.296988   0.000197   2.297185 (  2.301160)
+NUM * 2    2.114520   0.000157   2.114677 (  2.118208)
+NUM &lt;&lt; 1   2.121999   0.000158   2.122157 (  2.125518)
+</code></pre>
+<p>1 億回の反復では、反復ごとに実時間の 3 µs
+未満しかかかりません。私にとっては、実用的な目的には十分な速さだと思われます。各メソッドの合計時間が最高値と最低値の間で反復ごとに約
+1.44 フェムト秒しか変わらない場合、1
+秒あたりの反復数を心配するのは、最も厳密なユースケース以外では不合理に思えます。より一般的な使用例では、その小さなデルタは重要ではない可能性があります。ただし、別のエンジンを使用すると、さらに良い結果を得ることができます。</p>
+<p>リファレンス Ruby
+実装よりも高速なパフォーマンスが本当に必要な場合は、スレッド、ラクター、または同時実行性を最適化するマルチコア
+アプローチの使用を検討してください。並列 gem は、メインライン Ruby
+でそれを支援します。他のエンジンでは追加の代替手段が提供される場合があります。</p>
+<p>ファイルを呼び出すのではなく IRB 内で実行している場合は、次のように
+IRB を開始する必要があることに注意してください。</p>
+<pre><code>RUBYOPT=&quot;--enable=frozen_string_literal&quot; irb --nocolorize
+</code></pre>
+<p>凍結された文字列がデフォルトで有効になっていることを確認し、ANSI
+カラーがパフォーマンスに影響を与えないようにするためです。</p>
+<p>ループしていない場合、上記のコードは JRuby や TruffleRuby よりも C
+Ruby
+で高速に実行されたことは注目に値します。これらのエンジンはさまざまなユースケースに合わせて最適化されており、オーバーヘッドが高いため、これは予想されることですが、それでも、広範囲に反復する必要がない場合、リファレンス実装が現時点で最も高速であることは注目に値します。</p>
+<p>本当に何百万もの操作を実行する必要がある場合、ネイティブ モードの
+TruffleRuby は非常に高速です。 TruffleRuby 24.0.0 で同じ 1
+億回の反復を行うと、他のコード変更やエンジン固有の最適化を行わずに、ruby
+shft_ops.rb として実行され、次の結果が得られます。</p>
+<pre><code>Rehearsal --------------------------------------------
+NUM / 2    0.344032   0.009242   0.353274 (  0.265151)
+NUM &gt;&gt; 1   0.303473   0.002182   0.305655 (  0.259223)
+NUM * 2    0.372648   0.001641   0.374289 (  0.337829)
+NUM &lt;&lt; 1   0.355533   0.001281   0.356814 (  0.326600)
+----------------------------------- total: 1.390032sec
+
+               user     system      total        real
+NUM / 2    0.353571   0.000581   0.354152 (  0.245380)
+NUM &gt;&gt; 1   0.337815   0.000339   0.338154 (  0.253574)
+NUM * 2    0.336717   0.000570   0.337287 (  0.246457)
+NUM &lt;&lt; 1   0.351651   0.000632   0.352283 (  0.246673)
+</code></pre>
+<p>これにより、1 億回の操作にかかる時間が反復あたり約 2.54μs
+に短縮され、非常に大規模な操作セットに比べて合計時間が 900%
+向上しました。小さいセットでは改善は大幅に小さくなりますが、ミリ秒の何分の
+1
+かの違いを表現しようとすると、誰かが私の計算を間違いで指摘するでしょう。</p>
+<p>言い換えれば、別の Ruby
+エンジンを使用して計算を実行するだけで、必要なパフォーマンスの向上が得られる可能性があります。これは間違いなく検討する価値があります。</p>
+<p>また、TruffleRuby
+を複数回実行してテストする場合、または反復回数を増やす場合、リハーサル中はシフト演算子が乗算や除算演算子を上回ることがよくありますが、ウォームアップ後はほとんど勝てないことも注目に値します。リハーサル後のベンチマーク実行中に両方のエンジンの合計時間は短縮されましたが、非常に大規模な反復では、&gt;&gt;
+メソッドは /
+メソッドよりも著しく長い時間がかかることがよくありましたが、&lt;&lt; は
+* と比較してはるかに小さい差を示しました。同じことが C Ruby
+にも当てはまり、どのタイプのほとんどの実行でも同様のパターンが示されましたが、デルタは常に幅が広くなりました。</p>
+<p>私の知識に基づいた推測では、確実に基盤となる VM または C
+コードを調べる必要がありますが、Ruby コードでは * と /
+の方が頻繁に使用されるメソッドであると考えられます。システム
+プログラミングを特に対象とする言語とは異なり、乗算と除算の手法には、バイナリ
+シフト手法よりも多くの時間と注意が払われ、VM
+の最適化が行われてきたのではないかと思います。特に、&gt;&gt;
+は、何らかの理由で単に Ruby
+の呼び出しがより高価になる可能性があります。</p>
+<p>とはいえ、生のパフォーマンスが目標である場合は、実際のコードのベンチマークに基づいて利用可能な最もパフォーマンスの高い方法を使用する必要があります。使用する方法に関係なく、これらの結果はほとんどの実用的な目的には十分すぎる速度であるように見えますが、問題が
+Ruby 言語自体ではなく、基盤となる VM またはそのエンジンのバイナリ
+シフトの実装にある可能性が高いことを強調しています。</p>
+<p>それが言語や実装設計の決定ではなくバグであると思われる場合は、Ruby
+問題トラッカーでいつでも報告できます。ただし、純粋に実用的な観点から見ると、すべてのオプションは、ほとんどの実用的な使用例に対して十分に高速である可能性があります。さらに、独自のネイティブ
+C 拡張機能を作成するか、1
+秒あたりの高い命令速度で実行する必要がある数値計算アプリケーション専用のツールを
+Ruby から呼び出すかを常に選択できます。</p>
+  </div>
+</body>
+</html>

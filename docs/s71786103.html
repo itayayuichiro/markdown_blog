@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>Ruby on Rails API を Docker 化するときに Nokogiri 依存関係を克服するにはどうすればよいですか? | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">Ruby on Rails API を Docker 化するときに Nokogiri
+依存関係を克服するにはどうすればよいですか?</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>SQL データベースを使用して単純な Ruby on Rails API を Docker
+化することに取り組んでいますが、次のエラーが発生しました。</p>
+<pre><code>ERROR: It looks like you&#39;re trying to use Nokogiri as a precompiled native gem on a system with glibc &lt; 2.17:
+/lib/aarch64-linux-gnu/libm.so.6: version `GLIBC_2.29&#39; not found (required by /usr/local/bundle/gems/nokogiri-1.13.3-aarch64-linux/lib/nokogiri/3.0/nokogiri.so) - /usr/local/bundle/gems/nokogiri-1.13.3-aarch64-linux/lib/nokogiri/3.0/nokogiri.so
+   If that&#39;s the case, then please install Nokogiri via the `ruby` platform gem:      gem install nokogiri --platform=ruby   or:  bundle config set force_ruby_platform true
+Please visit https://nokogiri.org/tutorials/installing_nokogiri.html for more help.
+</code></pre>
+<p>これが私のdockerfileです</p>
+<pre><code>FROM ruby:3.0.0
+
+RUN apt-get update &amp;&amp; apt-get install -y build-essential
+RUN apt-get install default-mysql-client -y
+
+RUN mkdir /task
+WORKDIR /task
+
+ADD Gemfile /task/Gemfile
+ADD Gemfile.lock /task/Gemfile.lock
+
+RUN bundle install
+
+ADD . /task
+</code></pre>
+<p>そして、これが私の作成ファイルです</p>
+<pre><code>services:
+  db:
+    platform: linux/x86_64
+    image: mysql:8.0.20
+    restart: always
+    environment:
+      MYSQL_USER: root
+      MYSQL_DB: chat_system
+      MYSQL_HOST: db
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - &quot;3307:3306&quot;
+  app:
+    build: .
+    command: bundle exec rails s -p 3000 -b &#39;0.0.0.0&#39;
+    volumes:
+      - &quot;.:/noteapp&quot;
+    ports:
+      - &quot;3001:3000&quot;
+    depends_on:
+      - db
+    links:
+      - db
+    environment:
+      DB_USER: root
+      DB_NAME: chat_system
+      DB_PASSWORD: password
+      DB_HOST: db
+</code></pre>
+<p>Gemfile</p>
+<pre><code>source &quot;https://rubygems.org&quot;
+git_source(:github) { |repo| &quot;https://github.com/#{repo}.git&quot; }
+
+ruby &quot;3.0.0&quot;
+
+# Bundle edge Rails instead: gem &quot;rails&quot;, github: &quot;rails/rails&quot;, branch: &quot;main&quot;
+gem &quot;rails&quot;, &quot;~&gt; 7.0.2&quot;, &quot;&gt;= 7.0.2.3&quot;
+
+# Use mysql as the database for Active Record
+gem &quot;mysql2&quot;, &quot;~&gt; 0.5&quot;
+
+# Use the Puma web server [https://github.com/puma/puma]
+gem &quot;puma&quot;, &quot;~&gt; 5.0&quot;
+
+# Build JSON APIs with ease [https://github.com/rails/jbuilder]
+# gem &quot;jbuilder&quot;
+
+# Use Redis adapter to run Action Cable in production
+# gem &quot;redis&quot;, &quot;~&gt; 4.0&quot;
+
+# Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
+# gem &quot;kredis&quot;
+
+# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
+# gem &quot;bcrypt&quot;, &quot;~&gt; 3.1.7&quot;
+
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem &quot;tzinfo-data&quot;, platforms: %i[ mingw mswin x64_mingw jruby ]
+
+# Reduces boot times through caching; required in config/boot.rb
+gem &quot;bootsnap&quot;, require: false
+
+gem &#39;redis&#39;
+gem &#39;redis-namespace&#39;
+gem &#39;redis-rails&#39;
+gem &#39;redis-rack-cache&#39;
+gem &#39;sneakers&#39;
+gem &#39;bunny&#39;
+
+# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
+# gem &quot;image_processing&quot;, &quot;~&gt; 1.2&quot;
+
+# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
+# gem &quot;rack-cors&quot;
+
+group :development, :test do
+  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem &quot;debug&quot;, platforms: %i[ mri mingw x64_mingw ]
+end
+
+group :development do
+  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
+  # gem &quot;spring&quot;
+end
+
+</code></pre>
+<p>Gemfile.lock</p>
+<pre><code>GEM
+  remote: https://rubygems.org/
+  specs:
+    actioncable (7.0.2.3)
+      actionpack (= 7.0.2.3)
+      activesupport (= 7.0.2.3)
+      nio4r (~&gt; 2.0)
+      websocket-driver (&gt;= 0.6.1)
+    actionmailbox (7.0.2.3)
+      actionpack (= 7.0.2.3)
+      activejob (= 7.0.2.3)
+      activerecord (= 7.0.2.3)
+      activestorage (= 7.0.2.3)
+      activesupport (= 7.0.2.3)
+      mail (&gt;= 2.7.1)
+      net-imap
+      net-pop
+      net-smtp
+    actionmailer (7.0.2.3)
+      actionpack (= 7.0.2.3)
+      actionview (= 7.0.2.3)
+      activejob (= 7.0.2.3)
+      activesupport (= 7.0.2.3)
+      mail (~&gt; 2.5, &gt;= 2.5.4)
+      net-imap
+      net-pop
+      net-smtp
+      rails-dom-testing (~&gt; 2.0)
+    actionpack (7.0.2.3)
+      actionview (= 7.0.2.3)
+      activesupport (= 7.0.2.3)
+      rack (~&gt; 2.0, &gt;= 2.2.0)
+      rack-test (&gt;= 0.6.3)
+      rails-dom-testing (~&gt; 2.0)
+      rails-html-sanitizer (~&gt; 1.0, &gt;= 1.2.0)
+    actiontext (7.0.2.3)
+      actionpack (= 7.0.2.3)
+      activerecord (= 7.0.2.3)
+      activestorage (= 7.0.2.3)
+      activesupport (= 7.0.2.3)
+      globalid (&gt;= 0.6.0)
+      nokogiri (&gt;= 1.8.5)
+    actionview (7.0.2.3)
+      activesupport (= 7.0.2.3)
+      builder (~&gt; 3.1)
+      erubi (~&gt; 1.4)
+      rails-dom-testing (~&gt; 2.0)
+      rails-html-sanitizer (~&gt; 1.1, &gt;= 1.2.0)
+    activejob (7.0.2.3)
+      activesupport (= 7.0.2.3)
+      globalid (&gt;= 0.3.6)
+    activemodel (7.0.2.3)
+      activesupport (= 7.0.2.3)
+    activerecord (7.0.2.3)
+      activemodel (= 7.0.2.3)
+      activesupport (= 7.0.2.3)
+    activestorage (7.0.2.3)
+      actionpack (= 7.0.2.3)
+      activejob (= 7.0.2.3)
+      activerecord (= 7.0.2.3)
+      activesupport (= 7.0.2.3)
+      marcel (~&gt; 1.0)
+      mini_mime (&gt;= 1.1.0)
+    activesupport (7.0.2.3)
+      concurrent-ruby (~&gt; 1.0, &gt;= 1.0.2)
+      i18n (&gt;= 1.6, &lt; 2)
+      minitest (&gt;= 5.1)
+      tzinfo (~&gt; 2.0)
+    amq-protocol (2.3.2)
+    bootsnap (1.11.1)
+      msgpack (~&gt; 1.2)
+    builder (3.2.4)
+    bunny (2.19.0)
+      amq-protocol (~&gt; 2.3, &gt;= 2.3.1)
+      sorted_set (~&gt; 1, &gt;= 1.0.2)
+    concurrent-ruby (1.1.10)
+    crass (1.0.6)
+    debug (1.5.0)
+      irb (&gt;= 1.3.6)
+      reline (&gt;= 0.2.7)
+    digest (3.1.0)
+    erubi (1.10.0)
+    globalid (1.0.0)
+      activesupport (&gt;= 5.0)
+    i18n (1.10.0)
+      concurrent-ruby (~&gt; 1.0)
+    io-console (0.5.11)
+    irb (1.4.1)
+      reline (&gt;= 0.3.0)
+    loofah (2.16.0)
+      crass (~&gt; 1.0.2)
+      nokogiri (&gt;= 1.5.9)
+    mail (2.7.1)
+      mini_mime (&gt;= 0.1.1)
+    marcel (1.0.2)
+    method_source (1.0.0)
+    mini_mime (1.1.2)
+    minitest (5.15.0)
+    msgpack (1.5.1)
+    net-imap (0.2.3)
+      digest
+      net-protocol
+      strscan
+    net-pop (0.1.1)
+      digest
+      net-protocol
+      timeout
+    net-protocol (0.1.3)
+      timeout
+    net-smtp (0.3.1)
+      digest
+      net-protocol
+      timeout
+    nio4r (2.5.8)
+    nokogiri (1.13.3-arm64-darwin)
+      racc (~&gt; 1.4)
+    puma (5.6.4)
+      nio4r (~&gt; 2.0)
+    racc (1.6.0)
+    rack (2.2.3)
+    rack-cache (1.13.0)
+      rack (&gt;= 0.4)
+    rack-test (1.1.0)
+      rack (&gt;= 1.0, &lt; 3)
+    rails (7.0.2.3)
+      actioncable (= 7.0.2.3)
+      actionmailbox (= 7.0.2.3)
+      actionmailer (= 7.0.2.3)
+      actionpack (= 7.0.2.3)
+      actiontext (= 7.0.2.3)
+      actionview (= 7.0.2.3)
+      activejob (= 7.0.2.3)
+      activemodel (= 7.0.2.3)
+      activerecord (= 7.0.2.3)
+      activestorage (= 7.0.2.3)
+      activesupport (= 7.0.2.3)
+      bundler (&gt;= 1.15.0)
+      railties (= 7.0.2.3)
+    rails-dom-testing (2.0.3)
+      activesupport (&gt;= 4.2.0)
+      nokogiri (&gt;= 1.6)
+    rails-html-sanitizer (1.4.2)
+      loofah (~&gt; 2.3)
+    railties (7.0.2.3)
+      actionpack (= 7.0.2.3)
+      activesupport (= 7.0.2.3)
+      method_source
+      rake (&gt;= 12.2)
+      thor (~&gt; 1.0)
+      zeitwerk (~&gt; 2.5)
+    rake (12.3.3)
+    rbtree (0.4.5)
+    redis (4.6.0)
+    redis-actionpack (5.3.0)
+      actionpack (&gt;= 5, &lt; 8)
+      redis-rack (&gt;= 2.1.0, &lt; 3)
+      redis-store (&gt;= 1.1.0, &lt; 2)
+    redis-activesupport (5.3.0)
+      activesupport (&gt;= 3, &lt; 8)
+      redis-store (&gt;= 1.3, &lt; 2)
+    redis-namespace (1.8.2)
+      redis (&gt;= 3.0.4)
+    redis-rack (2.1.4)
+      rack (&gt;= 2.0.8, &lt; 3)
+      redis-store (&gt;= 1.2, &lt; 2)
+    redis-rack-cache (2.2.1)
+      rack-cache (&gt;= 1.10, &lt; 2)
+      redis-store (&gt;= 1.6, &lt; 2)
+    redis-rails (5.0.2)
+      redis-actionpack (&gt;= 5.0, &lt; 6)
+      redis-activesupport (&gt;= 5.0, &lt; 6)
+      redis-store (&gt;= 1.2, &lt; 2)
+    redis-store (1.9.1)
+      redis (&gt;= 4, &lt; 5)
+    reline (0.3.1)
+      io-console (~&gt; 0.5)
+    serverengine (2.1.1)
+      sigdump (~&gt; 0.2.2)
+    set (1.0.2)
+    sigdump (0.2.4)
+    sneakers (2.12.0)
+      bunny (~&gt; 2.14)
+      concurrent-ruby (~&gt; 1.0)
+      rake (~&gt; 12.3)
+      serverengine (~&gt; 2.1.0)
+      thor
+    sorted_set (1.0.3)
+      rbtree
+      set (~&gt; 1.0)
+    strscan (3.0.1)
+    thor (1.2.1)
+    timeout (0.2.0)
+    tzinfo (2.0.4)
+      concurrent-ruby (~&gt; 1.0)
+    websocket-driver (0.7.5)
+      websocket-extensions (&gt;= 0.1.0)
+    websocket-extensions (0.1.5)
+    zeitwerk (2.5.4)
+
+PLATFORMS
+  arm64-darwin-21
+
+DEPENDENCIES
+  bootsnap
+  bunny
+  debug
+  puma (~&gt; 5.0)
+  rails (~&gt; 7.0.2, &gt;= 7.0.2.3)
+  redis
+  redis-namespace
+  redis-rack-cache
+  redis-rails
+  sneakers
+  tzinfo-data
+
+RUBY VERSION
+   ruby 3.0.0p0
+
+BUNDLED WITH
+   2.2.3
+
+
+</code></pre>
+<p>私は M1 Macbook マシンで作業していることに注意してください 私はまだ
+Ruby
+に慣れていないので、この問題を引き起こしている愚かな問題かもしれません</p>
+<h2 id="解決策">解決策</h2>
+<p>これは確かに、ARM プラットフォーム (Mac M1 は ARM プロセッサ)
+を使用していることが原因であるようです。</p>
+<p>これは、エラー
+メッセージのパスによっても何らかの形で示されています。</p>
+<p>aarch64 は、ARM 64 ビット アーキテクチャの別名です。</p>
+<p>これを克服するには、MySQL
+コンテナに使用したのと同じトリックを使用する必要があります。つまり、MySQL
+コンテナを linux/x86_64 プラットフォームに交換します。</p>
+<p>したがって、docker-compose.yml には次のものがある必要があります。</p>
+<pre><code>## the file above this stays the same
+  app:
+    platform: linux/x86_64
+## the file below this stays the same
+</code></pre>
+<p>そして、Gemfile.lock の行を調整します。</p>
+<pre><code>    nokogiri (1.13.3-arm64-darwin)
+</code></pre>
+<p>になるはずです</p>
+<pre><code>    nokogiri (1.13.3-x86_64-linux)
+</code></pre>
+<p>次に、少なくともそのコンテナを再構築します。</p>
+<pre><code>docker compose down
+docker compose up --build
+</code></pre>
+  </div>
+</body>
+</html>

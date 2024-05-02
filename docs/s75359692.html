@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>Selenium::WebDriver::Error::WebDriverError: 返されたペイロードに sessionId がありません - Ruby 2.5.3 から移行。 3.1.2へ | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">Selenium::WebDriver::Error::WebDriverError:
+返されたペイロードに sessionId がありません - Ruby 2.5.3 から移行。
+3.1.2へ</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>Ruby と関連する gem を 2.5.3 から 3.1.2 にアップグレードしました。
+Cucumber テストは Chrome 上の v 2.5.3
+に対して正常に実行されていましたが、現在は以下のエラーとスタック
+トレースが発生しています。私の gemfile.lock も添付しました</p>
+<p>SELENIUM ブラウザ: クロム クロムパス: /opt/google/chrome
+クロムドライバー: /home/####/git/se/acceptancetests/chromedriver</p>
+<p>Selenium::WebDriver::Error::WebDriverError: 返されたペイロードに
+sessionId がありません
+/home/####/.rbenv/versions/3.1.2/lib/ruby/gems/3.1.0/gems/selenium-webdriver-4.8.0/lib/selenium/webdriver/remote/bridge.rb:57
+:in create_session’
+/home/####/.rbenv/versions/3.1.2/lib/ruby/gems/3.1.0/gems/selenium-webdriver-4.8.0/lib/selenium/webdriver/common/driver
+.rb:313:create_bridge のブロック内’ 内部:カーネル:90:タップ中’
+/home/####/.rbenv/versions/3.1.2/lib/ruby/gems/3.1.0/gems/selenium-webdriver-4.8.0/lib/selenium/
+webdriver/common/driver.rb:312:in create_bridge’
+/home/####/.rbenv/versions/3.1.2/lib/ruby/gems/3.1.0/gems/selenium-webdriver-4.8.0/lib/selenium/webdriver/common/driver.rb:74
+:in 初期化’
+/home/####/.rbenv/versions/3.1.2/lib/ruby/gems/3.1.0/gems/selenium-webdriver-4.8.0/lib/selenium/webdriver/chrome/driver
+.rb:36:初期化中’
+/home/####/.rbenv/versions/3.1.2/lib/ruby/gems/3.1.0/gems/selenium-webdriver-4.8.0/lib/selenium/webdriver/common/driver.rb:47
+:in new’
+/home/####/.rbenv/versions/3.1.2/lib/ruby/gems/3.1.0/gems/selenium-webdriver-4.8.0/lib/selenium/webdriver/common/driver
+.rb:47:in for’
+/home/####/.rbenv/versions/3.1.2/lib/ruby/gems/3.1.0/gems/selenium-webdriver-4.8.0/lib/selenium/webdriver.rb:88:in
+for’
+/home/####/.rbenv/versions/3.1.2/lib/ruby/gems/3.1.0/gems/capybara-3.38.0/lib/capybara/selenium/driver.rb:83:ブラウザ内’
+/home/####/.rbenv/versions/3.1.2/lib/ruby/gems/3.1.0/gems/capybara-3.38.0/lib/capybara/selenium/driver.rb:137:inexecute_script’
+/home/####/.rbenv/versions/3.1.2/lib/ruby/gems/3.1.0/gems/capybara-3.38.0/lib/capybara/session.rb:605:inexecute_script’
+/home/####/git/see/acceptancetests/features/step_settings/store_steps.rb:2827:in
+wait_for_page_load’
+/home/####/git/se/acceptancetests/features/support/hooks.rb:18
+:アフターステップ中’</p>
+<p>Gemfile.lock:</p>
+<p>宝石 リモート: ### 仕様: アドレス指定可能 (2.8.1) public_suffix
+(&gt;= 2.0.2、&lt; 6.0) 斧マッチャー (2.6.1) ダムデリゲーター (~&gt;
+0.8) ヴァートゥス (~&gt; 1.0) 公理型 (0.1.1) 子孫追跡者 (~&gt; 0.0.4)
+アイスナイン (~&gt; 0.11.0) thread_safe (~&gt; 0.3、&gt;= 0.3.1)
+ビルダー (3.2.4) カピバラ (3.14.0) アドレス指定可能な マトリックス
+mini_mime (&gt;= 0.1.3) のこぎり (~&gt; 1.8) ラック (&gt;= 1.6.0)
+ラックテスト (&gt;= 0.6.3) regexp_parser (&gt;= 1.5、&lt; 3.0) xpath
+(~&gt; 3.2) 強制的 (1.0.0) 子孫追跡者 (~&gt; 0.0.1) 同時実行ルビー
+(1.2.0) キュウリ (5.3.0) ビルダー (~&gt; 3.2、&gt;= 3.2.4)
+cucumber-ci-environment (~&gt; 9.0、&gt;= 9.0.4) キュウリの芯 (~&gt;
+11.0、&gt;= 11.0.0) cucumber-cucumber-expressions (~&gt; 15.1、&gt;=
+15.1.1) キュウリ-ガーキン (~&gt; 23.0、&gt;= 23.0.1)
+cucumber-html-formatter (~&gt; 19.1、&gt;= 19.1.0) キュウリメッセージ
+(~&gt; 18.0、&gt;= 18.0.0) diff-lcs (~&gt; 1.5、&gt;= 1.5.0) MIME タイプ
+(~&gt; 3.4、&gt;= 3.4.1) multi_test (~&gt; 1.1、&gt;= 1.1.0) sys-uname
+(~&gt; 1.2、&gt;= 1.2.2) キュウリ-ci-環境 (9.1.0) キュウリの芯 (11.0.0)
+キュウリ-ガーキン (~&gt; 23.0、&gt;= 23.0.1) キュウリメッセージ (~&gt;
+18.0、&gt;= 18.0.0) cucumber-tag-expressions (~&gt; 4.1、&gt;= 4.1.0)
+キュウリ-キュウリ-式 (15.2.0) キュウリ-ガーキン (23.0.1)
+キュウリメッセージ (~&gt; 18.0、&gt;= 18.0.0) キュウリ-html-フォーマッタ
+(19.2.0) キュウリメッセージ (~&gt; 18.0、&gt;= 18.0.0)
+キュウリメッセージ (18.0.0) キュウリのタグ式 (4.1.0) 子孫追跡者 (0.0.4)
+thread_safe (~&gt; 0.3、&gt;= 0.3.1) diff-lcs (1.5.0) ドメイン名
+(0.5.20190701) unf (&gt;= 0.0.5、&lt; 1.0.0) ダムデリゲーター (0.8.1)
+イコライザー (0.0.11) エクスコン (0.98.0) ffi (1.15.5) ヘッドレス
+(2.3.1) http-accept (1.7.0) http-cookie (1.0.5) ドメイン名 (~&gt; 0.5)
+i18n (1.12.0) 同時実行ルビー (~&gt; 1.0) アイスナイン (0.11.2) jwt
+(2.2.3) マトリックス (0.4.2) MIME タイプ (3.4.1) MIME タイプ データ
+(~&gt; 3.2015) MIME タイプ データ (3.2022.0105) ミニ_mime (1.1.2)
+mini_portile2 (2.6.1) マルチテスト (1.1.0) mysql2 (0.5.5) netrc (0.11.0)
+ノコギリ (1.12.5) mini_portile2 (~&gt; 2.6.1) racc (~&gt; 1.4) 並列
+(1.22.1) 並列テスト (3.13.0) 平行 パブリックサフィックス (5.0.1) racc
+(1.6.2) ラック (3.0.4.1) ラックテスト (2.0.2) ラック (&gt;= 1.3)
+regexp_parser (2.6.2) 残りのクライアント (2.1.0) http-accept (&gt;=
+1.7.0、&lt; 2.0) http-cookie (&gt;= 1.0.2、&lt; 2.0) MIME タイプ (&gt;=
+1.16、&lt; 4.0) netrc (~&gt; 0.8) rexml (3.2.5) rスペック（3.12.0）
+rspec-core (~&gt; 3.12.0) rspec-expectations (~&gt; 3.12.0) rspec-mocks
+(~&gt; 3.12.0) rspec-core (3.12.0) rspec-support (~&gt; 3.12.0)
+rspec-expectations (3.12.2) diff-lcs (&gt;= 1.2.0、&lt; 2.0)
+rspec-support (~&gt; 3.12.0)</p>
+<p>diff-lcs (&gt;= 1.2.0、&lt; 2.0) rspec-support (~&gt; 3.12.0)
+rspec-サポート (3.12.0) ルビー-hmac (0.4.0) ルビー-oci8 (2.2.12)
+ルビージップ (2.3.2) セレンウェブドライバー (4.8.0) rexml (~&gt;
+3.2、&gt;= 3.2.5) Rubyzip (&gt;= 1.2.2、&lt; 3.0) ウェブソケット (~&gt;
+1.0) sys-uname (1.2.2) ffi (~&gt; 1.1) スレッドセーフ (0.3.6) unf
+(0.1.4) unf_ext unf_ext (0.0.8.2) ヴァートゥス (1.0.5) 公理タイプ (~&gt;
+0.1) 強制的 (~&gt; 1.0) 子孫_トラッカー (~&gt; 0.0、&gt;= 0.0.3)
+イコライザー (~&gt; 0.0、&gt;= 0.0.9) ウェブソケット (1.2.9) xpath
+(3.2.0) のこぎり (~&gt; 1.8)</p>
+<p>プラットフォーム ルビー</p>
+<p>依存関係 斧合わせ者 カピバラ キュウリ エクスコン 頭のない i18n jwt
+(~&gt; 2.2.2) mysql2 鋸(=1.12.5)</p>
+<h2 id="解決策">解決策</h2>
+<p>ここでのエラーは、機能を正しく生成できなかったことを示しています。そのため、Selenium
+に対して行った更新によって、無効なペイロードが生成される可能性があります。</p>
+<p>Selenium 4alpha6 あたりで、いくつかの大きな変更が加えられました (v3
+では、desired_capabilities
+を使用できましたが、現在は単に機能を使用します)</p>
+<p>capybara を使用している場合は、ここで gem を使用して、1
+クリックで単純なドライバーを生成できます
+https://github.com/site-prism/automation_helpers/blob/main/lib/automation_helpers/drivers/local.rb#L7</p>
+<p>編集: あなたの宝石も少し不一致です。最新の Selenium-webdriver
+を使用していますが、capybara
+の非常に古いバージョンを使用しています。年齢が近い人たちを維持できるかどうかを確認する</p>
+  </div>
+</body>
+</html>

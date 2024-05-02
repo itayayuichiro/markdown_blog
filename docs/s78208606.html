@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>Ruby C APIでオブジェクトメソッドを適切に呼び出すにはどうすればよいですか? | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">Ruby C
+APIでオブジェクトメソッドを適切に呼び出すにはどうすればよいですか?</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>ファジング用の HTML
+解析ライブラリのラッパーを作成しています。ラッパーの現在の実装は次のとおりです。</p>
+<pre><code>// Main fuzzer
+static VALUE mHtmlTokenizer = Qnil;
+
+int main(int argc, char** argv) {
+  ruby_init();
+  VALUE cFoo = rb_define_class(&quot;Foo&quot;, rb_cObject);
+
+  rb_define_alloc_func(cFoo, parser_allocate);
+
+  rb_define_method_id(cFoo, 123, parser_initialize_method, 0);
+
+  VALUE x;
+  x = rb_str_new_cstr(&quot;&lt;div&gt;&quot;); // Example html string.
+
+  VALUE obj = rb_class_new_instance(0, NULL, cFoo);
+  rb_funcall(obj, rb_intern(&quot;initialize&quot;), 0);
+
+  // Now try to parse.
+
+  rb_funcall(obj, 123, 1, x);
+
+  return ruby_cleanup(0);
+}
+
+</code></pre>
+<p>(のソースコード)</p>
+<p>この関数の目標は、基本的にこの Ruby スクリプトの C コード
+バージョンになることです。</p>
+<pre><code>require &quot;html_tokenizer&quot;
+string = &quot;&lt;div&gt;&quot;
+parser = HtmlTokenizer::Parser.new
+parser.parse(string)
+</code></pre>
+<p>ただし、これをコンパイルして実行しようとすると、次のバックトレースが表示されます。</p>
+<pre><code>ruby: [BUG] Segmentation fault at 0x0000000000000040
+ruby 3.0.2p107 (2021-07-07 revision 0db68f0233) [x86_64-linux-gnu]
+
+-- Control frame information -----------------------------------------------
+c:0002 p:---- s:0006 e:000005 CFUNC  :{
+c:0001 p:0000 s:0003 E:001e80 (none) [FINISH]
+
+-- Ruby level backtrace information ----------------------------------------
+ruby:0:in `{&#39;
+
+-- Machine register context ------------------------------------------------
+ RIP: 0x00007fa005c56ca9 RBP: 0x000055fa55a1f850 RSP: 0x00007ffc7ad992b0
+ RAX: 0x0000000000000000 RBX: 0x000055fa55a7a030 RCX: 0x0000000000000003
+ RDX: 0x0000000000000010 RDI: 0x000055fa55a1f850 RSI: 0x0000000000000006
+  R8: 0x0000000000000000  R9: 0x000055fa55b41cc0 R10: 0x000055fa55b41b10
+ R11: 0x00007fa005ba4ce0 R12: 0x0000000000000006 R13: 0x00007fa005f20560
+ R14: 0x0000000000000008 R15: 0x0000000055550083 EFL: 0x0000000000010206
+
+-- C level backtrace information -------------------------------------------
+/lib/x86_64-linux-gnu/libruby-3.0.so.3.0(0x7fa005dfe0d0) [0x7fa005dfe0d0]
+/lib/x86_64-linux-gnu/libruby-3.0.so.3.0(0x7fa005c524f4) [0x7fa005c524f4]
+/lib/x86_64-linux-gnu/libruby-3.0.so.3.0(0x7fa005d724ed) [0x7fa005d724ed]
+/lib/x86_64-linux-gnu/libc.so.6(__restore_rt+0x0) [0x7fa0059cc520]
+/lib/x86_64-linux-gnu/libruby-3.0.so.3.0(0x7fa005c56ca9) [0x7fa005c56ca9]
+/lib/x86_64-linux-gnu/libruby-3.0.so.3.0(0x7fa005c5c502) [0x7fa005c5c502]
+/lib/x86_64-linux-gnu/libruby-3.0.so.3.0(0xa9662) [0x7fa005c5c662]
+/lib/x86_64-linux-gnu/libruby-3.0.so.3.0(0x2283e7) [0x7fa005ddb3e7]
+/lib/x86_64-linux-gnu/libruby-3.0.so.3.0(0x7fa005df27ef) [0x7fa005df27ef]
+/lib/x86_64-linux-gnu/libruby-3.0.so.3.0(rb_funcallv+0x19c) [0x7fa005df593c]
+./fuzzer(main+0xe5) [0x55fa541c137c]
+
+-- Other runtime information -----------------------------------------------
+
+* Loaded script: ruby
+
+* Loaded features:
+
+    0 enumerator.so
+    1 thread.rb
+    2 rational.so
+    3 complex.so
+    4 ruby2_keywords.rb
+
+* Process memory map:
+
+55fa541bd000-55fa541bf000 r--p 00000000 08:06 24676336                   /home/cyberhacker/Asioita/Hakkerointi/Fuzzing/html_tokenizer/ext/html_tokenizer_ext/fuzzer
+55fa541bf000-55fa541c3000 r-xp 00002000 08:06 24676336                   /home/cyberhacker/Asioita/Hakkerointi/Fuzzing/html_tokenizer/ext/html_tokenizer_ext/fuzzer
+55fa541c3000-55fa541c4000 r--p 00006000 08:06 24676336                   /home/cyberhacker/Asioita/Hakkerointi/Fuzzing/html_tokenizer/ext/html_tokenizer_ext/fuzzer
+55fa541c5000-55fa541c6000 r--p 00007000 08:06 24676336                   /home/cyberhacker/Asioita/Hakkerointi/Fuzzing/html_tokenizer/ext/html_tokenizer_ext/fuzzer
+55fa541c6000-55fa541c7000 rw-p 00008000 08:06 24676336                   /home/cyberhacker/Asioita/Hakkerointi/Fuzzing/html_tokenizer/ext/html_tokenizer_ext/fuzzer
+55fa55a1c000-55fa55b54000 rw-p 00000000 00:00 0                          [heap]
+7fa000fea000-7fa001840000 rw-p 00000000 00:00 0 
+7fa001840000-7fa001c77000 r--s 00000000 08:06 40248810                   /usr/lib/debug/.build-id/c2/89da5071a3399de893d2af81d6a30c62646e1e.debug
+7fa001c77000-7fa001e96000 r--s 00000000 08:06 40120745                   /usr/lib/x86_64-linux-gnu/libc.so.6
+7fa001e96000-7fa0021fb000 r--s 00000000 08:06 40117551                   /usr/lib/x86_64-linux-gnu/libruby-3.0.so.3.0.2
+7fa0021fb000-7fa0021fe000 r--p 00000000 08:06 40108172                   /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+7fa0021fe000-7fa002215000 r-xp 00003000 08:06 40108172                   /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+7fa002215000-7fa002219000 r--p 0001a000 08:06 40108172                   /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+7fa002219000-7fa00221a000 r--p 0001d000 08:06 40108172                   /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+7fa00221a000-7fa00221b000 rw-p 0001e000 08:06 40108172                   /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+7fa00221b000-7fa00221c000 ---p 00000000 00:00 0 
+7fa00221c000-7fa0022bd000 rw-p 00000000 00:00 0 
+7fa0022bd000-7fa0022be000 ---p 00000000 00:00 0 
+7fa0022be000-7fa00235f000 rw-p 00000000 00:00 0 
+7fa00235f000-7fa002360000 ---p 00000000 00:00 0 
+7fa002360000-7fa002401000 rw-p 00000000 00:00 0 
+7fa002401000-7fa002402000 ---p 00000000 00:00 0 
+7fa002402000-7fa0024a3000 rw-p 00000000 00:00 0 
+7fa0024a3000-7fa0024a4000 ---p 00000000 00:00 0 
+7fa0024a4000-7fa002545000 rw-p 00000000 00:00 0 
+7fa002545000-7fa002546000 ---p 00000000 00:00 0 
+7fa002546000-7fa0025e7000 rw-p 00000000 00:00 0 
+7fa0025e7000-7fa0025e8000 ---p 00000000 00:00 0 
+7fa0025e8000-7fa002689000 rw-p 00000000 00:00 0 
+7fa002689000-7fa00268a000 ---p 00000000 00:00 0 
+7fa00268a000-7fa00272b000 rw-p 00000000 00:00 0 
+7fa00272b000-7fa00272c000 ---p 00000000 00:00 0 
+7fa00272c000-7fa0027cd000 rw-p 00000000 00:00 0 
+7fa0027cd000-7fa0027ce000 ---p 00000000 00:00 0 
+7fa0027ce000-7fa00286f000 rw-p 00000000 00:00 0 
+7fa00286f000-7fa002870000 ---p 00000000 00:00 0 
+7fa002870000-7fa002911000 rw-p 00000000 00:00 0 
+7fa002911000-7fa002912000 ---p 00000000 00:00 0 
+7fa002912000-7fa0029b3000 rw-p 00000000 00:00 0 
+7fa0029b3000-7fa0029b4000 ---p 00000000 00:00 0 
+7fa0029b4000-7fa002a55000 rw-p 00000000 00:00 0 
+7fa002a55000-7fa002a56000 ---p 00000000 00:00 0 
+7fa002a56000-7fa002af7000 rw-p 00000000 00:00 0 
+7fa002af7000-7fa002af8000 ---p 00000000 00:00 0 
+7fa002af8000-7fa002b99000 rw-p 00000000 00:00 0 
+7fa002b99000-7fa002b9a000 ---p 00000000 00:00 0 
+7fa002b9a000-7fa002c3b000 rw-p 00000000 00:00 0 
+7fa002c3b000-7fa002c3c000 ---p 00000000 00:00 0 
+7fa002c3c000-7fa002cdd000 rw-p 00000000 00:00 0 
+7fa002cdd000-7fa002cde000 ---p 00000000 00:00 0 
+7fa002cde000-7fa002d7f000 rw-p 00000000 00:00 0 
+7fa002d7f000-7fa002d80000 ---p 00000000 00:00 0 
+7fa002d80000-7fa002e21000 rw-p 00000000 00:00 0 
+7fa002e21000-7fa002e22000 ---p 00000000 00:00 0 
+7fa002e22000-7fa002ec3000 rw-p 00000000 00:00 0 
+7fa002ec3000-7fa002ec4000 ---p 00000000 00:00 0 
+7fa002ec4000-7fa002f65000 rw-p 00000000 00:00 0 
+7fa002f65000-7fa002f66000 ---p 00000000 00:00 0 
+7fa002f66000-7fa003007000 rw-p 00000000 00:00 0 
+7fa003007000-7fa003008000 ---p 00000000 00:00 0 
+7fa003008000-7fa0030a9000 rw-p 00000000 00:00 0 
+7fa0030a9000-7fa0030aa000 ---p 00000000 00:00 0 
+7fa0030aa000-7fa00314b000 rw-p 00000000 00:00 0 
+7fa00314b000-7fa00314c000 ---p 00000000 00:00 0 
+7fa00314c000-7fa0031ed000 rw-p 00000000 00:00 0 
+7fa0031ed000-7fa0031ee000 ---p 00000000 00:00 0 
+7fa0031ee000-7fa00328f000 rw-p 00000000 00:00 0 
+7fa00328f000-7fa003290000 ---p 00000000 00:00 0 
+7fa003290000-7fa003331000 rw-p 00000000 00:00 0 
+7fa003331000-7fa003332000 ---p 00000000 00:00 0 
+7fa003332000-7fa0033d3000 rw-p 00000000 00:00 0 
+7fa0033d3000-7fa0033d4000 ---p 00000000 00:00 0 
+7fa0033d4000-7fa003475000 rw-p 00000000 00:00 0 
+7fa003475000-7fa003476000 ---p 00000000 00:00 0 
+7fa003476000-7fa003517000 rw-p 00000000 00:00 0 
+7fa003517000-7fa003518000 ---p 00000000 00:00 0 
+7fa003518000-7fa0035b9000 rw-p 00000000 00:00 0 
+7fa0035b9000-7fa0035ba000 ---p 00000000 00:00 0 
+7fa0035ba000-7fa0057cb000 rw-p 00000000 00:00 0 
+7fa0057cb000-7fa0057d9000 r--p 00000000 08:06 40120748                   /usr/lib/x86_64-linux-gnu/libm.so.6
+7fa0057d9000-7fa005855000 r-xp 0000e000 08:06 40120748                   /usr/lib/x86_64-linux-gnu/libm.so.6
+7fa005855000-7fa0058b0000 r--p 0008a000 08:06 40120748                   /usr/lib/x86_64-linux-gnu/libm.so.6
+7fa0058b0000-7fa0058b1000 r--p 000e4000 08:06 40120748                   /usr/lib/x86_64-linux-gnu/libm.so.6
+7fa0058b1000-7fa0058b2000 rw-p 000e5000 08:06 40120748                   /usr/lib/x86_64-linux-gnu/libm.so.6
+7fa0058b2000-7fa0058b4000 r--p 00000000 08:06 40110225                   /usr/lib/x86_64-linux-gnu/libcrypt.so.1.1.0
+7fa0058b4000-7fa0058c8000 r-xp 00002000 08:06 40110225                   /usr/lib/x86_64-linux-gnu/libcrypt.so.1.1.0
+7fa0058c8000-7fa0058e1000 r--p 00016000 08:06 40110225                   /usr/lib/x86_64-linux-gnu/libcrypt.so.1.1.0
+7fa0058e1000-7fa0058e2000 ---p 0002f000 08:06 40110225                   /usr/lib/x86_64-linux-gnu/libcrypt.so.1.1.0
+7fa0058e2000-7fa0058e3000 r--p 0002f000 08:06 40110225                   /usr/lib/x86_64-linux-gnu/libcrypt.so.1.1.0
+7fa0058e3000-7fa0058e4000 rw-p 00030000 08:06 40110225                   /usr/lib/x86_64-linux-gnu/libcrypt.so.1.1.0
+7fa0058e4000-7fa0058ec000 rw-p 00000000 00:00 0 
+7fa0058ec000-7fa0058f6000 r--p 00000000 08:06 40110568                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.4.1
+7fa0058f6000-7fa005955000 r-xp 0000a000 08:06 40110568                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.4.1
+7fa005955000-7fa00596c000 r--p 00069000 08:06 40110568                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.4.1
+7fa00596c000-7fa00596d000 r--p 0007f000 08:06 40110568                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.4.1
+7fa00596d000-7fa00596e000 rw-p 00080000 08:06 40110568                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.4.1
+7fa00596e000-7fa005970000 r--p 00000000 08:06 40110282                   /usr/lib/x86_64-linux-gnu/libz.so.1.2.11
+7fa005970000-7fa005981000 r-xp 00002000 08:06 40110282                   /usr/lib/x86_64-linux-gnu/libz.so.1.2.11
+7fa005981000-7fa005987000 r--p 00013000 08:06 40110282                   /usr/lib/x86_64-linux-gnu/libz.so.1.2.11
+7fa005987000-7fa005988000 ---p 00019000 08:06 40110282                   /usr/lib/x86_64-linux-gnu/libz.so.1.2.11
+7fa005988000-7fa005989000 r--p 00019000 08:06 40110282                   /usr/lib/x86_64-linux-gnu/libz.so.1.2.11
+7fa005989000-7fa00598a000 rw-p 0001a000 08:06 40110282                   /usr/lib/x86_64-linux-gnu/libz.so.1.2.11
+7fa00598a000-7fa0059b2000 r--p 00000000 08:06 40120745                   /usr/lib/x86_64-linux-gnu/libc.so.6
+7fa0059b2000-7fa005b47000 r-xp 00028000 08:06 40120745                   /usr/lib/x86_64-linux-gnu/libc.so.6
+7fa005b47000-7fa005b9f000 r--p 001bd000 08:06 40120745                   /usr/lib/x86_64-linux-gnu/libc.so.6
+7fa005b9f000-7fa005ba0000 ---p 00215000 08:06 40120745                   /usr/lib/x86_64-linux-gnu/libc.so.6
+7fa005ba0000-7fa005ba4000 r--p 00215000 08:06 40120745                   /usr/lib/x86_64-linux-gnu/libc.so.6
+7fa005ba4000-7fa005ba6000 rw-p 00219000 08:06 40120745                   /usr/lib/x86_64-linux-gnu/libc.so.6
+7fa005ba6000-7fa005bb3000 rw-p 00000000 00:00 0 
+7fa005bb3000-7fa005bdc000 r--p 00000000 08:06 40117551                   /usr/lib/x86_64-linux-gnu/libruby-3.0.so.3.0.2
+7fa005bdc000-7fa005e0a000 r-xp 00029000 08:06 40117551                   /usr/lib/x86_64-linux-gnu/libruby-3.0.so.3.0.2
+7fa005e0a000-7fa005f10000 r--p 00257000 08:06 40117551                   /usr/lib/x86_64-linux-gnu/libruby-3.0.so.3.0.2
+7fa005f10000-7fa005f17000 r--p 0035c000 08:06 40117551                   /usr/lib/x86_64-linux-gnu/libruby-3.0.so.3.0.2
+7fa005f17000-7fa005f18000 rw-p 00363000 08:06 40117551                   /usr/lib/x86_64-linux-gnu/libruby-3.0.so.3.0.2
+7fa005f18000-7fa005f28000 rw-p 00000000 00:00 0 
+7fa005f36000-7fa005f53000 r--s 00000000 08:06 24676336                   /home/cyberhacker/Asioita/Hakkerointi/Fuzzing/html_tokenizer/ext/html_tokenizer_ext/fuzzer
+7fa005f53000-7fa005f55000 rw-p 00000000 00:00 0 
+7fa005f55000-7fa005f57000 r--p 00000000 08:06 40110231                   /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+7fa005f57000-7fa005f81000 r-xp 00002000 08:06 40110231                   /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+7fa005f81000-7fa005f8c000 r--p 0002c000 08:06 40110231                   /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+7fa005f8d000-7fa005f8f000 r--p 00037000 08:06 40110231                   /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+7fa005f8f000-7fa005f91000 rw-p 00039000 08:06 40110231                   /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+7ffc7a59c000-7ffc7ad9b000 rw-p 00000000 00:00 0                          [stack]
+7ffc7adf0000-7ffc7adf4000 r--p 00000000 00:00 0                          [vvar]
+7ffc7adf4000-7ffc7adf6000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsyscall]
+
+
+Aborted (core dumped)
+</code></pre>
+<p>何か助けはありますか？</p>
+<h2 id="解決策">解決策</h2>
+<p>さて、これはうまくいくようです:</p>
+<pre><code>// Main fuzzer
+static VALUE mHtmlTokenizer = Qnil;
+
+int main(int argc, char** argv) {
+  ruby_init();
+  VALUE cFoo = rb_define_class(&quot;Foo&quot;, rb_cObject);
+
+  rb_define_alloc_func(cFoo, parser_allocate);
+
+  rb_define_method(cFoo, &quot;parse&quot;, parser_initialize_method, 1); // One argument
+
+  VALUE x;
+  x = rb_str_new_cstr(&quot;&lt;div&gt;&quot;); // Example html string.
+
+  VALUE obj = rb_class_new_instance(0, NULL, cFoo);
+  rb_funcall(obj, rb_intern(&quot;initialize&quot;), 0);
+
+  // Now try to parse.
+  rb_funcall(obj, rb_intern(&quot;parse&quot;), 1, x);
+  return ruby_cleanup(0);
+}
+
+</code></pre>
+<p>編集：</p>
+<p>わかりましたので、これが私が望むものだと思います:</p>
+<pre><code>
+__AFL_FUZZ_INIT();
+
+static VALUE mHtmlTokenizer = Qnil;
+
+int main(int argc, char** argv) {
+  ruby_init();
+
+
+
+
+  __AFL_INIT();
+
+  unsigned char *buf = __AFL_FUZZ_TESTCASE_BUF;
+
+
+
+  while (__AFL_LOOP(10000)) {
+
+
+
+    int len = __AFL_FUZZ_TESTCASE_LEN;
+
+    VALUE cFoo = rb_define_class(&quot;Foo&quot;, rb_cObject);
+
+
+
+    rb_define_alloc_func(cFoo, parser_allocate);
+
+    rb_define_method(cFoo, &quot;initialize&quot;, parser_initialize_method, 0); // One argument
+
+    // Now define the other method:
+
+    // rb_define_method(cParser, &quot;parse&quot;, parser_parse_method, 1);
+
+    rb_define_method(cFoo, &quot;parse&quot;, parser_parse_method, 1);
+
+
+    VALUE x;
+    //x = rb_str_new_cstr(&quot;&lt;div&gt;&quot;); // Example html string.
+
+    x = rb_str_new_cstr(buf); // Create string from fuzz buffer
+
+    VALUE obj = rb_class_new_instance(0, NULL, cFoo);
+    rb_funcall(obj, rb_intern(&quot;initialize&quot;), 0);
+
+    // Now try to parse.
+    
+    //printf(&quot;Now trying to call parse!!!!\n&quot;);
+
+    //printf(&quot;Here is the buffer %s\n&quot;, buf);
+
+    rb_funcall(obj, rb_intern(&quot;parse&quot;), 1, x);
+    
+    //printf(&quot;Done!\n&quot;);
+  }
+
+
+  return ruby_cleanup(0);
+}
+
+</code></pre>
+  </div>
+</body>
+</html>

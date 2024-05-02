@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>バンドルのインストール: エラー: gem ネイティブ拡張機能のビルドに失敗しました。 nio4r ジェム | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">バンドルのインストール: エラー: gem
+ネイティブ拡張機能のビルドに失敗しました。 nio4r ジェム</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>現在、次のものを使用してプロジェクトに取り組んでいます。</p>
+<p>バンドルのインストールを実行しようとしましたが、次のエラーが発生し続けます。</p>
+<pre><code>Gem::Ext::BuildError: ERROR: Failed to build gem native extension.
+</code></pre>
+<p>そして、次のようになります。</p>
+<pre><code>An error occurred while installing nio4r (1.0.0), and Bundler cannot continue.
+Make sure that `gem install nio4r -v &#39;1.0.0&#39;` succeeds before bundling.
+</code></pre>
+<p>gem install nio4r -v ‘1.0.0’
+を実行しようとすると、次のようになります。</p>
+<pre><code>Building native extensions.  This could take a while...
+ERROR: Error installing nio4r:
+ERROR: Failed to build gem native extension.
+</code></pre>
+<p>バンドルアップデートを実行しようとすると、次のようになります。</p>
+<pre><code>Please make sure you have the correct access rights
+and the repository exists.
+Retrying git clone &#39;[email protected]:kshmir/requirejs-rails.git&#39; ....*
+
+Git error: command `git clone &#39;[email protected]:kshmir/requirejs-rails.git&#39;....  has failed
+</code></pre>
+<p>バンドル更新 nio4r を実行しようとすると:</p>
+<pre><code>Gem::Ext::BuildError: ERROR: Failed to build gem native extension....
+An error occurred while installing eventmachine (1.0.3), and Bundler cannot continue.
+Make sure that `gem install eventmachine -v &#39;1.0.3&#39;` succeeds before bundling.
+</code></pre>
+<p>そのコマンドも試してみましたが、結果は得られませんでした。</p>
+<p>Rubyのバージョンも変更してみました。</p>
+<p>RVMは2.2.1 2.2.0
+2.0.0を使用し、上記のコマンドを実行しますが、何も変わりません</p>
+<p>編集：</p>
+<p>実行中のバンドル インストール ログからの出力:</p>
+<pre><code>Fetching gem metadata from rubygems....... Fetching version metadata from rubygems... Fetching dependency metadata from rubygems.. Using rake 10.2.2 Using i18n
+0.7.0 Using multi_json 1.11.0 Using activesupport 3.2.17 Using builder 3.0.4 Using activemodel 3.2.17 Using erubis 2.7.0 Using journey 1.0.4 Using rack 1.4.5 Using rack-cache 1.2 Using rack-test 0.6.2 Using hike
+1.2.3 Using tilt 1.4.1 Using sprockets 2.2.2 Using actionpack 3.2.17 Using mime-types 1.25.1 Using polyglot 0.3.4 Using treetop 1.4.15 Using mail 2.5.4 Using actionmailer 3.2.17 Using arbre 1.0.1 Using sass 3.2.19 Using thor 0.19.1 Using bourbon 3.1.8 Using bcrypt 3.1.7 Using bcrypt-ruby 3.1.5 Using orm_adapter 0.5.0 Using rack-ssl 1.3.4 Using json 1.8.1 Using rdoc 3.12.2 Using railties 3.2.17 Using atomic
+1.1.15 Using thread_safe 0.2.0 Using warden 1.2.3 Using devise 3.2.3 Using formtastic 2.2.1 Using has_scope 0.6.0.rc Using responders 1.0.0 Using inherited_resources 1.4.1 Using jquery-rails 2.3.0 Using kaminari 0.15.1 Using arel 3.0.3 Using tzinfo 0.3.39 Using activerecord 3.2.17 Using polyamorous 0.5.0 Using meta_search 1.1.3 Using activeresource 3.2.17 Using bundler 1.8.4 Using rails 3.2.17 Using activeadmin 0.6.2 Using rgeo 0.3.20 Using rgeo-activerecord
+0.5.0 Using activerecord-postgis-adapter 0.6.5 Using addressable 2.3.5 Using airbrake 3.1.16 Using descendants_tracker 0.0.3 Using ice_nine
+0.11.0 Using axiom-types 0.0.5 Using coderay 1.1.0 Using better_errors 1.1.0 Using debug_inspector 0.0.2 Using binding_of_caller 0.7.2 Using bootstrap-datepicker-rails 1.1.1.8 Using bootstrap-sass 3.1.1.0 Using browser 0.8.0 Using columnize 0.3.6 Using debugger-linecache 1.2.0 Using byebug 2.7.0 Using cancan 1.6.10 Using highline 1.6.21 Using net-ssh 2.8.0 Using net-scp 1.1.2 Using net-sftp 2.1.2 Using net-ssh-gateway 1.2.0 Using capistrano 2.15.5 Using mini_portile 0.5.2 Using nokogiri 1.6.1 Using ffi 1.9.3 Using childprocess 0.5.1 Using rubyzip 1.1.0 Using websocket 1.0.7 Using selenium-webdriver 2.40.0 Using xpath 1.0.0 Using capybara 2.0.2 Using carrierwave 0.10.0 Using carrierwave_backgrounder 0.3.0 Using hitimes 1.2.2 Using timers 4.0.1 Using celluloid 0.16.0
+
+Gem::Ext::BuildError: ERROR: Failed to build gem native extension.
+
+    /home/adrian/.rvm/rubies/ruby-2.2.1/bin/ruby -r ./siteconf20150424-28432-11y95op.rb extconf.rb  checking for rb_thread_blocking_region()... no checking for sys/select.h... yes checking for poll.h... yes checking for sys/epoll.h... yes checking for sys/event.h... no checking for port.h... no checking for sys/resource.h... yes creating Makefile
+
+make &quot;DESTDIR=&quot; clean
+
+make &quot;DESTDIR=&quot; compiling selector.c In file included from nio4r.h:10:0,
+                 from selector.c:6: /home/adrian/.rvm/rubies/ruby-2.2.1/include/ruby-2.2.0/ruby/backward/rubyio.h:2:2: warning: #warning use &quot;ruby/io.h&quot; instead of &quot;rubyio.h&quot; [-Wcpp] 
+#warning use &quot;ruby/io.h&quot; instead of &quot;rubyio.h&quot;   ^ In file included from selector.c:7:0: /home/adrian/.rvm/rubies/ruby-2.2.1/include/ruby-2.2.0/ruby/backward/rubysig.h:14:2: warning: #warning rubysig.h is obsolete [-Wcpp]  #warning rubysig.h is obsolete   ^ selector.c: In function ‘NIO_Selector_allocate’: selector.c:94:5: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]
+     ev_init(&amp;selector-&gt;timer, NIO_Selector_timeout_callback);
+     ^ selector.c:94:5: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing] selector.c:94:5: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing] selector.c:99:5: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]
+     ev_io_init(&amp;selector-&gt;wakeup, NIO_Selector_wakeup_callback, selector-&gt;wakeup_reader, EV_READ);
+     ^ selector.c:99:5: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing] selector.c:99:5: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing] selector.c: In function ‘NIO_Selector_synchronize’: selector.c:159:11: warning: variable ‘current_thread’ set but not used [-Wunused-but-set-variable]
+     VALUE current_thread, lock_holder, lock;
+           ^ selector.c: In function ‘NIO_Selector_deregister_synchronized’: selector.c:241:11: warning: unused variable ‘monitor_args’ [-Wunused-variable]
+     VALUE monitor_args[3];
+           ^ selector.c:240:21: warning: unused variable ‘interests’ [-Wunused-variable]
+     VALUE self, io, interests, selectables, monitor;
+                     ^ selector.c: In function ‘NIO_Selector_select’: selector.c:268:20: warning: unused variable ‘array’ [-Wunused-variable]
+     VALUE timeout, array;
+                    ^ selector.c: In function ‘NIO_Selector_select_synchronized’: selector.c:286:9: warning: unused variable ‘i’ [-Wunused-variable]
+     int i, ready;
+         ^ selector.c: In function ‘NIO_Selector_run’: selector.c:326:5: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+     ev_tstamp started_at = ev_now(selector-&gt;ev_loop);
+     ^ selector.c:341:9: error: ‘TRAP_BEG’ undeclared (first use in this function)
+         TRAP_BEG;
+         ^ selector.c:341:9: note: each undeclared identifier is reported only once for each function it appears in selector.c:343:9: error: ‘TRAP_END’ undeclared (first use in this function)
+         TRAP_END;
+         ^ selector.c:347:9: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]
+         ev_timer_init(&amp;selector-&gt;timer, NIO_Selector_timeout_callback, BUSYWAIT_INTERVAL, BUSYWAIT_INTERVAL);
+         ^ selector.c:347:9: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing] selector.c:347:9: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing] selector.c:347:9: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing] selector.c: In function ‘NIO_Selector_close’: selector.c:391:5: warning: passing argument 2 of ‘NIO_Selector_synchronize’ from incompatible pointer type [enabled by default]
+     return NIO_Selector_synchronize(self, NIO_Selector_close_synchronized, self);
+     ^ selector.c:157:14: note: expected ‘VALUE (*)(VALUE *)’ but argument is of type ‘VALUE (*)(VALUE)’  static VALUE NIO_Selector_synchronize(VALUE self, VALUE (*func)(VALUE *args), VALUE
+*args)
+              ^ selector.c:391:5: warning: passing argument 3 of ‘NIO_Selector_synchronize’ makes pointer from integer without a cast [enabled by default]
+     return NIO_Selector_synchronize(self, NIO_Selector_close_synchronized, self);
+     ^ selector.c:157:14: note: expected ‘VALUE *’ but argument is of type ‘VALUE’  static VALUE NIO_Selector_synchronize(VALUE self, VALUE (*func)(VALUE *args), VALUE *args)
+              ^ selector.c: In function ‘NIO_Selector_closed’: selector.c:407:5: warning: passing argument 2 of ‘NIO_Selector_synchronize’ from incompatible pointer type [enabled by default]
+     return NIO_Selector_synchronize(self, NIO_Selector_closed_synchronized, self);
+     ^ selector.c:157:14: note: expected ‘VALUE (*)(VALUE *)’ but argument is of type ‘VALUE (*)(VALUE)’  static VALUE NIO_Selector_synchronize(VALUE self, VALUE (*func)(VALUE *args), VALUE
+*args)
+              ^ selector.c:407:5: warning: passing argument 3 of ‘NIO_Selector_synchronize’ makes pointer from integer without a cast [enabled by default]
+     return NIO_Selector_synchronize(self, NIO_Selector_closed_synchronized, self);
+     ^ selector.c:157:14: note: expected ‘VALUE *’ but argument is of type ‘VALUE’  static VALUE NIO_Selector_synchronize(VALUE self, VALUE (*func)(VALUE *args), VALUE *args)
+              ^ selector.c: In function ‘NIO_Selector_wakeup’: selector.c:384:10: warning: ignoring return value of ‘write’, declared with attribute warn_unused_result [-Wunused-result]
+     write(selector-&gt;wakeup_writer, &quot;\0&quot;, 1);
+          ^ make: *** [selector.o] Error 1
+
+make failed, exit code 2
+
+Gem files will remain installed in /home/adrian/.rvm/gems/ruby-2.2.1/gems/nio4r-1.0.0 for inspection. Results logged to /home/adrian/.rvm/gems/ruby-2.2.1/extensions/x86_64-linux/2.2.0/nio4r-1.0.0/gem_make.out An error occurred while installing nio4r (1.0.0), and Bundler cannot continue. Make sure that `gem install nio4r -v &#39;1.0.0&#39;` succeeds before bundling.
+</code></pre>
+<h2 id="解決策">解決策</h2>
+<p>バージョン 10.11.x 以降の Mac OSX
+で作業している場合は、次のアプローチがうまくいきました。</p>
+<pre><code>gem install nio4r -v &#39;1.1.0&#39; -- with-cflags=&quot;-std=c99&quot;
+</code></pre>
+  </div>
+</body>
+</html>

@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>RVM 経由で Ruby 2.0.0 をインストールできない | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">RVM 経由で Ruby 2.0.0 をインストールできない</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>RVM と一緒に Ruby 2.0.0 をインストールする必要があるレガシー
+コードベースを継承しました。私は Mac OS X Catalina
+を使用していますが、Ruby 2.0.0 のインストーラーが動作しません。</p>
+<p>RVM 自体のインストールから Ruby 2.0.0
+のインストールに至るまでの、私のインストール試行の様子を次に示します。</p>
+<pre><code>nbyrd$ \curl -sSL https://get.rvm.io | bash -s stable
+Downloading https://github.com/rvm/rvm/archive/1.29.10.tar.gz
+Downloading https://github.com/rvm/rvm/releases/download/1.29.10/1.29.10.tar.gz.asc
+gpg: Signature made Wed Mar 25 14:58:42 2020 PDT
+gpg:                using RSA key 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+gpg: Good signature from &quot;Piotr Kuczynski &lt;[email protected]&gt;&quot; [unknown]
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 7D2B AF1C F37B 13E2 069D  6956 105B D0E7 3949 9BDB
+GPG verified &#39;/Users/nbyrd/.rvm/archives/rvm-1.29.10.tgz&#39;
+Installing RVM to /Users/nbyrd/.rvm/
+    RVM PATH line found in /Users/nbyrd/.mkshrc.
+    RVM PATH line not found for Bash or Zsh, rerun this command with &#39;--auto-dotfiles&#39; flag to fix it.
+    RVM sourcing line found in /Users/nbyrd/.profile /Users/nbyrd/.bash_profile /Users/nbyrd/.zlogin.
+Installation of RVM in /Users/nbyrd/.rvm/ is almost complete:
+
+  * To start using RVM you need to run `source /Users/nbyrd/.rvm/scripts/rvm`
+    in all your open shell windows, in rare cases you need to reopen all shell windows.
+Thanks for installing RVM 🙏
+Please consider donating to our open collective to help us maintain RVM.
+
+👉  Donate: https://opencollective.com/rvm/donate
+
+
+nbyrd$ source ~/.profile
+nbyrd$ rvm autolibs enable
+nbyrd$ rvm install 2.0.0 --force
+Searching for binary rubies, this might take some time.
+No binary rubies available for: osx/10.15/x86_64/ruby-2.0.0-p648.
+Continuing with compilation. Please read &#39;rvm help mount&#39; to get more information on binary rubies.
+Checking requirements for osx.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Installing requirements for osx.
+Updating system.......
+Installing required packages: openssl.
+Updating certificates bundle &#39;/usr/local/etc/[email protected]/cert.pem&#39;
+Requirements installation successful.
+Installing Ruby from source to: /Users/nbyrd/.rvm/rubies/ruby-2.0.0-p648, this may take a while depending on your cpu(s)...
+ruby-2.0.0-p648 - #downloading ruby-2.0.0-p648, this may take a while depending on your connection...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 10.2M  100 10.2M    0     0  18.2M      0 --:--:-- --:--:-- --:--:-- 18.2M
+ruby-2.0.0-p648 - #extracting ruby-2.0.0-p648 to /Users/nbyrd/.rvm/src/ruby-2.0.0-p648.....
+ruby-2.0.0-p648 - #applying patch /Users/nbyrd/.rvm/patches/ruby/2.0.0/openssl3.patch.
+ruby-2.0.0-p648 - #applying patch /Users/nbyrd/.rvm/patches/ruby/2.0.0/update-autoconf.patch.
+ruby-2.0.0-p648 - #configuring.................................................
+ruby-2.0.0-p648 - #post-configuration.
+ruby-2.0.0-p648 - #compiling......................
+Error running &#39;__rvm_make -j8&#39;,
+please read /Users/nbyrd/.rvm/log/1605305278_ruby-2.0.0-p648/make.log
+
+There has been an error while running make. Halting the installation.
+</code></pre>
+<p>エラー
+メッセージで参照されている「make.log」ファイルの内容は次のとおりです。</p>
+<pre><code>[2020-11-13 14:09:14] __rvm_make
+__rvm_make () 
+{ 
+    \make &quot;$@&quot; || return $?
+}
+current path: /Users/nbyrd/.rvm/src/ruby-2.0.0-p648
+PATH=/usr/local/opt/coreutils/bin:/usr/local/opt/pkg-config/bin:/usr/local/opt/libtool/bin:/usr/local/opt/automake/bin:/usr/local/opt/autoconf/bin:/usr/local/sbin:/Users/nbyrd/.yarn/bin:/Users/nbyrd/.config/yarn/global/node_modules/.bin:/usr/local/sbin:/Users/nbyrd/.yarn/bin:/Users/nbyrd/.config/yarn/global/node_modules/.bin:/usr/local/sbin:/Users/nbyrd/.yarn/bin:/Users/nbyrd/.config/yarn/global/node_modules/.bin:/Users/nbyrd/.nvm/versions/node/v10.15.3/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/nbyrd/.rvm/bin
+command(2): __rvm_make -j8
+++ make -j8
+    CC = /usr/bin/clang
+    LD = ld
+    LDSHARED = /usr/bin/clang -dynamiclib
+    CFLAGS = -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wunused-variable -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wshorten-64-to-32 -Wimplicit-function-declaration   -fno-common -pipe 
+    XCFLAGS = -include ruby/config.h -include ruby/missing.h -D_FORTIFY_SOURCE=2 -fstack-protector -fno-strict-overflow -fvisibility=hidden -DRUBY_EXPORT
+    CPPFLAGS = -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT -I/usr/local/opt/libyaml/include -I/usr/local/opt/libksba/include -I/usr/local/opt/readline/include -I/usr/local/opt/zlib/include -I/usr/local/opt/[email protected]/include   -I. -I.ext/include/x86_64-darwin19.6.0 -I./include -I.
+    DLDFLAGS = -Wl,-undefined,dynamic_lookup -Wl,-multiply_defined,suppress -L/usr/local/opt/libyaml/lib -L/usr/local/opt/libksba/lib -L/usr/local/opt/readline/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/[email protected]/lib  -install_name /Users/nbyrd/.rvm/rubies/ruby-2.0.0-p648/lib/libruby.2.0.0.dylib -current_version 2.0.0 -compatibility_version 2.0.0  -fstack-protector -Wl,-u,_objc_msgSend  -fstack-protector -Wl,-u,_objc_msgSend  
+    SOLIBS = 
+compiling main.c
+compiling dmydln.c
+compiling dmyencoding.c
+compiling version.c
+compiling miniprelude.c
+translating probes probes.d
+compiling bignum.c
+compiling class.c
+. ./vm_opts.h
+compiling compar.c
+compiling complex.c
+compiling dir.c
+compiling dln_find.c
+compiling enum.c
+complex.c:79:1: warning: unused function &#39;f_cmp&#39; [-Wunused-function]
+f_cmp(VALUE x, VALUE y)
+^
+complex.c:109:1: warning: unused function &#39;f_lt_p&#39; [-Wunused-function]
+f_lt_p(VALUE x, VALUE y)
+^
+complex.c:116:1: warning: unused function &#39;f_mod&#39; [-Wunused-function]
+binop(mod, &#39;%&#39;)
+^
+complex.c:30:21: note: expanded from macro &#39;binop&#39;
+inline static VALUE \
+                    ^
+&lt;scratch space&gt;:89:1: note: expanded from here
+f_mod
+^
+complex.c:155:1: warning: unused function &#39;f_abs2&#39; [-Wunused-function]
+fun1(abs2)
+^
+complex.c:37:21: note: expanded from macro &#39;fun1&#39;
+inline static VALUE \
+                    ^
+&lt;scratch space&gt;:92:1: note: expanded from here
+f_abs2
+^
+complex.c:157:1: warning: unused function &#39;f_conj&#39; [-Wunused-function]
+fun1(conj)
+^
+complex.c:37:21: note: expanded from macro &#39;fun1&#39;
+inline static VALUE \
+                    ^
+&lt;scratch space&gt;:96:1: note: expanded from here
+f_conj
+^
+complex.c:159:1: warning: unused function &#39;f_floor&#39; [-Wunused-function]
+fun1(floor)
+^
+complex.c:37:21: note: expanded from macro &#39;fun1&#39;
+inline static VALUE \
+                    ^
+&lt;scratch space&gt;:100:1: note: expanded from here
+f_floor
+^
+complex.c:160:1: warning: unused function &#39;f_imag&#39; [-Wunused-function]
+fun1(imag)
+^
+complex.c:37:21: note: expanded from macro &#39;fun1&#39;
+inline static VALUE \
+                    ^
+&lt;scratch space&gt;:102:1: note: expanded from here
+f_imag
+^
+complex.c:164:1: warning: unused function &#39;f_real&#39; [-Wunused-function]
+fun1(real)
+^
+complex.c:37:21: note: expanded from macro &#39;fun1&#39;
+inline static VALUE \
+                    ^
+&lt;scratch space&gt;:110:1: note: expanded from here
+f_real
+^
+complex.c:185:1: warning: unused function &#39;f_divmod&#39; [-Wunused-function]
+fun2(divmod)
+^
+complex.c:44:21: note: expanded from macro &#39;fun2&#39;
+inline static VALUE \
+                    ^
+&lt;scratch space&gt;:118:1: note: expanded from here
+f_divmod
+^
+complex.c:197:1: warning: unused function &#39;f_idiv&#39; [-Wunused-function]
+fun2(idiv)
+^
+complex.c:44:21: note: expanded from macro &#39;fun2&#39;
+inline static VALUE \
+                    ^
+&lt;scratch space&gt;:124:1: note: expanded from here
+f_idiv
+^
+complex.c:263:1: warning: unused function &#39;k_integer_p&#39; [-Wunused-function]
+k_integer_p(VALUE x)
+^
+complex.c:465:1: warning: unused function &#39;f_complex_new1&#39; [-Wunused-function]
+f_complex_new1(VALUE klass, VALUE x)
+^
+complex.c:547:1: warning: unused function &#39;m_sqrt_bang&#39; [-Wunused-function]
+imp1(sqrt)
+^
+complex.c:518:21: note: expanded from macro &#39;imp1&#39;
+inline static VALUE \
+                    ^
+&lt;scratch space&gt;:150:1: note: expanded from here
+m_sqrt_bang
+^
+bignum.c:910:1: warning: unused function &#39;next_pow2&#39; [-Wunused-function]
+next_pow2(register unsigned long x)
+^
+compiling enumerator.c
+compiling error.c
+compiling eval.c
+compiling load.c
+compiling proc.c
+compiling file.c
+compiling gc.c
+13 warnings generated.
+compiling hash.c
+compiling inits.c
+compiling io.c
+compiling marshal.c
+compiling math.c
+compiling node.c
+compiling numeric.c
+compiling object.c
+compiling pack.c
+compiling parse.c
+compiling process.c
+compiling random.c
+compiling range.c
+compiling rational.c
+rational.c:86:1: warning: unused function &#39;f_gt_p&#39; [-Wunused-function]
+f_gt_p(VALUE x, VALUE y)
+^
+rational.c:136:1: warning: unused function &#39;f_floor&#39; [-Wunused-function]
+fun1(floor)
+^
+rational.c:40:21: note: expanded from macro &#39;fun1&#39;
+inline static VALUE \
+                    ^
+&lt;scratch space&gt;:93:1: note: expanded from here
+f_floor
+^
+rational.c:157:1: warning: unused function &#39;f_truncate&#39; [-Wunused-function]
+fun1(truncate)
+^
+rational.c:40:21: note: expanded from macro &#39;fun1&#39;
+inline static VALUE \
+                    ^
+&lt;scratch space&gt;:103:1: note: expanded from here
+f_truncate
+^
+rational.c:428:1: warning: unused function &#39;f_rational_new_bang2&#39; [-Wunused-function]
+f_rational_new_bang2(VALUE klass, VALUE x, VALUE y)
+^
+rational.c:537:1: warning: unused function &#39;f_rational_new1&#39; [-Wunused-function]
+f_rational_new1(VALUE klass, VALUE x)
+^
+rational.c:552:1: warning: unused function &#39;f_rational_new_no_reduce1&#39; [-Wunused-function]
+f_rational_new_no_reduce1(VALUE klass, VALUE x)
+^
+1 warning generated.
+compiling re.c
+compiling regcomp.c
+compiling regenc.c
+compiling regerror.c
+compiling regexec.c
+compiling regparse.c
+compiling regsyntax.c
+compiling ruby.c
+6 warnings generated.
+compiling safe.c
+compiling signal.c
+compiling sprintf.c
+compiling st.c
+compiling strftime.c
+compiling string.c
+compiling struct.c
+compiling time.c
+compiling transcode.c
+compiling util.c
+compiling variable.c
+compiling compile.c
+compiling debug.c
+compiling iseq.c
+compiling vm.c
+compiling vm_dump.c
+compiling vm_backtrace.c
+compiling vm_trace.c
+compiling thread.c
+vm.c:1916:31: warning: expression does not compute the number of elements in this array; element type is &#39;int&#39;, not &#39;VALUE&#39; (aka &#39;unsigned long&#39;) [-Wsizeof-array-div]
+                                 sizeof(th-&gt;machine_regs) / sizeof(VALUE));
+                                        ~~~~~~~~~~~~~~~~  ^
+vm.c:1916:31: note: place parentheses around the &#39;sizeof(VALUE)&#39; expression to silence this warning
+thread.c:977:27: warning: implicit conversion loses integer precision: &#39;long&#39; to &#39;__darwin_suseconds_t&#39; (aka &#39;int&#39;) [-Wshorten-64-to-32]
+        tp-&gt;tv_usec = ts.tv_nsec / 1000;
+                    ~ ~~~~~~~~~~~^~~~~~
+thread.c:4835:20: error: implicit declaration of function &#39;rb_frame_last_func&#39; is invalid in C99 [-Werror,-Wimplicit-function-declaration]
+    const ID mid = rb_frame_last_func();
+                   ^
+thread.c:4835:20: note: did you mean &#39;rb_frame_this_func&#39;?
+./include/ruby/intern.h:369:4: note: &#39;rb_frame_this_func&#39; declared here
+ID rb_frame_this_func(void);
+   ^
+1 warning and 1 error generated.
+make: *** [thread.o] Error 1
+make: *** Waiting for unfinished jobs....
+1 warning generated.
+++ return 2
+</code></pre>
+<p>このエラーを回避するために何ができるか本当にわかりません。これまで
+Ruby を使ったことがありませんでしたが、ソース コードに関数宣言
+(「rb_frame_last_func」) のない関数呼び出しがあるようです。</p>
+<p>複数の C コンパイラを試しましたが、どれも機能しませんでした。 RVM
+開発者にも助けを求めてみましたが、彼らは私の質問にまったく答えてくれませんでした。
+RVM の Web
+サイトには、これらのエラーに関する詳細が記載されていません。そして私は
+Stackoverflow や Google
+を閲覧し、数十の代替アプローチを試しましたが、どれもうまくいきませんでした。</p>
+<p>誰かが私にここで何が欠けているのか教えてもらえますか？</p>
+<h2 id="解決策">解決策</h2>
+<p>これは、Xcode 12 に含まれるツールの動作の変更によるものです。</p>
+<p>https://translate.google.com/translate?hl=ja&amp;sl=en&amp;tl=ja&amp;u=https://developer.apple.com/documentation/xcode-release-notes/xcode-12-release-notes</p>
+<p>おそらく、コンパイル フラグを環境内で設定して RVM
+に渡したいと思うでしょう。</p>
+<pre><code>export optflags=&quot;-Wno-error=implicit-function-declaration&quot;
+</code></pre>
+<p>その後、再試行できます。</p>
+<pre><code>$ rvm install 2.0.0
+Searching for binary rubies, this might take some time.
+No binary rubies available for: osx/10.15/x86_64/ruby-2.0.0-p648.
+Continuing with compilation. Please read &#39;rvm help mount&#39; to get more information on binary rubies.
+Checking requirements for osx.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Warning: Calling `brew list` to only list formulae is deprecated! Use `brew list --formula` instead.
+Installing requirements for osx.
+Updating system - please wait
+Installing required packages: openssl - please wait
+Certificates bundle &#39;/usr/local/etc/[email protected]/cert.pem&#39; is already up to date.
+Requirements installation successful.
+Installing Ruby from source to: /Users/foo/.rvm/rubies/ruby-2.0.0-p648, this may take a while depending on your cpu(s)...
+ruby-2.0.0-p648 - #downloading ruby-2.0.0-p648, this may take a while depending on your connection...
+ruby-2.0.0-p648 - #extracting ruby-2.0.0-p648 to /Users/foo/.rvm/src/ruby-2.0.0-p648 - please wait
+ruby-2.0.0-p648 - #applying patch /Users/foo/.rvm/patches/ruby/2.0.0/openssl3.patch - please wait
+ruby-2.0.0-p648 - #applying patch /Users/foo/.rvm/patches/ruby/2.0.0/update-autoconf.patch - please wait
+ruby-2.0.0-p648 - #configuring - please wait
+ruby-2.0.0-p648 - #post-configuration - please wait
+ruby-2.0.0-p648 - #compiling - please wait
+ruby-2.0.0-p648 - #installing - please wait
+ruby-2.0.0-p648 - #making binaries executable - please wait
+ruby-2.0.0-p648 - #downloading rubygems-3.0.8
+ruby-2.0.0-p648 - #extracting rubygems-3.0.8 - please wait
+ruby-2.0.0-p648 - #removing old rubygems - please wait
+ruby-2.0.0-p648 - #installing rubygems-3.0.8 - please wait
+Error running &#39;env GEM_HOME=/Users/foo/.rvm/gems/ruby-2.0.0-p648@global GEM_PATH= /Users/foo/.rvm/rubies/ruby-2.0.0-p648/bin/ruby -d /Users/foo/.rvm/src/rubygems-3.0.8/setup.rb --no-document&#39;,
+please read /Users/foo/.rvm/log/1605308161_ruby-2.0.0-p648/rubygems.install.log
+</code></pre>
+<p>最後にエラーが発生したにもかかわらず、Ruby
+は正常にコンパイルおよびインストールされます。</p>
+<pre><code>$ rvm list
+   ruby-2.0.0-p648 [ x86_64 ]
+   ruby-2.5.7 [ x86_64 ]
+=* ruby-2.7.1 [ x86_64 ]
+   ruby-3.0.0-preview1 [ x86_64 ]
+
+# =&gt; - current
+# =* - current &amp;&amp; default
+#  * - default
+$ rvm use 2.0.0
+rvm use 2.0.0
+Using /Users/foo/.rvm/gems/ruby-2.0.0-p648
+YAML safe loading is not available. Please upgrade psych to a version that supports safe loading (&gt;= 2.0).
+$ ruby -v
+ruby 2.0.0p648 (2015-12-16 revision 53162) [x86_64-darwin19.6.0]
+</code></pre>
+<p>おそらくネイティブ拡張機能を備えた gem にも同じ修正が必要です。</p>
+<pre><code>gem install some_gem_name --with-cflags=&quot;-Wno-error=implicit-function-declaration&quot;
+</code></pre>
+<p>または、バンドラーを使用するアプリの場合:</p>
+<pre><code>bundle config build.some_gem_name --with-cflags=\&quot;-Wno-error=implicit-function-declaration\&quot;
+</code></pre>
+  </div>
+</body>
+</html>

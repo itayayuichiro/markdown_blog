@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>Windows 10 + Ruby 3.1.2 – nokogiri をインストールできない | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">Windows 10 + Ruby 3.1.2 – nokogiri
+をインストールできない</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>私は開発にはまったく慣れておらず、Windows 10 PC を Rails
+開発用にセットアップしようとしているところです。ここで非常に明確で達成可能と思われるチュートリアルを見つけました。</p>
+<p>Ruby 3.1.2
+をインストールでき、永続フォルダーに解凍できました。それをパスに追加し、ツールのビルドに進みました。
+MSYS2 をサイトからダウンロードしてインストールし、pacman、RubyInstaller2
+をセットアップして、MSYS2 と MINGW
+開発ツールチェーンをインストールしました。 C 依存の gem
+をインストールするところまで進み、以下を使用して sqlite3
+をインストールできました。</p>
+<pre><code>ridk exec pacman -S mingw-w64-x86_64-sqlite3
+gem install sqlite3 --platform ruby
+</code></pre>
+<p>そして、nokogiri gem のインストールを続けました。</p>
+<pre><code>ridk exec pacman -S mingw-w64-x86_64-libxslt
+gem install nokogiri --platform ruby -- --use-system-libraries 
+</code></pre>
+<p>この最後の gem
+インストール行は私が失敗した箇所です。私はこれに関してほとんど初心者で、WSL
+または仮想マシンのインストールを試みる寸前ですが、トラブルシューティングを試みて解決策を見つけるのが賢明だと思いました。</p>
+<pre><code>C:\WINDOWS\system32&gt;gem install nokogiri --platform ruby -- --use-system-libraries
+Temporarily enhancing PATH for MSYS/MINGW...
+Building native extensions with: &#39;--use-system-libraries&#39;
+This could take a while...
+ERROR:  Error installing nokogiri:
+        ERROR: Failed to build gem native extension.
+
+    current directory: C:/Dev/Dependencies/Ruby/rubyinstaller-3.1.2-1-x64/lib/ruby/gems/3.1.0/gems/nokogiri-1.13.6/ext/nokogiri
+C:/Dev/Dependencies/Ruby/rubyinstaller-3.1.2-1-x64/bin/ruby.exe -I C:/Dev/Dependencies/Ruby/rubyinstaller-3.1.2-1-x64/lib/ruby/site_ruby/3.1.0 -r ./siteconf20220511-16300-lhgizk.rb extconf.rb --use-system-libraries
+checking for whether -std=c99 is accepted as CFLAGS... yes
+checking for whether -Wno-declaration-after-statement is accepted as CFLAGS... yes
+checking for whether -g is accepted as CFLAGS... yes
+checking for whether -Winline is accepted as CFLAGS... yes
+checking for whether -Wmissing-noreturn is accepted as CFLAGS... yes
+checking for whether  &quot;-Idummypath&quot; is accepted as CPPFLAGS... yes
+Building nokogiri using system libraries.
+checking for gzdopen() in -lz... yes
+checking for xmlParseDoc() in -lxml2... no
+checking for xmlParseDoc() in -llibxml2... no
+checking for libxml-2.0 using `pkg_config`... no
+Please install either the `pkg-config` utility or the `pkg-config` rubygem.
+checking for xmlParseDoc() in -lxml2... no
+checking for xmlParseDoc() in -llibxml2... no
+-----
+extconf.rb:285:in `ensure_package_configuration&#39;
+extconf.rb:648:in `&lt;main&gt;&#39;
+xml2 is missing. Please locate mkmf.log to investigate how it is failing.
+-----
+*** extconf.rb failed ***
+Could not create Makefile due to some reason, probably lack of necessary
+libraries and/or headers.  Check the mkmf.log file for more details.  You may
+need configuration options.
+
+Provided configuration options:
+        --with-opt-dir
+        --without-opt-dir
+        --with-opt-include
+        --without-opt-include=${opt-dir}/include
+        --with-opt-lib
+        --without-opt-lib=${opt-dir}/lib
+        --with-make-prog
+        --without-make-prog
+        --srcdir=.
+        --curdir
+        --ruby=C:/Dev/Dependencies/Ruby/rubyinstaller-3.1.2-1-x64/bin/$(RUBY_BASE_NAME)
+        --help
+        --clean
+        --prevent-strip
+        --enable-system-libraries
+        --disable-system-libraries
+        --use-system-libraries
+        --enable-system-libraries
+        --disable-system-libraries
+        --use-system-libraries
+        --with-zlib-dir
+        --without-zlib-dir
+        --with-zlib-include
+        --without-zlib-include=${zlib-dir}/include
+        --with-zlib-lib
+        --without-zlib-lib=${zlib-dir}/lib
+        --with-z-dir
+        --without-z-dir
+        --with-z-include
+        --without-z-include=${z-dir}/include
+        --with-z-lib
+        --without-z-lib=${z-dir}/lib
+        --with-zlib
+        --without-zlib
+        --with-xml2-dir
+        --without-xml2-dir
+        --with-xml2-include
+        --without-xml2-include=${xml2-dir}/include
+        --with-xml2-lib
+        --without-xml2-lib=${xml2-dir}/lib
+        --with-xml2lib
+        --without-xml2lib
+        --with-libxml2-dir
+        --without-libxml2-dir
+        --with-libxml2-include
+        --without-libxml2-include=${libxml2-dir}/include
+        --with-libxml2-lib
+        --without-libxml2-lib=${libxml2-dir}/lib
+        --with-libxml2lib
+        --without-libxml2lib
+        --with-libxml-2.0-dir
+        --without-libxml-2.0-dir
+        --with-libxml-2.0-include
+        --without-libxml-2.0-include=${libxml-2.0-dir}/include
+        --with-libxml-2.0-lib
+        --without-libxml-2.0-lib=${libxml-2.0-dir}/lib
+        --with-libxml-2.0-config
+        --without-libxml-2.0-config
+        --with-pkg-config
+        --without-pkg-config
+        --with-xml2lib
+        --without-xml2lib
+        --with-libxml2lib
+        --without-libxml2lib
+
+To see why this extension failed to compile, please check the mkmf.log which can be found here:
+
+  C:/Dev/Dependencies/Ruby/rubyinstaller-3.1.2-1-x64/lib/ruby/gems/3.1.0/extensions/x64-mingw-ucrt/3.1.0/nokogiri-1.13.6/mkmf.log
+
+extconf failed, exit code 1
+
+Gem files will remain installed in C:/Dev/Dependencies/Ruby/rubyinstaller-3.1.2-1-x64/lib/ruby/gems/3.1.0/gems/nokogiri-1.13.6 for inspection.
+Results logged to C:/Dev/Dependencies/Ruby/rubyinstaller-3.1.2-1-x64/lib/ruby/gems/3.1.0/extensions/x64-mingw-ucrt/3.1.0/nokogiri-1.13.6/gem_make.out
+
+C:\WINDOWS\system32&gt;
+</code></pre>
+<p>そこで、「pkg-config Rubygem
+をインストールしてください」という記事を読んで、その方法を調べて MSYS2
+にインストールしようとしました。インストールできるようでした。</p>
+<h2 id="解決策">解決策</h2>
+<pre><code>#!/bin/bash
+
+pacman -S binutils gcc make cmake clang base-devel libxml2 \
+          libxml2-devel zlib zlib-devel libiconv libiconv-devel \
+          libxslt libxslt-devel 
+</code></pre>
+<p>注目すべき相違点:</p>
+<p>その他の注意事項：</p>
+<p>最後のメモ:</p>
+<p>私の経験では、Linux は Windows よりも Ruby (開発または実行)
+に対してはるかにうまく機能します。私がこれを追求したのは、ディスク容量が不足していて、WSL2
+が残りの容量を消費してしまうためです。実行可能なオプションであれば、WSL2
+を使用することを強くお勧めします。そうしないと、Ruby
+の依存関係でネイティブ コードをビルドする必要があるときに、暗号的な
+C/C++ ビルドを解読することになります。</p>
+  </div>
+</body>
+</html>

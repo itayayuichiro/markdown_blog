@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>動的テキスト注釈用の SketchUp Ruby API での add_3d_text の実装に関する問題 | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">動的テキスト注釈用の SketchUp Ruby API での
+add_3d_text の実装に関する問題</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>問題の詳細は何ですか?
+私はモデル内にテキスト注釈を追加するプロセスを自動化するための SketchUp
+用の Ruby スクリプトに取り組んでいます。特定のコンポーネント
+(「Enkeltreol」と「Dobbeltreol」)
+のインスタンスをカウントし、その合計をモデル内にテキストとして表示する必要があります。この目的で
+add_3d_text メソッドを使用しようとしていますが、解決できない TypeError
+が発生し続けます。</p>
+<p>何を試し、何を期待していましたか? add_3d_text
+メソッドを使用してテキスト注釈を作成しようとしましたが、スクリプトによってモデル内にテキストが生成されないか、TypeError
+が発生します。私は、モデル内の特定の位置に配置されたコンポーネントの数を示すテキスト注釈が表示されることを期待していました。代わりに、コンソールはエラーを報告し、テキストは表示されません。</p>
+<p>SketchUp Pro バージョン 23.1.341 を使用しています。</p>
+<p>質問:</p>
+<p>1: 動的テキスト注釈をモデルに追加するために SketchUp Ruby API で
+add_3d_text を使用する正しい方法は何ですか?</p>
+<p>2: TypeError
+を解決し、モデルの特定の時点でテキストが正しく追加されるようにするにはどうすればよいですか?</p>
+<p>3: SketchUp Ruby API 内に、モデル
+コンポーネントに基づいてテキスト情報を動的に表示するための代替アプローチはありますか?</p>
+<p>Ruby を使用して SketchUp
+に動的テキスト注釈を正しく実装する洞察や例があれば、大変助かります。</p>
+<p>これは私が実行しようとしているコードの例です:</p>
+<pre><code># Initialize counters
+enkeltreol_count = 0
+dobbeltreol_count = 0
+
+# Start an operation so it can be undone in one step if needed
+model = Sketchup.active_model
+model.start_operation(&#39;Add Count Text&#39;, true)
+
+# Iterate through all entities in the model for counting
+definitions = model.definitions
+definitions.each do |definition|
+  definition.instances.each do |instance|
+    if instance.definition.name == &quot;Enkeltreol&quot;
+      enkeltreol_count += 1
+    elsif instance.definition.name == &quot;Dobbeltreol&quot;
+      dobbeltreol_count += 1
+    end
+  end
+end
+
+# Calculate the total number of shelf units
+total_shelf_units = enkeltreol_count + (dobbeltreol_count * 2)
+
+# Create a text string that includes the counts
+count_text = &quot;Enkeltreol units: #{enkeltreol_count}\nDobbeltreol units: #{dobbeltreol_count}\nTotal shelf units: #{total_shelf_units}&quot;
+
+# Define parameters for the 3D text
+font = &quot;Arial&quot;
+bold = false
+italic = false
+height = 10.0 # Height of the text
+z = 0.0 # Extrusion depth of the 3D text
+
+# Define the point where the 3D text will be inserted
+point = Geom::Point3d.new(10, 0, 0)
+
+# Correctly add the 3D text to the model, placed flat like a label
+entities = model.active_entities
+entities.add_3d_text(count_text, TextAlignLeft, font, bold, italic, height, z, false, point)
+
+# Commit the operation
+model.commit_operation
+
+# Output to the console
+puts &quot;Counts have been added to the model as 3D text.&quot;
+</code></pre>
+<p>出力</p>
+<p>「カウントが 3D テキストとしてモデルに追加されました。」 エラー:
+#&lt;TypeError: false から float への暗黙的な変換はありません&gt;</p>
+<h2 id="解決策">解決策</h2>
+<p>add_3d_text の使用法にいくつかのエラーがあります。</p>
+<p>SketchUp API ドキュメントの説明によると、次のようになります。</p>
+<pre><code>#add_3d_text(string, alignment, font, is_bold = false, is_italic = false, letter_height = 1.0, tolerance = 0.0, z = 0.0, is_filled = true, extrusion = 0.0) ⇒ Boolean
+</code></pre>
+<p>使用法には許容値が欠落しており、最後のパラメータは 3D
+位置ではなく押し出しの高さです。</p>
+<p>新しく作成したテキストを配置する場合は、グループを作成し、テキストをグループに追加して、グループ変換を設定します。</p>
+<pre><code>xform = Geom::Transformation.new([10, 0, 0])
+group = Sketchup.active_model.entities.add_group()
+
+tolerance = 0
+extrusion = 0
+group.entities.add_3d_text(count_text, TextAlignLeft, font, bold, italic, height, tolerance, z, false, extrusion)
+group.transformation = xform
+</code></pre>
+  </div>
+</body>
+</html>

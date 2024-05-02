@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>n 回サイコロを振った後に特定の合計が得られる確率。ルビー | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">n
+回サイコロを振った後に特定の合計が得られる確率。ルビー</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>n 個のサイコロの合計の確率を求めるための最良の解決策は何ですか?
+見つけることで解決しています</p>
+<p>これが私がこれまでやってきたことです。</p>
+<pre><code># sides - number of sides on one die
+def get_mean(sides)
+  (1..sides).inject(:+) / sides.to_f
+end
+
+def get_variance(sides)
+  mean_of_squares = ((1..sides).inject {|sum, side| sum + side ** 2}) / sides.to_f
+  square_mean = get_mean(sides) ** 2
+
+  mean_of_squares - square_mean
+end
+
+def get_sigma(variance)
+  variance ** 0.5
+end
+
+# x - the number of points in question
+def get_z_score(x, mean, sigma)
+  (x - mean) / sigma.to_f
+end
+
+# Converts z_score to probability
+def z_to_probability(z)
+  return 0 if z &lt; -6.5
+  return 1 if z &gt; 6.5
+
+  fact_k = 1
+  sum = 0
+  term = 1
+  k = 0
+
+  loop_stop = Math.exp(-23)
+  while term.abs &gt; loop_stop do
+    term = 0.3989422804 * ((-1)**k) * (z**k) / (2*k+1) / (2**k) * (z**(k+1)) / fact_k
+    sum += term
+    k += 1
+    fact_k *= k
+  end
+
+  sum += 0.5
+  1 - sum
+end
+
+# Calculate probability of getting &#39;х&#39; total points by rolling &#39;n&#39; dice with &#39;sides&#39; number of sides.
+def probability_of_sum(x, n, sides=6)
+
+  mean = n * get_mean(sides)
+  variance = get_variance(sides)
+  sigma = get_sigma(n * variance)
+
+  # Rolling below the sum
+  z1 = get_z_score(x, mean, sigma)
+  prob_1 = z_to_probability(z1)
+
+  # Rolling above the sum
+  z2 = get_z_score(x+1, mean, sigma)
+  prob_2 = z_to_probability(z2)
+
+  prob_1 - prob_2
+end
+
+# Run probability for 100 dice
+puts probability_of_sum(400, 100)
+</code></pre>
+<p>私が懸念しているのは、x = 200 を選択すると、確率が 0 になることです。
+これは正しい解決策ですか?</p>
+<h2 id="解決策">解決策</h2>
+<p>2 つの独立した確率分布の結果を加算することは、2
+つの分布を畳み込むことと同じです。分布が離散的である場合、それは離散畳み込みです。</p>
+<p>したがって、1 つのサイコロが次のように表されるとします。</p>
+<pre><code>probs_1d6 = Array.new(6) { Rational(1,6) }
+</code></pre>
+<p>2d6 は次のように計算できます。</p>
+<pre><code>probs_2d6 = []
+probs_1d6.each_with_index do |prob_a,i_a|  
+  probs_1d6.each_with_index do |prob_b,i_b| 
+    probs_2d6[i_a + i_b] = ( probs_2d6[i_a + i_b] || 0 ) + prob_a * prob_b
+  end
+end
+
+probs_2d6
+# =&gt;  [(1/36), (1/18), (1/12), (1/9), (5/36), (1/6), 
+#      (5/36), (1/9), (1/12), (1/18), (1/36)]
+</code></pre>
+<p>これはサイコロの面の n
+乗であり、完全に論理的に組み合わせることでこれを減らすことができますが、より複雑な設定では一般に柔軟性が低くなります。このアプローチの良い点は、サイコロを追加し続けて、他のよりエキゾチックな組み合わせを実行できることです。たとえば、4d6
+を取得するには、2d6 の 2
+つの結果を畳み込みます。有理数を使用すると、浮動小数点精度の問題を回避できます。</p>
+<p>詳細を 1
+つ省略しましたが、確率が何に一致するかを知るために、初期オフセット
+(通常の 6 面サイコロの場合は +1)
+を保存し、それを加算する必要があります。</p>
+<p>私は、Rational ではなく浮動小数点で、Gem games_dice
+でこのロジックのより洗練されたバージョンを作成しました。これは、他のいくつかのサイコロの組み合わせに対応できます。</p>
+<p>上記のアプローチを素朴な方法 (一度に 1
+つずつサイコロの効果を組み合わせるだけ)
+を使用してメソッドを基本的に書き直すと、次のようになります。</p>
+<pre><code>def probability_of_sum(x, n, sides=6)
+  return 0 if x &lt; n
+  single_die_probs = Array.new(sides) { Rational(1,sides) }
+
+  combined_probs = [1] # Represents chance of getting 0 when rolling 0 dice :-)
+
+  # This is not the most efficient way to do this, but easier to understand
+  n.times do
+    start_probs = combined_probs
+    combined_probs = []
+    start_probs.each_with_index do |prob_a,i_a|  
+        single_die_probs.each_with_index do |prob_b,i_b| 
+          combined_probs[i_a + i_b] = ( combined_probs[i_a + i_b] || 0 ) + prob_a * prob_b
+        end
+    end
+  end
+
+  combined_probs[ x - n ] || 0
+end
+
+puts probability_of_sum(400, 100).to_f
+# =&gt; 0.0003172139126369326
+</code></pre>
+<p>このメソッドは実際には 100 から 600
+までの完全な確率分布を計算するため、メソッドを 1 回呼び出して配列
+(オフセット +100) を 1
+回保存するだけで済み、より大きくなる確率など、他の便利な操作を実行できることに注意してください。ある数字。
+Ruby では有理数を使用しているため、すべてが完璧な精度で行われます。</p>
+<p>あなたの状況ではサイコロの種類が 1 種類しかないため、最後まで
+Rational の使用を避け、整数 (基本的には結合された値の数)
+だけを使用し、組み合わせの合計数 (辺の数の乗)
+で割ることができます。ロールズ）。これははるかに高速で、1
+秒以内に数百のサイコロの値を返します。</p>
+<pre><code>def probability_of_sum(x, n, sides=6)
+  return 0 if x &lt; n
+  combined_probs = [1] # Represents chance of getting 0 when rolling 0 dice :-)
+
+  n.times do
+    start_probs = combined_probs
+    combined_probs = []
+    start_probs.each_with_index do |prob_a,i_a|  
+        sides.times do |i_b| 
+          combined_probs[i_a + i_b] = ( combined_probs[i_a + i_b] || 0 ) + prob_a
+        end
+    end
+  end
+
+  Rational( combined_probs[ x - n ] || 0, sides ** n )
+end
+</code></pre>
+  </div>
+</body>
+</html>

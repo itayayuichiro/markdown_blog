@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>Postモデルでアクションテキストリッチテキストを使用する場合、Rails 7でRansackを使用して検索するにはどうすればよいですか? | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">Postモデルでアクションテキストリッチテキストを使用する場合、Rails
+7でRansackを使用して検索するにはどうすればよいですか?</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>誰かがなぜ機能しないのかを理解するのを手伝ってくれますか?
+それで、話は何ですか：ランサックバージョン4.1.1を備えたRails
+7（7.1.3）ブログアプリがあります</p>
+<p>検索フォームでは、投稿タイトルと投稿本文でテキストを検索する必要があります
+そしてこのエラーが発生します</p>
+<p>paramsでこれを見ることができます</p>
+<p>title_cont
+のようなタイトルのみで検索しようとしている場合はすべて問題ありませんが、body_cont
+または title_or_body_cont
+で検索すると前述のエラーが発生します。これは、Post モデルに body
+フィールドがなく、このフィールドが action_text_rich_texts
+テーブルにあるためだと思います。そして、Post モデルの
+action_text_rich_texts
+テーブルに関連付けを追加した後も、前述のエラーが依然として発生します。よろしくお願いいたします。</p>
+<p>そして私のコード</p>
+<pre><code>class Post &lt; ApplicationRecord
+  has_rich_text :body
+  has_many :comments, dependent: :destroy
+  belongs_to :user
+  has_one_attached :post_image
+
+  validates :title, presence: { message: &#39;must be given please&#39; }, length: { minimum: 5 }
+  validates :body, presence: true, length: { minimum: 10 }
+  validate :post_body_length
+  validate :acceptable_image
+
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[title body created_at updated_at user_id]
+  end
+
+  def self.ransackable_associations(_auth_object = nil)
+    %w[users action_text_rich_texts]
+  end
+
+  private
+
+  def acceptable_image
+    return unless post_image.attached?
+
+    errors.add(:post_image, &#39;is too big&#39;) unless post_image.blob.byte_size &lt;= 5.megabyte
+
+    acceptable_types = [&#39;image/jpeg&#39;, &#39;image/png&#39;]
+    return if acceptable_types.include?(post_image.content_type)
+
+    errors.add(:post_image, &#39;must be a JPEG or PNG&#39;)
+  end
+
+  def post_body_cant_be_empty
+    if self.body.blank?
+      self.errors.add(:body, &quot;can&#39;t be empty&quot;)
+    end
+  end
+
+  def post_body_length
+    if self.body.to_plain_text.length &lt; 10
+      self.errors.add(:body, &#39;is too short (minimum is 10 characters)&#39;)
+    end
+  end
+end
+
+</code></pre>
+<p>また、searchs_controllerもあります</p>
+<pre><code>class SearchesController &lt; ApplicationController
+  def index
+    @query = Post.ransack(params[:q])
+    @posts = @query.result.includes(:rich_text_body)
+  end
+end
+</code></pre>
+<p>そしてsearch_form</p>
+<pre><code>&lt;%= search_form_for @query, url: searches_path, method: :get, html: { class: &quot;d-flex&quot;, role: &quot;search&quot; } do |f| %&gt;
+  &lt;%= f.search_field :title_or_body_cont, class: &quot;form-control me-2&quot;, placeholder: &quot;Search title or body...&quot; %&gt;
+  &lt;%= f.submit &quot;Search&quot;, class: &quot;btn btn-outline-secondary-light btn-sm&quot; %&gt;
+&lt;% end %&gt;
+</code></pre>
+<p>とルート</p>
+<pre><code>resources :searches, only: %i[index]
+</code></pre>
+<p>ポストテーブルの構造</p>
+<pre><code> create_table &quot;posts&quot;, force: :cascade do |t|
+    t.string &quot;title&quot;, null: false
+    t.datetime &quot;created_at&quot;, null: false
+    t.datetime &quot;updated_at&quot;, null: false
+    t.bigint &quot;user_id&quot;, null: false
+    t.index [&quot;user_id&quot;], name: &quot;index_posts_on_user_id&quot;
+  end
+</code></pre>
+<p>Action_text_rich_texts テーブル構造</p>
+<pre><code>create_table &quot;action_text_rich_texts&quot;, force: :cascade do |t|
+    t.string &quot;name&quot;, null: false
+    t.text &quot;body&quot;
+    t.string &quot;record_type&quot;, null: false
+    t.bigint &quot;record_id&quot;, null: false
+    t.datetime &quot;created_at&quot;, null: false
+    t.datetime &quot;updated_at&quot;, null: false
+    t.index [&quot;record_type&quot;, &quot;record_id&quot;, &quot;name&quot;], name: &quot;index_action_text_rich_texts_uniqueness&quot;, unique: true
+  end
+</code></pre>
+<h2 id="解決策">解決策</h2>
+<p>ご提案いただきありがとうございます。それは動作します。</p>
+<p>Post モデルの関連付け rich_text_body をメソッドに追加します
+self.ransackable_associations</p>
+<pre><code>def self.ransackable_associations(_auth_object = nil)
+   %w[users rich_text_body]
+end
+</code></pre>
+<p>そして、検索フォーム search_field で検索する場所を修正します</p>
+<pre><code>title_or_rich_text_body_body_cont
+</code></pre>
+<p>この調整を行った後は、すべてが正しく機能するようになりました。</p>
+<p>この提案に従ってランサック初期化子を追加する必要もあります 4.0.0 と
+ActionText::RichText へのアップグレードを捜索する</p>
+<pre><code>class ActionText::Record &lt; ActiveRecord::Base
+  def self.ransackable_attributes(auth_object = nil)
+    authorizable_ransackable_attributes
+  end
+end
+</code></pre>
+  </div>
+</body>
+</html>

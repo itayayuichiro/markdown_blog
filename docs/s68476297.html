@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>Windows に shopify-cli をインストールする | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">Windows に shopify-cli をインストールする</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>次のコマンドを使用して Shopify アプリ CLI
+をインストールしてみました。</p>
+<pre><code>gem install shopify-cli
+</code></pre>
+<p>出力：</p>
+<pre><code>ERROR:  Error installing shopify-cli:
+        &quot;theme-check-language-server.bat&quot; from theme-check conflicts with C:/Ruby27-x64/bin/theme-check-language-server.bat
+</code></pre>
+<p>助けていただければ幸いです。</p>
+<h2 id="解決策">解決策</h2>
+<p>このサイトが役立つかもしれませんので、ぜひアクセスしてください。</p>
+<p>https://translate.google.com/translate?hl=ja&amp;sl=en&amp;tl=ja&amp;u=https://shopify.dev/docs/themes/tools/cli</p>
+<p>CLI については以下の手順に従ってください:-</p>
+<p>ステップ 1: 新しい要件をインストールする「ステップ 1:
+新しい要件をインストールする」というタイトルのセクションへのアンカー
+リンク Shopify CLI 2.x の要件に加えて、Shopify CLI 3.x には Node.js
+14.17.0 以降が必要です。 macOS を使用している場合、Shopify CLI
+の最新バージョンにアップグレードすると、Homebrew によって Node.js
+がインストールされます。</p>
+<p>要件の完全なリストについては、「Shopify CLI
+のインストール」を参照してください。</p>
+<p>ステップ 2: Shopify CLI 2.x をアンインストールする 「ステップ 2:
+Shopify CLI 2.x
+をアンインストールする」というタイトルのセクションへのアンカー リンク
+以前のバージョンの Shopify CLI
+をアンインストールすることを検討してください。以前のバージョンをアンインストールすると、2
+つのバージョン間の衝突が回避されます。</p>
+<p>Shopify CLI
+の両方のバージョンをインストールしたままにする場合は、「Shopify CLI 2.x
+と 3.x
+の両方の使用」を参照して、同じ環境で両方のバージョンを操作する方法を確認してください。</p>
+<p>Shopify CLI は、インストールに使用したのと同じパッケージ
+マネージャーを使用してシステムから削除できます。</p>
+<p>ターミナル</p>
+<p>gem アンインストール shopify-cli Shopify CLI のレガシー バージョン
+(0.9.0 未満)
+を使用している場合は、手動でアンインストールする必要があります。</p>
+<p>ステップ 3: Shopify CLI 3.x をインストールする 「ステップ 3: Shopify
+CLI 3.x をインストールする」というタイトルのセクションへのアンカー
+リンク Shopify CLI は、一連の Node.js パッケージとして管理されます。</p>
+<p><span class="citation" data-cites="shopify/cli">@shopify/cli</span>
+<span class="citation"
+data-cites="shopify/テーマ">@shopify/テーマ</span></p>
+<p>これらのパッケージは、macOS で Homebrew
+を使用してインストールすることも、Windows または Linux
+にパッケージをグローバルにインストールすることによってもインストールできます。</p>
+<p>注記 apt、Yum、および RubyGems
+のインストールはサポートされなくなりました。</p>
+<p>MACOS「MacOS」というタイトルのセクションへのアンカー リンク Homebrew
+を使用して macOS に Shopify CLI をインストールできます。</p>
+<p>Shopify CLI をインストールする前に、brew Tap を使用して Shopify
+のサードパーティ リポジトリを Homebrew に追加する必要があります。</p>
+<p>ターミナル</p>
+<p>醸造タップ Shopify/Shopify 醸造インストールshopify-cli</p>
+<p>注記 Homebrew は、Ruby、Node.js、Git など、Shopify CLI
+を実行するためのすべての要件をインストールします。</p>
+<p>WINDOWS AND LINUX「Windows と
+Linux」というタイトルのセクションへのアンカー リンク テーマ用に Shopify
+CLI をインストールするには、コマンド ラインを使用して <span
+class="citation" data-cites="shopify/cli">@shopify/cli</span> および
+<span class="citation" data-cites="shopify/theme">@shopify/theme</span>
+Node.js パッケージをグローバルにインストールします。</p>
+<p>ターミナル</p>
+<p>npm install -g <span class="citation"
+data-cites="shopify/cli">@shopify/cli</span> <span class="citation"
+data-cites="shopify/theme">@shopify/theme</span> ステップ 4:
+インストールを確認する「ステップ 4:
+インストールを確認する」というタイトルのセクションへのアンカー リンク
+Shopify CLI
+が正しくインストールされていることを確認するには、次のコマンドを実行します。</p>
+  </div>
+</body>
+</html>

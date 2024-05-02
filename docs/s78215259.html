@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>Ruby C-APIでモジュールのメソッドを適切に呼び出すにはどうすればよいですか? | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">Ruby
+C-APIでモジュールのメソッドを適切に呼び出すにはどうすればよいですか?</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>このオープンソース正規表現ライブラリのファジングハーネスを作成しようとしていますが、Ruby
+C-API
+でモジュールを適切に呼び出す方法がわからないという問題に遭遇しています。</p>
+<p>現在のハーネスコードは次のようになります。</p>
+<pre><code>
+int main(int argc, char** argv) {
+    // Initialize ruby
+    ruby_init();
+
+    // Define example regex string
+    VALUE x;
+    x = rb_str_new_cstr(&quot;a&quot;); // Very simple regex which maches an &quot;a&quot; character
+
+    
+    // Initialize the Onigmo module
+    printf(&quot;Initializing the Onigmo module...\n&quot;);
+
+    VALUE rb_cOnigmo = rb_define_module(&quot;Onigmo&quot;);
+
+    rb_define_singleton_method(rb_cOnigmo, &quot;parse&quot;, parse, 1);
+    rb_define_singleton_method(rb_cOnigmo, &quot;compile&quot;, compile, 1);
+
+    rb_cOnigmoNode = rb_define_class_under(rb_cOnigmo, &quot;Node&quot;, rb_cObject);
+    rb_cOnigmoAlternationNode = rb_define_class_under(rb_cOnigmo, &quot;AlternationNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoAnchorBufferBeginNode = rb_define_class_under(rb_cOnigmo, &quot;AnchorBufferBeginNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoAnchorBufferEndNode = rb_define_class_under(rb_cOnigmo, &quot;AnchorBufferEndNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoAnchorKeepNode = rb_define_class_under(rb_cOnigmo, &quot;AnchorKeepNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoAnchorLineBeginNode = rb_define_class_under(rb_cOnigmo, &quot;AnchorLineBeginNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoAnchorLineEndNode = rb_define_class_under(rb_cOnigmo, &quot;AnchorLineEndNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoAnchorPositionBeginNode = rb_define_class_under(rb_cOnigmo, &quot;AnchorPositionBeginNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoAnchorSemiEndNode = rb_define_class_under(rb_cOnigmo, &quot;AnchorSemiEndNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoAnchorWordBoundaryNode = rb_define_class_under(rb_cOnigmo, &quot;AnchorWordBoundaryNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoAnchorWordBoundaryInvertNode = rb_define_class_under(rb_cOnigmo, &quot;AnchorWordBoundaryInvertNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoAnyNode = rb_define_class_under(rb_cOnigmo, &quot;AnyNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoBackrefNode = rb_define_class_under(rb_cOnigmo, &quot;BackrefNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoCallNode = rb_define_class_under(rb_cOnigmo, &quot;CallNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoCClassNode = rb_define_class_under(rb_cOnigmo, &quot;CClassNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoCClassInvertNode = rb_define_class_under(rb_cOnigmo, &quot;CClassInvertNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoEncloseAbsentNode = rb_define_class_under(rb_cOnigmo, &quot;EncloseAbsentNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoEncloseConditionNode = rb_define_class_under(rb_cOnigmo, &quot;EncloseConditionNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoEncloseMemoryNode = rb_define_class_under(rb_cOnigmo, &quot;EncloseMemoryNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoEncloseOptionsNode = rb_define_class_under(rb_cOnigmo, &quot;EncloseOptionsNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoEncloseStopBacktrackNode = rb_define_class_under(rb_cOnigmo, &quot;EncloseStopBacktrackNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoListNode = rb_define_class_under(rb_cOnigmo, &quot;ListNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoLookAheadNode = rb_define_class_under(rb_cOnigmo, &quot;LookAheadNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoLookAheadInvertNode = rb_define_class_under(rb_cOnigmo, &quot;LookAheadInvertNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoLookBehindNode = rb_define_class_under(rb_cOnigmo, &quot;LookBehindNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoLookBehindInvertNode = rb_define_class_under(rb_cOnigmo, &quot;LookBehindInvertNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoQuantifierNode = rb_define_class_under(rb_cOnigmo, &quot;QuantifierNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoStringNode = rb_define_class_under(rb_cOnigmo, &quot;StringNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoWordNode = rb_define_class_under(rb_cOnigmo, &quot;WordNode&quot;, rb_cOnigmoNode);
+    rb_cOnigmoWordInvertNode = rb_define_class_under(rb_cOnigmo, &quot;WordInvertNode&quot;, rb_cOnigmoNode);
+
+
+
+    printf(&quot;Creating instance of rb_cOnigmo...\n&quot;);
+    VALUE module_object = rb_class_new_instance(0, NULL, rb_cOnigmo);
+    printf(&quot;Trying to call \&quot;parse\&quot; on the module...\n&quot;);
+    rb_funcall(module_object, rb_intern(&quot;parse&quot;), 1, x);
+    printf(&quot;Done!\n&quot;);
+
+    // Cleanup
+    return ruby_cleanup(0);
+}
+
+</code></pre>
+<p>コンパイルして実行しようとすると、次の出力が得られます。</p>
+<pre><code>Initializing the Onigmo module...
+Creating instance of rb_cOnigmo...
+ruby: [BUG] Segmentation fault at 0x0000000000000040
+ruby 3.0.2p107 (2021-07-07 revision 0db68f0233) [x86_64-linux-gnu]
+
+-- Control frame information -----------------------------------------------
+c:0001 p:0000 s:0003 E:0008c0 (none) [FINISH]
+
+
+-- Machine register context ------------------------------------------------
+ RIP: 0x00007fc7cd3d2ca9 RBP: 0x00005614b0a0b850 RSP: 0x00007ffca19ce140
+ RAX: 0x0000000000000000 RBX: 0x00005614b0a64d28 RCX: 0x0000000000000003
+ RDX: 0x0000000000000010 RDI: 0x00005614b0a0b850 RSI: 0x0000000000000006
+  R8: 0x0000000000000000  R9: 0x00005614b0b32ab0 R10: 0x00005614b0b32900
+ R11: 0x00007fc7cd239ce0 R12: 0x0000000000000006 R13: 0x00007fc7cd69c560
+ R14: 0x0000000000000008 R15: 0x00005614b00db7a8 EFL: 0x0000000000010206
+
+-- C level backtrace information -------------------------------------------
+/lib/x86_64-linux-gnu/libruby-3.0.so.3.0(0x7fc7cd57a0d0) [0x7fc7cd57a0d0]
+/lib/x86_64-linux-gnu/libruby-3.0.so.3.0(0x7fc7cd3ce4f4) [0x7fc7cd3ce4f4]
+/lib/x86_64-linux-gnu/libruby-3.0.so.3.0(0x7fc7cd4ee4ed) [0x7fc7cd4ee4ed]
+/lib/x86_64-linux-gnu/libc.so.6(__restore_rt+0x0) [0x7fc7cd061520]
+/lib/x86_64-linux-gnu/libruby-3.0.so.3.0(0x7fc7cd3d2ca9) [0x7fc7cd3d2ca9]
+/lib/x86_64-linux-gnu/libruby-3.0.so.3.0(0x7fc7cd3d8502) [0x7fc7cd3d8502]
+/lib/x86_64-linux-gnu/libruby-3.0.so.3.0(0xa9662) [0x7fc7cd3d8662]
+/lib/x86_64-linux-gnu/libruby-3.0.so.3.0(0x7fc7cd3cea0b) [0x7fc7cd3cea0b]
+/lib/x86_64-linux-gnu/libruby-3.0.so.3.0(rb_check_type+0x3c) [0x7fc7cd359ccb]
+/lib/x86_64-linux-gnu/libruby-3.0.so.3.0(0x7fc7cd35ac7b) [0x7fc7cd35ac7b]
+./fuzzer(main+0x406) [0x5614b00d1686]
+
+-- Other runtime information -----------------------------------------------
+
+* Loaded script: ruby
+
+* Loaded features:
+
+    0 enumerator.so
+    1 thread.rb
+    2 rational.so
+    3 complex.so
+    4 ruby2_keywords.rb
+
+* Process memory map:
+
+5614b00c9000-5614b00cd000 r--p 00000000 08:06 23653890                   /home/cyberhacker/Asioita/Hakkerointi/Fuzzing/onigmo/ext/onigmo/fuzzer
+5614b00cd000-5614b00d7000 r-xp 00004000 08:06 23653890                   /home/cyberhacker/Asioita/Hakkerointi/Fuzzing/onigmo/ext/onigmo/fuzzer
+5614b00d7000-5614b00da000 r--p 0000e000 08:06 23653890                   /home/cyberhacker/Asioita/Hakkerointi/Fuzzing/onigmo/ext/onigmo/fuzzer
+5614b00da000-5614b00db000 r--p 00010000 08:06 23653890                   /home/cyberhacker/Asioita/Hakkerointi/Fuzzing/onigmo/ext/onigmo/fuzzer
+5614b00db000-5614b00dc000 rw-p 00011000 08:06 23653890                   /home/cyberhacker/Asioita/Hakkerointi/Fuzzing/onigmo/ext/onigmo/fuzzer
+5614b00dc000-5614b02dc000 rw-p 00000000 00:00 0 
+5614b0a08000-5614b0b40000 rw-p 00000000 00:00 0                          [heap]
+7fc7c8737000-7fc7c8f8d000 rw-p 00000000 00:00 0 
+7fc7c8f8d000-7fc7c93c4000 r--s 00000000 08:06 40248810                   /usr/lib/debug/.build-id/c2/89da5071a3399de893d2af81d6a30c62646e1e.debug
+7fc7c93c4000-7fc7c95e3000 r--s 00000000 08:06 40120745                   /usr/lib/x86_64-linux-gnu/libc.so.6
+7fc7c95e3000-7fc7c9948000 r--s 00000000 08:06 40117551                   /usr/lib/x86_64-linux-gnu/libruby-3.0.so.3.0.2
+7fc7c9948000-7fc7c9977000 r--s 00000000 08:06 23653890                   /home/cyberhacker/Asioita/Hakkerointi/Fuzzing/onigmo/ext/onigmo/fuzzer
+7fc7c9977000-7fc7c997a000 r--p 00000000 08:06 40108172                   /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+7fc7c997a000-7fc7c9991000 r-xp 00003000 08:06 40108172                   /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+7fc7c9991000-7fc7c9995000 r--p 0001a000 08:06 40108172                   /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+7fc7c9995000-7fc7c9996000 r--p 0001d000 08:06 40108172                   /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+7fc7c9996000-7fc7c9997000 rw-p 0001e000 08:06 40108172                   /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+7fc7c9997000-7fc7c9998000 ---p 00000000 00:00 0 
+7fc7c9998000-7fc7c9a39000 rw-p 00000000 00:00 0 
+7fc7c9a39000-7fc7c9a3a000 ---p 00000000 00:00 0 
+7fc7c9a3a000-7fc7c9adb000 rw-p 00000000 00:00 0 
+7fc7c9adb000-7fc7c9adc000 ---p 00000000 00:00 0 
+7fc7c9adc000-7fc7c9b7d000 rw-p 00000000 00:00 0 
+7fc7c9b7d000-7fc7c9b7e000 ---p 00000000 00:00 0 
+7fc7c9b7e000-7fc7c9c1f000 rw-p 00000000 00:00 0 
+7fc7c9c1f000-7fc7c9c20000 ---p 00000000 00:00 0 
+7fc7c9c20000-7fc7c9cc1000 rw-p 00000000 00:00 0 
+7fc7c9cc1000-7fc7c9cc2000 ---p 00000000 00:00 0 
+7fc7c9cc2000-7fc7c9d63000 rw-p 00000000 00:00 0 
+7fc7c9d63000-7fc7c9d64000 ---p 00000000 00:00 0 
+7fc7c9d64000-7fc7c9e05000 rw-p 00000000 00:00 0 
+7fc7c9e05000-7fc7c9e06000 ---p 00000000 00:00 0 
+7fc7c9e06000-7fc7c9ea7000 rw-p 00000000 00:00 0 
+7fc7c9ea7000-7fc7c9ea8000 ---p 00000000 00:00 0 
+7fc7c9ea8000-7fc7c9f49000 rw-p 00000000 00:00 0 
+7fc7c9f49000-7fc7c9f4a000 ---p 00000000 00:00 0 
+7fc7c9f4a000-7fc7c9feb000 rw-p 00000000 00:00 0 
+7fc7c9feb000-7fc7c9fec000 ---p 00000000 00:00 0 
+7fc7c9fec000-7fc7ca08d000 rw-p 00000000 00:00 0 
+7fc7ca08d000-7fc7ca08e000 ---p 00000000 00:00 0 
+7fc7ca08e000-7fc7ca12f000 rw-p 00000000 00:00 0 
+7fc7ca12f000-7fc7ca130000 ---p 00000000 00:00 0 
+7fc7ca130000-7fc7ca1d1000 rw-p 00000000 00:00 0 
+7fc7ca1d1000-7fc7ca1d2000 ---p 00000000 00:00 0 
+7fc7ca1d2000-7fc7ca273000 rw-p 00000000 00:00 0 
+7fc7ca273000-7fc7ca274000 ---p 00000000 00:00 0 
+7fc7ca274000-7fc7ca315000 rw-p 00000000 00:00 0 
+7fc7ca315000-7fc7ca316000 ---p 00000000 00:00 0 
+7fc7ca316000-7fc7ca3b7000 rw-p 00000000 00:00 0 
+7fc7ca3b7000-7fc7ca3b8000 ---p 00000000 00:00 0 
+7fc7ca3b8000-7fc7ca459000 rw-p 00000000 00:00 0 
+7fc7ca459000-7fc7ca45a000 ---p 00000000 00:00 0 
+7fc7ca45a000-7fc7ca4fb000 rw-p 00000000 00:00 0 
+7fc7ca4fb000-7fc7ca4fc000 ---p 00000000 00:00 0 
+7fc7ca4fc000-7fc7ca59d000 rw-p 00000000 00:00 0 
+7fc7ca59d000-7fc7ca59e000 ---p 00000000 00:00 0 
+7fc7ca59e000-7fc7ca63f000 rw-p 00000000 00:00 0 
+7fc7ca63f000-7fc7ca640000 ---p 00000000 00:00 0 
+7fc7ca640000-7fc7ca6e1000 rw-p 00000000 00:00 0 
+7fc7ca6e1000-7fc7ca6e2000 ---p 00000000 00:00 0 
+7fc7ca6e2000-7fc7ca783000 rw-p 00000000 00:00 0 
+7fc7ca783000-7fc7ca784000 ---p 00000000 00:00 0 
+7fc7ca784000-7fc7ca825000 rw-p 00000000 00:00 0 
+7fc7ca825000-7fc7ca826000 ---p 00000000 00:00 0 
+7fc7ca826000-7fc7ca8c7000 rw-p 00000000 00:00 0 
+7fc7ca8c7000-7fc7ca8c8000 ---p 00000000 00:00 0 
+7fc7ca8c8000-7fc7ca969000 rw-p 00000000 00:00 0 
+7fc7ca969000-7fc7ca96a000 ---p 00000000 00:00 0 
+7fc7ca96a000-7fc7caa0b000 rw-p 00000000 00:00 0 
+7fc7caa0b000-7fc7caa0c000 ---p 00000000 00:00 0 
+7fc7caa0c000-7fc7caaad000 rw-p 00000000 00:00 0 
+7fc7caaad000-7fc7caaae000 ---p 00000000 00:00 0 
+7fc7caaae000-7fc7cab4f000 rw-p 00000000 00:00 0 
+7fc7cab4f000-7fc7cab50000 ---p 00000000 00:00 0 
+7fc7cab50000-7fc7cabf1000 rw-p 00000000 00:00 0 
+7fc7cabf1000-7fc7cabf2000 ---p 00000000 00:00 0 
+7fc7cabf2000-7fc7cac93000 rw-p 00000000 00:00 0 
+7fc7cac93000-7fc7cac94000 ---p 00000000 00:00 0 
+7fc7cac94000-7fc7cad35000 rw-p 00000000 00:00 0 
+7fc7cad35000-7fc7cad36000 ---p 00000000 00:00 0 
+7fc7cad36000-7fc7ccf47000 rw-p 00000000 00:00 0 
+7fc7ccf47000-7fc7ccf49000 r--p 00000000 08:06 40110225                   /usr/lib/x86_64-linux-gnu/libcrypt.so.1.1.0
+7fc7ccf49000-7fc7ccf5d000 r-xp 00002000 08:06 40110225                   /usr/lib/x86_64-linux-gnu/libcrypt.so.1.1.0
+7fc7ccf5d000-7fc7ccf76000 r--p 00016000 08:06 40110225                   /usr/lib/x86_64-linux-gnu/libcrypt.so.1.1.0
+7fc7ccf76000-7fc7ccf77000 ---p 0002f000 08:06 40110225                   /usr/lib/x86_64-linux-gnu/libcrypt.so.1.1.0
+7fc7ccf77000-7fc7ccf78000 r--p 0002f000 08:06 40110225                   /usr/lib/x86_64-linux-gnu/libcrypt.so.1.1.0
+7fc7ccf78000-7fc7ccf79000 rw-p 00030000 08:06 40110225                   /usr/lib/x86_64-linux-gnu/libcrypt.so.1.1.0
+7fc7ccf79000-7fc7ccf81000 rw-p 00000000 00:00 0 
+7fc7ccf81000-7fc7ccf8b000 r--p 00000000 08:06 40110568                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.4.1
+7fc7ccf8b000-7fc7ccfea000 r-xp 0000a000 08:06 40110568                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.4.1
+7fc7ccfea000-7fc7cd001000 r--p 00069000 08:06 40110568                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.4.1
+7fc7cd001000-7fc7cd002000 r--p 0007f000 08:06 40110568                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.4.1
+7fc7cd002000-7fc7cd003000 rw-p 00080000 08:06 40110568                   /usr/lib/x86_64-linux-gnu/libgmp.so.10.4.1
+7fc7cd003000-7fc7cd005000 r--p 00000000 08:06 40110282                   /usr/lib/x86_64-linux-gnu/libz.so.1.2.11
+7fc7cd005000-7fc7cd016000 r-xp 00002000 08:06 40110282                   /usr/lib/x86_64-linux-gnu/libz.so.1.2.11
+7fc7cd016000-7fc7cd01c000 r--p 00013000 08:06 40110282                   /usr/lib/x86_64-linux-gnu/libz.so.1.2.11
+7fc7cd01c000-7fc7cd01d000 ---p 00019000 08:06 40110282                   /usr/lib/x86_64-linux-gnu/libz.so.1.2.11
+7fc7cd01d000-7fc7cd01e000 r--p 00019000 08:06 40110282                   /usr/lib/x86_64-linux-gnu/libz.so.1.2.11
+7fc7cd01e000-7fc7cd01f000 rw-p 0001a000 08:06 40110282                   /usr/lib/x86_64-linux-gnu/libz.so.1.2.11
+7fc7cd01f000-7fc7cd047000 r--p 00000000 08:06 40120745                   /usr/lib/x86_64-linux-gnu/libc.so.6
+7fc7cd047000-7fc7cd1dc000 r-xp 00028000 08:06 40120745                   /usr/lib/x86_64-linux-gnu/libc.so.6
+7fc7cd1dc000-7fc7cd234000 r--p 001bd000 08:06 40120745                   /usr/lib/x86_64-linux-gnu/libc.so.6
+7fc7cd234000-7fc7cd235000 ---p 00215000 08:06 40120745                   /usr/lib/x86_64-linux-gnu/libc.so.6
+7fc7cd235000-7fc7cd239000 r--p 00215000 08:06 40120745                   /usr/lib/x86_64-linux-gnu/libc.so.6
+7fc7cd239000-7fc7cd23b000 rw-p 00219000 08:06 40120745                   /usr/lib/x86_64-linux-gnu/libc.so.6
+7fc7cd23b000-7fc7cd248000 rw-p 00000000 00:00 0 
+7fc7cd248000-7fc7cd256000 r--p 00000000 08:06 40120748                   /usr/lib/x86_64-linux-gnu/libm.so.6
+7fc7cd256000-7fc7cd2d2000 r-xp 0000e000 08:06 40120748                   /usr/lib/x86_64-linux-gnu/libm.so.6
+7fc7cd2d2000-7fc7cd32d000 r--p 0008a000 08:06 40120748                   /usr/lib/x86_64-linux-gnu/libm.so.6
+7fc7cd32d000-7fc7cd32e000 r--p 000e4000 08:06 40120748                   /usr/lib/x86_64-linux-gnu/libm.so.6
+7fc7cd32e000-7fc7cd32f000 rw-p 000e5000 08:06 40120748                   /usr/lib/x86_64-linux-gnu/libm.so.6
+7fc7cd32f000-7fc7cd358000 r--p 00000000 08:06 40117551                   /usr/lib/x86_64-linux-gnu/libruby-3.0.so.3.0.2
+7fc7cd358000-7fc7cd586000 r-xp 00029000 08:06 40117551                   /usr/lib/x86_64-linux-gnu/libruby-3.0.so.3.0.2
+7fc7cd586000-7fc7cd68c000 r--p 00257000 08:06 40117551                   /usr/lib/x86_64-linux-gnu/libruby-3.0.so.3.0.2
+7fc7cd68c000-7fc7cd693000 r--p 0035c000 08:06 40117551                   /usr/lib/x86_64-linux-gnu/libruby-3.0.so.3.0.2
+7fc7cd693000-7fc7cd694000 rw-p 00363000 08:06 40117551                   /usr/lib/x86_64-linux-gnu/libruby-3.0.so.3.0.2
+7fc7cd694000-7fc7cd6a4000 rw-p 00000000 00:00 0 
+7fc7cd6cf000-7fc7cd6d1000 rw-p 00000000 00:00 0 
+7fc7cd6d1000-7fc7cd6d3000 r--p 00000000 08:06 40110231                   /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+7fc7cd6d3000-7fc7cd6fd000 r-xp 00002000 08:06 40110231                   /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+7fc7cd6fd000-7fc7cd708000 r--p 0002c000 08:06 40110231                   /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+7fc7cd709000-7fc7cd70b000 r--p 00037000 08:06 40110231                   /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+7fc7cd70b000-7fc7cd70d000 rw-p 00039000 08:06 40110231                   /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+7ffca11d1000-7ffca19d0000 rw-p 00000000 00:00 0                          [stack]
+7ffca19e0000-7ffca19e4000 r--p 00000000 00:00 0                          [vvar]
+7ffca19e4000-7ffca19e6000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsyscall]
+
+
+Aborted (core dumped)
+</code></pre>
+<p>したがって、問題のあるコード行は次のとおりです。 VALUE module_object
+= rb_class_new_instance(0, NULL, rb_cOnigmo); 。 rb_cOnigmo
+はモジュールです: VALUE rb_cOnigmo =
+rb_define_module(“Onigmo”);クラスではないので、 rb_class_new_instance
+ではなく、代わりに他の関数を使用する必要があると思います。問題は、この他の機能が何であるかがわからないことです。</p>
+<p>基本的にこれを実現したいのですが、 Onigmo.parse(“a”) ですが、C
+コードで実行します。</p>
+<p>TLDR: Ruby C API
+を使用するときにモジュールのメソッドを適切に呼び出すにはどうすればよいですか?</p>
+<h2 id="解決策">解決策</h2>
+<p>答えてくれてmitch_さんに感謝します！モジュールオブジェクトに対して
+rb_funcall(rb_cOnigmo, …) を呼び出す必要がありました。</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>ブラウザ確認でボタンをクリックしようとすると、RSpec Capybara が Selenium エラーをスローします | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">ブラウザ確認でボタンをクリックしようとすると、RSpec
+Capybara が Selenium エラーをスローします</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>Rails アプリケーションのエンドツーエンドの Capybara
+仕様でエラーが発生しました。</p>
+<p>私の見解の関連部分は次のとおりです。</p>
+<pre><code>#show.html.erb
+...
+&lt;%= button_to &#39;Cancel&#39;,
+  cancel_subscription_path,
+  class: &#39;button button--danger&#39;,
+  data: {
+    turbo_confirm: &#39;Are you sure you want to cancel?&#39;,
+    turbo_method: &#39;post&#39;
+  }
+%&gt;
+&lt;div id=&quot;cancel_message&quot;&gt;&lt;/div&gt;
+...
+</code></pre>
+<pre><code># cancel_subscription_spec.rb
+
+require &#39;rails_helper&#39;
+
+RSpec.describe &#39;CancelSubscriptions&#39;, js: true do
+  it &#39;cancels an active subscription&#39; do
+    email = sign_up_and_subscribe
+
+    visit subscription_path
+
+    accept_confirm do
+      click_button &#39;Cancel&#39;
+    end
+
+    subscription = User.find_by(email:).current_subscription
+
+    expect(subscription.cancelled?).to be(true)
+  end
+end
+</code></pre>
+<p>Sign_up_and_subscribe は、アプリケーションにサインアップし、Stripe
+フォームに記入してサブスクリプションを作成する単純なヘルパー
+メソッドです。これは他のテストでも機能し、Stripe
+ダッシュボードでサブスクリプションが作成されたことも確認できます。これは問題ではありません。</p>
+<p>仕様が visit subscription_path に到達し、キャンセル
+ボタンをクリックしようとすると、次のエラーが表示されます。</p>
+<pre><code>Selenium::WebDriver::Error::UnexpectedAlertOpenError:  
+  unexpected alert open: {Alert text : }
+    (Session info: chrome-headless-shell=123.0.6312.87)
+</code></pre>
+<p>accept_confirm
+メソッドの使用法を誤っているのではないかと思いましたが、ドキュメントで見つけたところによると、これは正しい使用法です。</p>
+<p>私が奇妙に思ったのは、仕様の accept_confirm とビューの Turbo_confirm
+をコメントアウトしても、実際にはエラー メッセージが変わらないことです。
+Capybara はテスト実行の間にページをキャッシュしていますか?</p>
+<p>この時点で仕様を通過させるために動作を変更することを検討します。ユーザー
+エクスペリエンスに小さな変更が生じる場合でも、十分にテストされたユーザー
+フローを使用することを好みますが、それすらできず、問題は残ります。同じ。</p>
+<p>役立つ場合に備えて、rails_helper.rb の関連部分は次のとおりです。</p>
+<pre><code>Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new app, browser: :chrome,
+                                      options: Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu])
+end
+
+Capybara.javascript_driver = :chrome
+</code></pre>
+<p>役立つ可能性がある場合は残りを投稿することもできますが、私が見る限り、ほとんど無関係です。</p>
+<p>コントローラーでのキャンセルアクションは次のようになります。</p>
+<pre><code>def cancel
+  @subscription = current_user.current_subscription
+  SubscriptionCanceller.new(subscription_id: @subscription.provider_id).call
+rescue SubscriptionCancellationError =&gt; _e
+  render :cancellation_error
+end
+</code></pre>
+<p>ここでは、cancel_error と cancel 自体の Turbo_stream
+ビューがあります。手動でテストすると、どちらもブラウザーで機能します。</p>
+<p>影響を受ける場合に備えて、cancel.turbo_stream.erb
+を次に示します。</p>
+<pre><code>&lt;%= turbo_stream.replace &#39;cancel_message&#39; do %&gt;
+  &lt;div&gt;We are cancelling your subscription.&lt;/div&gt;
+&lt;% end %&gt;
+</code></pre>
+<p>さらに詳細やコードが必要な場合は、お知らせください。投稿させていただきます。</p>
+<h2 id="解決策">解決策</h2>
+<p>問題はわかりました。問題の仕様の問題ではありませんでしたが、動作は予期していませんでした。</p>
+<p>テスト対象のページが依存する基礎となるデータが存在しませんでした。これは、他の仕様で同じ
+Stripe
+フォーム入力機能をテストしましたが、それらのテストで行われたアサーションにより、アプリケーションがそれらが
+true
+になるまで待機するようになったためです。ただし、このテストでは、Stripe
+API からの結果が保存される前にページが visit subscription_path
+でリダイレクトされたため、エラーが発生しました。</p>
+<p>テストで発生したエラーは、開いているはずのないダイアログ
+ボックスが開いていると信じ込ませたので、私をイライラさせました。一方、実際の問題は、開いているはずのダイアログ
+ボックスが開いていないことでした。サブスクリプション
+ページが空で表示されていたため、キャンセル
+ボタンがページに表示されませんでした。</p>
+<p>テストは次のようになります。</p>
+<pre><code>RSpec.describe &#39;CancelSubscriptions&#39;, js: true do
+  it &#39;cancels an active subscription&#39; do
+    email = sign_up_and_subscribe
+
+    expect(page).to have_current_path(&#39;/subscription/success&#39;, ignore_query: true) # making sure the Stripe return_url was hit and so the data is saved in my DB
+
+    click_on &#39;dropdown-toggle&#39;
+    click_on &#39;Subscription&#39;
+    expect(page).to have_content &#39;Your subscription&#39;
+
+    accept_confirm do
+      click_button &#39;Cancel&#39;
+    end
+    expect(page).to have_content &#39;We are cancelling your subscription.&#39;
+
+    subscription = User.find_by(email:).current_subscription
+    expect(subscription.cancelled?).to be(true)
+  end
+end
+</code></pre>
+<p>要点: Capybara/Selenium
+で確認またはプロンプトダイアログボックスを受け入れるかどうかをアサーションする前に、ページが期待どおりにレンダリングされていることを確認してください。そうしないと、予期しないエラーが発生する可能性があります。</p>
+  </div>
+</body>
+</html>

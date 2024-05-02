@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>Ruby で Webhook を検証するにはどうすればよいですか? (レール内) | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">Ruby で Webhook を検証するにはどうすればよいですか?
+(レール内)</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>Ruby で Paddle Webhook
+を検証する方法を知りたいのですが?彼らの例には、PHP、Python、JavaScript
+でそれを行う方法に関するオプションがありますが、Ruby
+はありません。それを行う方法について何かアイデアはありますか?</p>
+<p>次の古い例は機能しません。</p>
+<pre><code>require &#39;base64&#39;
+require &#39;php_serialize&#39;
+require &#39;openssl&#39;
+
+
+public_key = &#39;-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqh...&#39;
+
+# &#39;data&#39; represents all of the POST fields sent with the request.
+# Get the p_signature parameter &amp; base64 decode it.
+signature = Base64.decode64(data[&#39;p_signature&#39;])
+
+# Remove the p_signature parameter
+data.delete(&#39;p_signature&#39;)
+
+# Ensure all the data fields are strings
+data.each {|key, value|data[key] = String(value)}
+
+# Sort the data
+data_sorted = data.sort_by{|key, value| key}
+
+# and serialize the fields
+# serialization library is available here: https://github.com/jqr/php-serialize
+data_serialized = PHP.serialize(data_sorted, true)
+
+# verify the data
+digest    = OpenSSL::Digest::SHA1.new
+pub_key   = OpenSSL::PKey::RSA.new(public_key).public_key
+verified  = pub_key.verify(digest, signature, data_serialized)
+
+if verified
+    puts &quot;Yay! Signature is valid!&quot;
+else
+    puts &quot;The signature is invalid!&quot;
+end
+</code></pre>
+<p>JS での例は次のとおりです。</p>
+<pre><code>// Node.js &amp; Express implementation
+const express = require(&#39;express&#39;);
+const querystring = require(&#39;querystring&#39;);
+const crypto = require(&#39;crypto&#39;);
+const Serialize = require(&#39;php-serialize&#39;);
+
+const router = express.Router();
+const pubKey = `-----BEGIN PUBLIC KEY-----
+...
+-----END PUBLIC KEY-----`
+
+function ksort(obj){
+    let keys = Object.keys(obj).sort();
+    let sortedObj = {};
+
+    for (var i in keys) {
+      sortedObj[keys[i]] = obj[keys[i]];
+    }
+
+    return sortedObj;
+  }
+
+function validateWebhook(jsonObj) {
+    const mySig = Buffer.from(jsonObj.p_signature, &#39;base64&#39;);
+    delete jsonObj.p_signature;
+    // Need to serialize array and assign to data object
+    jsonObj = ksort(jsonObj);
+    for (var property in jsonObj) {
+        if (jsonObj.hasOwnProperty(property) &amp;&amp; (typeof jsonObj[property]) !== &quot;string&quot;) {
+            if (Array.isArray(jsonObj[property])) { // is it an array
+                jsonObj[property] = jsonObj[property].toString();
+            } else { //if its not an array and not a string, then it is a JSON obj
+                jsonObj[property] = JSON.stringify(jsonObj[property]);
+            }
+        }
+    }
+    const serialized = Serialize.serialize(jsonObj);
+    // End serialize data object
+    const verifier = crypto.createVerify(&#39;sha1&#39;);
+    verifier.update(serialized);
+    verifier.end();
+
+    let verification = verifier.verify(pubKey, mySig);
+
+    if (verification) {
+        return &#39;Yay! Signature is valid!&#39;;
+    } else {
+        return &#39;The signature is invalid!&#39;;
+    }
+}
+
+/* Validate a Paddle webhook to this endpoint, or wherever in your app you are listening for Paddle webhooks */
+router.post(&#39;/&#39;, function(req, res, next) {
+    res.send(validateWebhook(req.body));
+});
+
+module.exports = router;
+</code></pre>
+<p>Ruby で Webhook を検証するにはどうすればよいですか? Webhook
+を検証する別の方法はありますか?</p>
+<p>Webhook リクエストの例を次に示します。</p>
+<pre><code>(
+    [alert_name] =&gt; subscription_created
+    [cancel_url] =&gt; https://checkout.paddle.com/subscription/cancel?user=4&amp;subscription=8&amp;hash=b0bd354fexamplec39b0ff93c917804acf
+    [checkout_id] =&gt; 1-61ff5b400-756ea301a9
+    [currency] =&gt; USD
+    [email] =&gt; [email protected]
+    [event_time] =&gt; 2019-08-10 18:33:58
+    [marketing_consent] =&gt; 
+    [next_bill_date] =&gt; 2019-08-18
+    [passthrough] =&gt; 1132
+    [quantity] =&gt; 67
+    [status] =&gt; active
+    [subscription_id] =&gt; 4
+    [subscription_plan_id] =&gt; 5
+    [unit_price] =&gt; unit_price
+    [update_url] =&gt; https://checkout.paddle.com/subscription/update?user=5&amp;subscription=4&amp;hash=e937ed03f1637e45d912f4f4d293a
+    [user_id] =&gt; 6
+    [p_signature] =&gt; HM2Isn1k6Sy1cKySQGoFH...
+)
+</code></pre>
+<p>編集：</p>
+<p>私は Ruby 2.5.5 と Ruby on Rails 5
+を使用しています。現時点でも、最終的には常に “false”
+になります。コンソールで確認してみます。</p>
+<p>Rails で取得した (偽の) データは次のとおりです。</p>
+<pre><code>data = {
+&quot;alert_id&quot;=&gt;&quot;1&quot;, 
+&quot;alert_name&quot;=&gt;&quot;alert_created&quot;, 
+&quot;cancel_url&quot;=&gt;&quot;https://...&quot;, 
+&quot;checkout_id&quot;=&gt;&quot;1&quot;, 
+&quot;user_id&quot;=&gt;&quot;1&quot;, 
+&quot;p_signature&quot;=&gt;&quot;fwWXqR9C...&quot;
+} 
+
+public_key = &#39;-----BEGIN PUBLIC KEY-----sDFKJSD2332FKJLWJF......&#39;
+</code></pre>
+<p>次に、次のことを行います。</p>
+<pre><code>signature = Base64.decode64(data[&#39;p_signature&#39;])
+
+data.delete(&#39;p_signature&#39;)
+
+data.each {|key, value|data[key] = String(value)}
+
+data_sorted = data.sort_by{|key, value| key}
+
+data_serialized = data_sorted.to_json
+
+digest    = OpenSSL::Digest::SHA1.new
+
+pub_key   = OpenSSL::PKey::RSA.new(public_key)
+
+verified  = pub_key.verify(digest, signature, data_serialized)
+</code></pre>
+<p>最終的に検証されたことは常に false
+です。私の何が間違っているのでしょうか？</p>
+<h2 id="解決策">解決策</h2>
+<p>あなたが言及した Ruby
+の例は、データ変数を取得する必要があるため機能しません。これは、コントローラーからリクエストを処理するクラスに送信する必要があります。</p>
+<p>これを試して：</p>
+<p>ルート.rb内</p>
+<p>‘check’ を取得して: ‘test#check’</p>
+<p>コントローラー内</p>
+<pre><code>class TestController &lt; ApplicationController
+
+  def check
+    verification = SignatureVerifier.new(check_params.as_json)
+    if verification
+      #... do something
+    end
+  end
+
+  private
+
+  def check_params
+    params.permit.all
+  end
+end
+</code></pre>
+<p>検証者クラス内</p>
+<pre><code>require &#39;base64&#39;
+require &#39;json&#39;
+require &#39;openssl&#39;
+
+class SignatureVerifier
+
+  def initialize(data)
+    @data = data
+    @public_key_path = &#39;/path/to/file&#39;
+  end
+
+  #data = {
+  #  &quot;alert_name&quot;: &quot;payment_succeeded&quot;,
+  #  &quot;balance_currency&quot;: &quot;USD&quot;,
+  #  &quot;balance_earnings&quot;: 355.05,
+  #  &quot;balance_fee&quot;: 177.36,
+  #  &quot;balance_gross&quot;: 180.85,
+  #  &quot;balance_tax&quot;: 433.43,
+  #  &quot;checkout_id&quot;: &quot;4-601ee0e3d793922-ab8910b010&quot;,
+  #  &quot;currency&quot;: &quot;USD&quot;,
+  #  &quot;customer_name&quot;: &quot;customer_name&quot;,
+  #  &quot;earnings&quot;: 292.87,
+  #  &quot;product_name&quot;: &quot;Example&quot;,
+  #  &quot;quantity&quot;: 12,
+  #  &quot;p_signature&quot;: &quot;dl8PN7OrxiYHSJzT3CLUDlElodOE2j8puZkDNPHX9rZnTgig123f4KhtUXZT/HjbU5D7g/PZggxSCt9YrMcWrbSkfINJROTb+YrlhYKAVyTbmMWJV8u+YU6VcGNkhcGK7tIZNBJuaKMBrByrYA14gR3TvMjgXbQWNSFJ8LgJKMWoovbpuOkQwzkKze4vavt3WhElW0izPZwpiqVWTVXAlIvDxHTNT+sS1jXqAHdoli6sVblQQtAujSxdGm2OXB92yifcV0oHhrsqt8rCk1TzJOqsVrhQz1lqSYsbdhlM40QPHM7nHPGe5RITly4t8BjsuCB+V1aeof3N5A0ZDk+2M2Cox6S+vEahEdbW8QdecIKN12SMAYI5kx9zMMiUZ9XZqqC6orXE3uVAcTvMwiTRDDmEVr1HtsBZRo/Ykg7+fMYPc/o7rDpA16/EIOcce1zp+vgilL6rSxIuMFfWlP9qxzrV1MtcmQa86NxEU0GJtebkhehXZfh/eDCAjysmrrBM5xkqE19M+Ye4jZCRTzQTHyDJxjdNYefk7bVfivwRI606JJCGYUMTD6NIsn4rinw2SxKkZquqjTykcob5gn3HH+0AxyjuDj7fsLyqEl3gE9tgo/oMKRBy+zsYzQk4v291sh2PbUfH36W4aL4YYztlsarfMIBWqJshc8rf0RL3pAM=&quot;
+  #}
+
+  def verify
+    data = @data
+    signature = Base64.decode64(data[:p_signature])
+
+    # Remove the p_signature parameter
+    data.delete(:p_signature)
+
+    # Ensure all the data fields are strings
+    data.each {|key, value|data[key] = String(value)}
+
+    # Sort the data
+    data_sorted = data.sort_by{|key, value| key}
+
+    # Serialized with JSON library
+    data_serialized = data_sorted.to_json
+
+    # verify the data
+    digest    = OpenSSL::Digest::SHA1.new
+    pub_key   = OpenSSL::PKey::RSA.new(File.read(@public_key_path))
+    verified  = pub_key.verify(digest, signature, data_serialized)
+
+    verified
+  end
+end
+</code></pre>
+  </div>
+</body>
+</html>

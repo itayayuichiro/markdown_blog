@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>GET リクエストの重複 - Rails と Heroku | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">GET リクエストの重複 - Rails と Heroku</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>Heroku にデプロイされた Ruby on Rails 6
+プロジェクトで発生するリクエストの重複を解決する解決策を試みています。</p>
+<p>これは、ハイパーリンク付きのアンカーが使用されている場合に発生するようで、2
+回ロードされます。</p>
+<p>その結果、コントローラーも呼び出すため (GET -&gt; コントローラー
+-&gt; モデル -&gt; ビュー)、重複したログが生成されてしまいます。</p>
+<p>以下は、重複したリクエストを証明するいくつかのログです。</p>
+<pre><code>caio-agiani in ~ via ⬢ v14.21.3 took 10m 37s ❯ heroku logs -a levante-web -t | grep 2804:7f0:b8c2:13f:8755:4a1e:74b8:x735,172.71.10.17          
+2024-03-31T02:32:36.318790+00:00 heroku[router]: at=info method=GET path=&quot;/levante/search?query=caioagiani&quot; host=app request_id=3e84b5d5-b478-41aa-b1e8-218838f37ca1 fwd=&quot;2804:7f0:b8c2:13f:8755:4a1e:74b8:x735,172.71.10.17&quot; dyno=web.1 connect=0ms service=426ms status=200 bytes=12075 protocol=https
+2024-03-31T02:32:57.648033+00:00 heroku[router]: at=info method=GET path=&quot;/levante/search?query=caioagiani&quot; host=app request_id=f17c6635-3541-4153-8283-3811659ff00a fwd=&quot;2804:7f0:b8c2:13f:8755:4a1e:74b8:x735,172.71.10.17&quot; dyno=web.1 connect=0ms service=330ms status=200 bytes=12077 protocol=https
+2024-03-31T02:33:01.813927+00:00 heroku[router]: at=info method=GET path=&quot;/levante/shop/index&quot; host=app request_id=cc5dd643-41c3-45e9-bffa-a73ed617d0b0 fwd=&quot;2804:7f0:b8c2:13f:8755:4a1e:74b8:x735,172.71.10.17&quot; dyno=web.1 connect=0ms service=42ms status=200 bytes=25575 protocol=https
+2024-03-31T02:33:02.145246+00:00 heroku[router]: at=info method=GET path=&quot;/levante/shop/index&quot; host=app request_id=7bdfadad-273e-4b8a-ab88-4f0422ececaf fwd=&quot;2804:7f0:b8c2:13f:8755:4a1e:74b8:x735,172.71.10.17&quot; dyno=web.1 connect=0ms service=39ms status=200 bytes=25564 protocol=https
+</code></pre>
+<p>PS: これは Turbolink/Load または ujs などの内部 Rails
+スクリプトにリンクされている可能性がありますか?全く同じセットアップを使用する実稼働環境の別のアプリケーションがあるため、そのとおりであるという証拠があります。ただし、1
+つは従来の Rails ネイティブ インポート スクリプトと CSS テンプレート
+(javascript_include_tag、javascript_pack_tag、stylesheet_pack_tag)
+を使用し、もう 1 つは単純な HTML メタ タグを使用します。</p>
+<h2 id="解決策">解決策</h2>
+<p>そうですね、これは実際にはターボリンクによるもので、基本的に
+data-turbolinks-track を挿入してリロードするセクションがありました
+[スクリーンショット]。</p>
+<p>このピクセル
+スクリプトのスニペットには運用環境のチェックが含まれていたため、この問題はローカルでは発生しませんでした。</p>
+<p>data-turbolinks-track
+のリロードを維持することもできますが、アンカー要素に
+data-turbolinks=false を追加する必要があります。</p>
+<pre><code>= link_to &quot;Comprar&quot;, levante_checkout_offer_path(offer), class: &quot;btn button-primary&quot;, data: { turbolinks: &quot;false&quot; }
+</code></pre>
+<pre><code>$(document).on(&quot;turbolinks:load&quot;, () =&gt; {
+  $(&quot;a&quot;).attr(&quot;data-turbolinks&quot;, &quot;false&quot;);
+});
+</code></pre>
+  </div>
+</body>
+</html>

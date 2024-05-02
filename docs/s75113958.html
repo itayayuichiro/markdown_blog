@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>AWS APIゲートウェイを使用したLambdaリクエスト本文の解析の問題 | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">AWS
+APIゲートウェイを使用したLambdaリクエスト本文の解析の問題</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>Mailgun
+からのリクエストの受信中に、リクエスト本文に電子メール属性が含まれる問題が発生しました。
+API ゲートウェイとともに AWS ラムダ関数をデプロイしました。リクエストが
+AWS API
+ゲートウェイを経由すると、本文のコンテンツがエンコードされ、リクエストが
+Lambda 関数に渡されますが、私の Lambda
+関数は、実装を通じて消費できるような方法でコンテンツをデコードできませんでした。</p>
+<p>AWS API
+ゲートウェイを使用せずに実装をテストしたところ、動作しましたが、AWS API
+ゲートウェイを使用すると動作しませんでした。</p>
+<p>API ゲートウェイを介して送信されるリクエスト本文コンテンツ (API
+ゲートウェイによってエンコードされたもの)
+を変換しているとき、それを消費するためのフォーム内のリクエスト本文を変換できません。</p>
+<p>デコード後、これが得られます -</p>
+<pre><code>Base64.strict_decode64(base64string)
+
+
+&quot;Content-Type=multipart%2Falternative%3B+boundary%3D%22772a87c3bfe6815a93e5a01ac72bf6f3304ff90d08696b62b907422a03a3%22&amp;Date=Fri%2C+13+Jan+2023+10%3A44%3A06+%2B0000&amp;From=VueOps+Warranty+Ticket+%3Cservice-requests-qa%40mg.vueops-qa.com%3E&amp;In-Reply-To%5B%5D=20230113104406.86d5542bf7d85f30%40mg.vueops-qa.com&amp;Message-Id=%3C20230113104406.962d120183579f0f%40mg.vueops-qa.com%3E&amp;Mime-Version=1.0&amp;Sender=service-requests-qa%40mg.vueops-qa.com&amp;Subject=Warranty+Ticket+SUM-EST-0204+for+Email+Subject+Test+edit+for+Sumit%27s+Test+has+been+issued+to+you+for+coordination&amp;To=service-requests-qa%40mg.vueops-qa.com&amp;body-html=%3C%21DOCTYPE+html%3E%0A%3Chtml%3E%0A%3Chead%3E%0A%3Cmeta+content%3D%22text%2Fhtml%3B+charset%3Dutf-8%22+http-equiv%3D%22Content-Type%22%3E%0A%3Cstyle%3Ebody+%7B%0Afont-family%3A+%27Calibri%27%2C+%27Arial%27%2C+sans-serif%3B%0A%7D%0Aimg+%7B%0Aoutline%3A+none%3B+text-decoration%3A+none%3B+-ms-interpolation-mode%3A+bicubic%3B%0A%7D%0A%3C%2Fstyle%3E%0A%3C%2Fhead%3E%0A%3Cbody+style%3D%22font-family%3A+%27Calibri%27%2C+%27Arial%27%2C+sans-serif%3B%22%3E%0A%3Ctable+align%3D%22center%22+cellpadding%3D%220%22+cellspacing%3D%220%22+class%3D%22logo%22+width%3D%22100%25%22%3E%3Ctr%3E%3Ctd+align%3D%22left%22%3E%3Cimg+src%3D%22https%3A%2F%2Fs3-us-west-1.amazonaws.com%2Fdpr-email-assets%2FVueOPS-logo-full-color-ps.png%22+style%3D%22outline%3A+none%3B+text-decoration%3A+none%3B+-ms-interpolation-mode%3A+bicubic%3B+width%3A+120px%3B%22%3E%3C%2Ftd%3E%3C%2Ftr%3E%3C%2Ftable%3E%0A%3Cp%3E%3C%2Fp%3E%0A%3Cp%3E%0A++++Hello%2C%0A%3C%2Fp%3E%0A%3Cp+class%3D%22ng-binding%22%3E%0A++++A+new+Warranty+Ticket+has+been+issued+for+Email+Subject+Test+edit+for+Sumit%27s+Test.%0A++++%3Cstrong%3EPlease+follow+the+steps+below+to+resolve+this+issue.%3C%2Fstrong%3E%0A%3C%2Fp%3E%0A%3Cp%3E%0A++++%3Cbr%3E%0A++++%3Cstrong%3ESTEP+1%3A%3C%2Fstrong%3E%0A++++Contact+the+client+contact+noted+below+for+scheduling+your+inspection+and+repair.+You+may+contact+the+client+by+phone+or+by+replying-all+to+this+email.%0A++++%3Cbr%3E%0A%3C%2Fp%3E%0A%3Cp+class%3D%22ng-binding%22%3E%0A++++%3Cstrong+style%3D%22font-size%3A+1.1em%3B%22%3EWarranty+Ticket+Details%3A%3C%2Fstrong%3E%0A++++%3Cbr%3E%0A++++%3Cstrong%3ETicket+%23%3A%3C%2Fstrong%3E+SUM-EST-0204%0A++++%3Cbr%3E%0A++++%3Cstrong%3EClient%3A%3C%2Fstrong%3E+Sumit%27s+Test%0A++++%3Cbr%3E%0A++++%3Cstrong%3EFacility%3A%3C%2Fstrong%3E+Email+Subject+Test+edit%0A++++%3Cbr%3E%0A++++%3Cstrong%3EProject%3A%3C%2Fstrong%3E+118+docs%0A++++%3Cbr%3E%0A++++%3Cstrong%3ETitle%3A%3C%2Fstrong%3E+Perferendis+voluptat%0A++++%3Cbr%3E%0A++++%3Cstrong%3EDescription%3A%3C%2Fstrong%3E+In+excepteur+aliquid%0A++++%3Cbr%3E%0A++++%3Cstrong%3ELocation%3A%3C%2Fstrong%3E+Sed+sint+nihil+moles%0A++++%3Cbr%3E%0A++++%3Cstrong%3EPriority%3A%3C%2Fstrong%3E+Emergency%0A++++%3Cbr%3E%0A++++%3Cstring%3EYou+can+view+the+ticket+details+here%3A%3C%2Fstring%3E%0A++++%3Cbr%3E%3Cbr%3E%0A++++%3Ca+ng-href%3D%22https%3A%2F%2Fsumit-s-test.vueops-qa.com%2Fservice_requests%2Fsum-est-0204%22+class%3D%22ng-binding%22+href%3D%22https%3A%2F%2Fsumit-s-test.vueops-qa.com%2Fservice_requests%2Fsum-est-0204%22+style%3D%22color%3A+%232e74b5%3B+text-decoration%3A+none%3B%22%3Ehttps%3A%2F%2Fsumit-s-test.vueops-qa.com%2Fservice_requests%2Fsum-est-0204%3C%2Fa%3E%0A++++%3Cbr%3E%0A%3C%2Fp%3E%0A%0A%3Cp%3E%0A++++%3Cstrong%3EFacility+Address%3A%3C%2Fstrong%3E%0A++++%3Cbr%3E%0A++++%3Cspan+ng-bind-html%3D%22serviceRequest.formattedFacilityAddress%22+class%3D%22ng-binding%22%3EMetro+Street%3Cbr%3EB+23+Street%3Cbr%3ENoida+City%2C+NCR+State+110092%3C%2Fspan%3E%0A++++%3Cbr%3E%0A%3C%2Fp%3E%0A%0A%3Cp+class%3D%22ng-binding%22%3E%0A++++%3Cstrong%3EClient+Contact+Information%3C%2Fstrong%3E%0A++++%3Cbr%3E%0A++++%3Cstrong%3EName%3A%3C%2Fstrong%3E+Sumit+Vueops+Account%0A++++%3Cbr%3E%0A++++%3Cstrong%3EEmail%3A%3C%2Fstrong%3E+sumitka%40vueops.com%0A++++%3Cbr%3E%0A++++%3Cstrong%3EPhone+Number%3A%3C%2Fstrong%3E+999-687-4668%0A%3C%2Fp%3E%0A%0A%3Cp%3E%0A++++%3Cstrong%3ESTEP+2%3A%3C%2Fstrong%3E%0A++++When+the+repair+work+is+complete+we+ask+that+you+respond+to+this+email+with+the+following+information+and+a+photo+of+the+completed+work%3A%0A++++%3Cbr%3E%0A%3C%2Fp%3E%0A%3Cp%3E%0A++++%3Cstrong%3EWork+Performed%3C%2Fstrong%3E%0A++++%3Cbr%3E%0A++++%3Cbr%3E%0A++++%3Cstrong%3ERoot+Cause%3A%3C%2Fstrong%3E%0A++++%3Cbr%3E%0A++++%3Cstrong%3ERepair+Date%3A%3C%2Fstrong%3E%0A%3C%2Fp%3E%0A%0A%3Cp%3E%0A++++%0A+%3C%2Fp%3E%0A%3Cdiv+class%3D%22footer%22+style%3D%22font-size%3A+10pt%3B+font-family%3A+%27FrnkGothITC+Bk+BT%27%2C+%27Calibri%27%2C+%27Arial%27%2C+sans-serif%3B+color%3A+%23999999%3B+letter-spacing%3A+2pt%3B%22%3E%3Cp%3EThank+You%2C+%3Cbr%3EPowered+by+%3Ca+href%3D%22www.vueops.com%22+style%3D%22color%3A+%232e74b5%3B+text-decoration%3A+none%3B%22%3EVueOps%3C%2Fa%3E%3Cbr%3EKnow+Your+Building+Inside+Out%3Csup%3ETM%3Csup%3E%3C%2Fsup%3E%3C%2Fsup%3E%3C%2Fp%3E%3C%2Fdiv%3E%0A%3C%2Fbody%3E%0A%3C%2Fhtml%3E%0A&amp;body-plain=Hello%2C%0A%0AA+new+Warranty+Ticket+has+been+issued+for+Email+Subject+Test+edit+for+Sumit%27s+Test.%0APlease+follow+the+steps+below+to+resolve+this+issue.%0A%0ASTEP+1%3A%0AContact+the+client+contact+noted+below+for+scheduling+your+inspection+and+repair.+You+may+contact+the+client+by+phone+or+by+replying-all+to+this+email.%0A%0AWarranty+Ticket+Details%3A%0A%0ATicket+%23%3A+SUM-EST-0204%0A%0AClient%3A+Sumit%27s+Test%0A%0AFacility%3A+Email+Subject+Test+edit%0A%0AProject%3A+118+docs%0A%0ATitle%3A+Perferendis+voluptat%0A%0ADescription%3A+In+excepteur+aliquid%0A%0ALocation%3A+Sed+sint+nihil+moles%0A%0APriority%3A+Emergency%0A%0AYou+can+view+the+ticket+details+here%3A%0A%0Ahttps%3A%2F%2Fsumit-s-test.vueops-qa.com%2Fservice_requests%2Fsum-est-0204+%28+https%3A%2F%2Fsumit-s-test.vueops-qa.com%2Fservice_requests%2Fsum-est-0204+%29%0A%0AFacility+Address%3A%0A%0AMetro+Street%0AB+23+Street%0ANoida+City%2C+NCR+State+110092%0A%0AClient+Contact+Information%0A%0AName%3A+Sumit+Vueops+Account%0A%0AEmail%3A+sumitka%40vueops.com%0A%0APhone+Number%3A+999-687-4668%0A%0ASTEP+2%3A%0AWhen+the+repair+work+is+complete+we+ask+that+you+respond+to+this+email+with+the+following+information+and+a+photo+of+the+completed+work%3A%0A%0AWork+Performed%0A%0ARoot+Cause%3A%0A%0ARepair+Date%3A%0A%0AThank+You%2C%0APowered+by+VueOps+%28+www.vueops.com+%29%0AKnow+Your+Building+Inside+OutTM&amp;from=VueOps+Warranty+Ticket+%3Cservice-requests-qa%40mg.vueops-qa.com%3E&amp;message-headers=%5B%5B%22Mime-Version%22%2C%221.0%22%5D%2C%5B%22Content-Type%22%2C%22multipart%2Falternative%3B+boundary%3D%5C%22772a87c3bfe6815a93e5a01ac72bf6f3304ff90d08696b62b907422a03a3%5C%22%22%5D%2C%5B%22Subject%22%2C%22Warranty+Ticket+SUM-EST-0204+for+Email+Subject+Test+edit+for+Sumit%27s+Test+has+been+issued+to+you+for+coordination%22%5D%2C%5B%22From%22%2C%22VueOps+Warranty+Ticket+%3Cservice-requests-qa%40mg.vueops-qa.com%3E%22%5D%2C%5B%22To%22%2C%22service-requests-qa%40mg.vueops-qa.com%22%5D%2C%5B%22In-Reply-To%5B%5D%22%2C%2220230113104406.86d5542bf7d85f30%40mg.vueops-qa.com%22%5D%2C%5B%22Message-Id%22%2C%22%3C20230113104406.962d120183579f0f%40mg.vueops-qa.com%3E%22%5D%2C%5B%22Date%22%2C%22Fri%2C+13+Jan+2023+10%3A44%3A06+%2B0000%22%5D%2C%5B%22Sender%22%2C%22service-requests-qa%40mg.vueops-qa.com%22%5D%5D&amp;recipient=service-requests-qa%40mg.vueops-qa.com&amp;sender=VueOps+Warranty+Ticket+%3Cservice-requests-qa%40mg.vueops-qa.com%3E&amp;signature=69257cd5ebdff97507389baaa401c9f7d370b25e43135c8695342b676412ac42&amp;stripped-html=%3C%21DOCTYPE+html%3E%0A%3Chtml%3E%0A%3Chead%3E%0A%3Cmeta+content%3D%22text%2Fhtml%3B+charset%3Dutf-8%22+http-equiv%3D%22Content-Type%22%3E%0A%3Cstyle%3Ebody+%7B%0Afont-family%3A+%27Calibri%27%2C+%27Arial%27%2C+sans-serif%3B%0A%7D%0Aimg+%7B%0Aoutline%3A+none%3B+text-decoration%3A+none%3B+-ms-interpolation-mode%3A+bicubic%3B%0A%7D%0A%3C%2Fstyle%3E%0A%3C%2Fhead%3E%0A%3Cbody+style%3D%22font-family%3A+%27Calibri%27%2C+%27Arial%27%2C+sans-serif%3B%22%3E%0A%3Ctable+align%3D%22center%22+cellpadding%3D%220%22+cellspacing%3D%220%22+class%3D%22logo%22+width%3D%22100%25%22%3E%3Ctr%3E%3Ctd+align%3D%22left%22%3E%3Cimg+src%3D%22https%3A%2F%2Fs3-us-west-1.amazonaws.com%2Fdpr-email-assets%2FVueOPS-logo-full-color-ps.png%22+style%3D%22outline%3A+none%3B+text-decoration%3A+none%3B+-ms-interpolation-mode%3A+bicubic%3B+width%3A+120px%3B%22%3E%3C%2Ftd%3E%3C%2Ftr%3E%3C%2Ftable%3E%0A%3Cp%3E%3C%2Fp%3E%0A%3Cp%3E%0A++++Hello%2C%0A%3C%2Fp%3E%0A%3Cp+class%3D%22ng-binding%22%3E%0A++++A+new+Warranty+Ticket+has+been+issued+for+Email+Subject+Test+edit+for+Sumit%27s+Test.%0A++++%3Cstrong%3EPlease+follow+the+steps+below+to+resolve+this+issue.%3C%2Fstrong%3E%0A%3C%2Fp%3E%0A%3Cp%3E%0A++++%3Cbr%3E%0A++++%3Cstrong%3ESTEP+1%3A%3C%2Fstrong%3E%0A++++Contact+the+client+contact+noted+below+for+scheduling+your+inspection+and+repair.+You+may+contact+the+client+by+phone+or+by+replying-all+to+this+email.%0A++++%3Cbr%3E%0A%3C%2Fp%3E%0A%3Cp+class%3D%22ng-binding%22%3E%0A++++%3Cstrong+style%3D%22font-size%3A+1.1em%3B%22%3EWarranty+Ticket+Details%3A%3C%2Fstrong%3E%0A++++%3Cbr%3E%0A++++%3Cstrong%3ETicket+%23%3A%3C%2Fstrong%3E+SUM-EST-0204%0A++++%3Cbr%3E%0A++++%3Cstrong%3EClient%3A%3C%2Fstrong%3E+Sumit%27s+Test%0A++++%3Cbr%3E%0A++++%3Cstrong%3EFacility%3A%3C%2Fstrong%3E+Email+Subject+Test+edit%0A++++%3Cbr%3E%0A++++%3Cstrong%3EProject%3A%3C%2Fstrong%3E+118+docs%0A++++%3Cbr%3E%0A++++%3Cstrong%3ETitle%3A%3C%2Fstrong%3E+Perferendis+voluptat%0A++++%3Cbr%3E%0A++++%3Cstrong%3EDescription%3A%3C%2Fstrong%3E+In+excepteur+aliquid%0A++++%3Cbr%3E%0A++++%3Cstrong%3ELocation%3A%3C%2Fstrong%3E+Sed+sint+nihil+moles%0A++++%3Cbr%3E%0A++++%3Cstrong%3EPriority%3A%3C%2Fstrong%3E+Emergency%0A++++%3Cbr%3E%0A++++%3Cstring%3EYou+can+view+the+ticket+details+here%3A%3C%2Fstring%3E%0A++++%3Cbr%3E%3Cbr%3E%0A++++%3Ca+ng-href%3D%22https%3A%2F%2Fsumit-s-test.vueops-qa.com%2Fservice_requests%2Fsum-est-0204%22+class%3D%22ng-binding%22+href%3D%22https%3A%2F%2Fsumit-s-test.vueops-qa.com%2Fservice_requests%2Fsum-est-0204%22+style%3D%22color%3A+%232e74b5%3B+text-decoration%3A+none%3B%22%3Ehttps%3A%2F%2Fsumit-s-test.vueops-qa.com%2Fservice_requests%2Fsum-est-0204%3C%2Fa%3E%0A++++%3Cbr%3E%0A%3C%2Fp%3E%0A%0A%3Cp%3E%0A++++%3Cstrong%3EFacility+Address%3A%3C%2Fstrong%3E%0A++++%3Cbr%3E%0A++++%3Cspan+ng-bind-html%3D%22serviceRequest.formattedFacilityAddress%22+class%3D%22ng-binding%22%3EMetro+Street%3Cbr%3EB+23+Street%3Cbr%3ENoida+City%2C+NCR+State+110092%3C%2Fspan%3E%0A++++%3Cbr%3E%0A%3C%2Fp%3E%0A%0A%3Cp+class%3D%22ng-binding%22%3E%0A++++%3Cstrong%3EClient+Contact+Information%3C%2Fstrong%3E%0A++++%3Cbr%3E%0A++++%3Cstrong%3EName%3A%3C%2Fstrong%3E+Sumit+Vueops+Account%0A++++%3Cbr%3E%0A++++%3Cstrong%3EEmail%3A%3C%2Fstrong%3E+sumitka%40vueops.com%0A++++%3Cbr%3E%0A++++%3Cstrong%3EPhone+Number%3A%3C%2Fstrong%3E+999-687-4668%0A%3C%2Fp%3E%0A%0A%3Cp%3E%0A++++%3Cstrong%3ESTEP+2%3A%3C%2Fstrong%3E%0A++++When+the+repair+work+is+complete+we+ask+that+you+respond+to+this+email+with+the+following+information+and+a+photo+of+the+completed+work%3A%0A++++%3Cbr%3E%0A%3C%2Fp%3E%0A%3Cp%3E%0A++++%3Cstrong%3EWork+Performed%3C%2Fstrong%3E%0A++++%3Cbr%3E%0A++++%3Cbr%3E%0A++++%3Cstrong%3ERoot+Cause%3A%3C%2Fstrong%3E%0A++++%3Cbr%3E%0A++++%3Cstrong%3ERepair+Date%3A%3C%2Fstrong%3E%0A%3C%2Fp%3E%0A%0A%3Cp%3E%0A++++%0A+%3C%2Fp%3E%0A%3Cdiv+class%3D%22footer%22+style%3D%22font-size%3A+10pt%3B+font-family%3A+%27FrnkGothITC+Bk+BT%27%2C+%27Calibri%27%2C+%27Arial%27%2C+sans-serif%3B+color%3A+%23999999%3B+letter-spacing%3A+2pt%3B%22%3E%3Cp%3EThank+You%2C+%3Cbr%3EPowered+by+%3Ca+href%3D%22www.vueops.com%22+style%3D%22color%3A+%232e74b5%3B+text-decoration%3A+none%3B%22%3EVueOps%3C%2Fa%3E%3Cbr%3EKnow+Your+Building+Inside+Out%3Csup%3ETM%3Csup%3E%3C%2Fsup%3E%3C%2Fsup%3E%3C%2Fp%3E%3C%2Fdiv%3E%0A%3C%2Fbody%3E%0A%3C%2Fhtml%3E%0A&amp;stripped-signature=Work+Performed%0A%0ARoot+Cause%3A%0A%0ARepair+Date%3A%0A%0AThank+You%2C%0APowered+by+VueOps+%28+www.vueops.com+%29%0AKnow+Your+Building+Inside+OutTM&amp;stripped-text=Hello%2C%0A%0AA+new+Warranty+Ticket+has+been+issued+for+Email+Subject+Test+edit+for+Sumit%27s+Test.%0APlease+follow+the+steps+below+to+resolve+this+issue.%0A%0ASTEP+1%3A%0AContact+the+client+contact+noted+below+for+scheduling+your+inspection+and+repair.+You+may+contact+the+client+by+phone+or+by+replying-all+to+this+email.%0A%0AWarranty+Ticket+Details%3A%0A%0ATicket+%23%3A+SUM-EST-0204%0A%0AClient%3A+Sumit%27s+Test%0A%0AFacility%3A+Email+Subject+Test+edit%0A%0AProject%3A+118+docs%0A%0ATitle%3A+Perferendis+voluptat%0A%0ADescription%3A+In+excepteur+aliquid%0A%0ALocation%3A+Sed+sint+nihil+moles%0A%0APriority%3A+Emergency%0A%0AYou+can+view+the+ticket+details+here%3A%0A%0Ahttps%3A%2F%2Fsumit-s-test.vueops-qa.com%2Fservice_requests%2Fsum-est-0204+%28+https%3A%2F%2Fsumit-s-test.vueops-qa.com%2Fservice_requests%2Fsum-est-0204+%29%0A%0AFacility+Address%3A%0A%0AMetro+Street%0AB+23+Street%0ANoida+City%2C+NCR+State+110092%0A%0AClient+Contact+Information%0A%0AName%3A+Sumit+Vueops+Account%0A%0AEmail%3A+sumitka%40vueops.com%0A%0APhone+Number%3A+999-687-4668%0A%0ASTEP+2%3A%0AWhen+the+repair+work+is+complete+we+ask+that+you+respond+to+this+email+with+the+following+information+and+a+photo+of+the+completed+work%3A%0A&amp;subject=Warranty+Ticket+SUM-EST-0204+for+Email+Subject+Test+edit+for+Sumit%27s+Test+has+been+issued+to+you+for+coordination&amp;timestamp=1673613697&amp;token=9e50b9d3b4b4cfac741c4e0a7d154ca9b52a69146937cc2ba4&quot;
+</code></pre>
+<p>これはこうあるべきです -</p>
+<pre><code>{&quot;Content-Type&quot;=&gt;&quot;multipart/alternative; boundary=\&quot;0d4b5135bbc71f7078e98fd7ee7355506fb2c219e22a702a301bd7123e55\&quot;&quot;, &quot;Date&quot;=&gt;&quot;Fri, 13 Jan 2023 18:31:51 +0000&quot;, &quot;From&quot;=&gt;&quot;VueOps Warranty Ticket &lt;[email protected]&gt;&quot;, &quot;In-Reply-To&quot;=&gt;[&quot;[email protected]&quot;], &quot;Message-Id&quot;=&gt;&quot;&lt;[email protected]&gt;&quot;, &quot;Mime-Version&quot;=&gt;&quot;1.0&quot;, &quot;Sender&quot;=&gt;&quot;[email protected]&quot;, &quot;Subject&quot;=&gt;&quot;Warranty Ticket SUM-EST-0204 for Email Subject Test edit for Sumit&#39;s Test has been issued to you for coordination&quot;, &quot;To&quot;=&gt;&quot;[email protected]&quot;, &quot;body-html&quot;=&gt;&quot;&lt;!DOCTYPE html&gt;\n&lt;html&gt;\n&lt;head&gt;\n&lt;meta content=\&quot;text/html; charset=utf-8\&quot; http-equiv=\&quot;Content-Type\&quot;&gt;\n&lt;style&gt;body {\nfont-family: &#39;Calibri&#39;, &#39;Arial&#39;, sans-serif;\n}\nimg {\noutline: none; text-decoration: none; -ms-interpolation-mode: bicubic;\n}\n&lt;/style&gt;\n&lt;/head&gt;\n&lt;body style=\&quot;font-family: &#39;Calibri&#39;, &#39;Arial&#39;, sans-serif;\&quot;&gt;\n&lt;table align=\&quot;center\&quot; cellpadding=\&quot;0\&quot; cellspacing=\&quot;0\&quot; class=\&quot;logo\&quot; width=\&quot;100%\&quot;&gt;&lt;tr&gt;&lt;td align=\&quot;left\&quot;&gt;&lt;img src=\&quot;https://s3-us-west-1.amazonaws.com/dpr-email-assets/VueOPS-logo-full-color-ps.png\&quot; style=\&quot;outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: 120px;\&quot;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;\n&lt;p&gt;&lt;/p&gt;\n&lt;p&gt;\n    Hello,\n&lt;/p&gt;\n&lt;p class=\&quot;ng-binding\&quot;&gt;\n    A new Warranty Ticket has been issued for Email Subject Test edit for Sumit&#39;s Test.\n    &lt;strong&gt;Please follow the steps below to resolve this issue.&lt;/strong&gt;\n&lt;/p&gt;\n&lt;p&gt;\n    &lt;br&gt;\n    &lt;strong&gt;STEP 1:&lt;/strong&gt;\n    Contact the client contact noted below for scheduling your inspection and repair. You may contact the client by phone or by replying-all to this email.\n    &lt;br&gt;\n&lt;/p&gt;\n&lt;p class=\&quot;ng-binding\&quot;&gt;\n    &lt;strong style=\&quot;font-size: 1.1em;\&quot;&gt;Warranty Ticket Details:&lt;/strong&gt;\n    &lt;br&gt;\n    &lt;strong&gt;Ticket #:&lt;/strong&gt; SUM-EST-0204\n    &lt;br&gt;\n    &lt;strong&gt;Client:&lt;/strong&gt; Sumit&#39;s Test\n    &lt;br&gt;\n    &lt;strong&gt;Facility:&lt;/strong&gt; Email Subject Test edit\n    &lt;br&gt;\n    &lt;strong&gt;Project:&lt;/strong&gt; 118 docs\n    &lt;br&gt;\n    &lt;strong&gt;Title:&lt;/strong&gt; Perferendis voluptat\n    &lt;br&gt;\n    &lt;strong&gt;Description:&lt;/strong&gt; In excepteur aliquid\n    &lt;br&gt;\n    &lt;strong&gt;Location:&lt;/strong&gt; Sed sint nihil moles\n    &lt;br&gt;\n    &lt;strong&gt;Priority:&lt;/strong&gt; Emergency\n    &lt;br&gt;\n    &lt;string&gt;You can view the ticket details here:&lt;/string&gt;\n    &lt;br&gt;&lt;br&gt;\n    &lt;a ng-href=\&quot;https://sumit-s-test.vueops-qa.com/service_requests/sum-est-0204\&quot; class=\&quot;ng-binding\&quot; href=\&quot;https://sumit-s-test.vueops-qa.com/service_requests/sum-est-0204\&quot; style=\&quot;color: #2e74b5; text-decoration: none;\&quot;&gt;https://sumit-s-test.vueops-qa.com/service_requests/sum-est-0204&lt;/a&gt;\n    &lt;br&gt;\n&lt;/p&gt;\n\n&lt;p&gt;\n    &lt;strong&gt;Facility Address:&lt;/strong&gt;\n    &lt;br&gt;\n    &lt;span ng-bind-html=\&quot;serviceRequest.formattedFacilityAddress\&quot; class=\&quot;ng-binding\&quot;&gt;Metro Street&lt;br&gt;B 23 Street&lt;br&gt;Noida City, NCR State 110092&lt;/span&gt;\n    &lt;br&gt;\n&lt;/p&gt;\n\n&lt;p class=\&quot;ng-binding\&quot;&gt;\n    &lt;strong&gt;Client Contact Information&lt;/strong&gt;\n    &lt;br&gt;\n    &lt;strong&gt;Name:&lt;/strong&gt; Sumit Vueops Account\n    &lt;br&gt;\n    &lt;strong&gt;Email:&lt;/strong&gt; [email protected]\n    &lt;br&gt;\n    &lt;strong&gt;Phone Number:&lt;/strong&gt; 999-687-4668\n&lt;/p&gt;\n\n&lt;p&gt;\n    &lt;strong&gt;STEP 2:&lt;/strong&gt;\n    When the repair work is complete we ask that you respond to this email with the following information and a photo of the completed work:\n    &lt;br&gt;\n&lt;/p&gt;\n&lt;p&gt;\n    &lt;strong&gt;Work Performed&lt;/strong&gt;\n    &lt;br&gt;\n    &lt;br&gt;\n    &lt;strong&gt;Root Cause:&lt;/strong&gt;\n    &lt;br&gt;\n    &lt;strong&gt;Repair Date:&lt;/strong&gt;\n&lt;/p&gt;\n\n&lt;p&gt;\n    \n &lt;/p&gt;\n&lt;div class=\&quot;footer\&quot; style=\&quot;font-size: 10pt; font-family: &#39;FrnkGothITC Bk BT&#39;, &#39;Calibri&#39;, &#39;Arial&#39;, sans-serif; color: #999999; letter-spacing: 2pt;\&quot;&gt;&lt;p&gt;Thank You, &lt;br&gt;Powered by &lt;a href=\&quot;www.vueops.com\&quot; style=\&quot;color: #2e74b5; text-decoration: none;\&quot;&gt;VueOps&lt;/a&gt;&lt;br&gt;Know Your Building Inside Out&lt;sup&gt;TM&lt;sup&gt;&lt;/sup&gt;&lt;/sup&gt;&lt;/p&gt;&lt;/div&gt;\n&lt;/body&gt;\n&lt;/html&gt;\n&quot;, &quot;body-plain&quot;=&gt;&quot;Hello,\n\nA new Warranty Ticket has been issued for Email Subject Test edit for Sumit&#39;s Test.\nPlease follow the steps below to resolve this issue.\n\nSTEP 1:\nContact the client contact noted below for scheduling your inspection and repair. You may contact the client by phone or by replying-all to this email.\n\nWarranty Ticket Details:\n\nTicket #: SUM-EST-0204\n\nClient: Sumit&#39;s Test\n\nFacility: Email Subject Test edit\n\nProject: 118 docs\n\nTitle: Perferendis voluptat\n\nDescription: In excepteur aliquid\n\nLocation: Sed sint nihil moles\n\nPriority: Emergency\n\nYou can view the ticket details here:\n\nhttps://sumit-s-test.vueops-qa.com/service_requests/sum-est-0204 ( https://sumit-s-test.vueops-qa.com/service_requests/sum-est-0204 )\n\nFacility Address:\n\nMetro Street\nB 23 Street\nNoida City, NCR State 110092\n\nClient Contact Information\n\nName: Sumit Vueops Account\n\nEmail: [email protected]\n\nPhone Number: 999-687-4668\n\nSTEP 2:\nWhen the repair work is complete we ask that you respond to this email with the following information and a photo of the completed work:\n\nWork Performed\n\nRoot Cause:\n\nRepair Date:\n\nThank You,\nPowered by VueOps ( www.vueops.com )\nKnow Your Building Inside OutTM&quot;, &quot;from&quot;=&gt;&quot;VueOps Warranty Ticket &lt;[email protected]&gt;&quot;, &quot;message-headers&quot;=&gt;&quot;[[\&quot;Mime-Version\&quot;,\&quot;1.0\&quot;],[\&quot;Content-Type\&quot;,\&quot;multipart/alternative; boundary=\\\&quot;0d4b5135bbc71f7078e98fd7ee7355506fb2c219e22a702a301bd7123e55\\\&quot;\&quot;],[\&quot;Subject\&quot;,\&quot;Warranty Ticket SUM-EST-0204 for Email Subject Test edit for Sumit&#39;s Test has been issued to you for coordination\&quot;],[\&quot;From\&quot;,\&quot;VueOps Warranty Ticket &lt;[email protected]&gt;\&quot;],[\&quot;To\&quot;,\&quot;[email protected]\&quot;],[\&quot;In-Reply-To[]\&quot;,\&quot;[email protected]\&quot;],[\&quot;Message-Id\&quot;,\&quot;&lt;[email protected]&gt;\&quot;],[\&quot;Date\&quot;,\&quot;Fri, 13 Jan 2023 18:31:51 +0000\&quot;],[\&quot;Sender\&quot;,\&quot;[email protected]\&quot;]]&quot;, &quot;recipient&quot;=&gt;&quot;[email protected]&quot;, &quot;sender&quot;=&gt;&quot;VueOps Warranty Ticket &lt;[email protected]&gt;&quot;, &quot;signature&quot;=&gt;&quot;88d9f1b2a5f75668a0436c39050bbccd194485cd4a3b8369d2025311c87c87aa&quot;, &quot;stripped-html&quot;=&gt;&quot;&lt;!DOCTYPE html&gt;\n&lt;html&gt;\n&lt;head&gt;\n&lt;meta content=\&quot;text/html; charset=utf-8\&quot; http-equiv=\&quot;Content-Type\&quot;&gt;\n&lt;style&gt;body {\nfont-family: &#39;Calibri&#39;, &#39;Arial&#39;, sans-serif;\n}\nimg {\noutline: none; text-decoration: none; -ms-interpolation-mode: bicubic;\n}\n&lt;/style&gt;\n&lt;/head&gt;\n&lt;body style=\&quot;font-family: &#39;Calibri&#39;, &#39;Arial&#39;, sans-serif;\&quot;&gt;\n&lt;table align=\&quot;center\&quot; cellpadding=\&quot;0\&quot; cellspacing=\&quot;0\&quot; class=\&quot;logo\&quot; width=\&quot;100%\&quot;&gt;&lt;tr&gt;&lt;td align=\&quot;left\&quot;&gt;&lt;img src=\&quot;https://s3-us-west-1.amazonaws.com/dpr-email-assets/VueOPS-logo-full-color-ps.png\&quot; style=\&quot;outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: 120px;\&quot;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;\n&lt;p&gt;&lt;/p&gt;\n&lt;p&gt;\n    Hello,\n&lt;/p&gt;\n&lt;p class=\&quot;ng-binding\&quot;&gt;\n    A new Warranty Ticket has been issued for Email Subject Test edit for Sumit&#39;s Test.\n    &lt;strong&gt;Please follow the steps below to resolve this issue.&lt;/strong&gt;\n&lt;/p&gt;\n&lt;p&gt;\n    &lt;br&gt;\n    &lt;strong&gt;STEP 1:&lt;/strong&gt;\n    Contact the client contact noted below for scheduling your inspection and repair. You may contact the client by phone or by replying-all to this email.\n    &lt;br&gt;\n&lt;/p&gt;\n&lt;p class=\&quot;ng-binding\&quot;&gt;\n    &lt;strong style=\&quot;font-size: 1.1em;\&quot;&gt;Warranty Ticket Details:&lt;/strong&gt;\n    &lt;br&gt;\n    &lt;strong&gt;Ticket #:&lt;/strong&gt; SUM-EST-0204\n    &lt;br&gt;\n    &lt;strong&gt;Client:&lt;/strong&gt; Sumit&#39;s Test\n    &lt;br&gt;\n    &lt;strong&gt;Facility:&lt;/strong&gt; Email Subject Test edit\n    &lt;br&gt;\n    &lt;strong&gt;Project:&lt;/strong&gt; 118 docs\n    &lt;br&gt;\n    &lt;strong&gt;Title:&lt;/strong&gt; Perferendis voluptat\n    &lt;br&gt;\n    &lt;strong&gt;Description:&lt;/strong&gt; In excepteur aliquid\n    &lt;br&gt;\n    &lt;strong&gt;Location:&lt;/strong&gt; Sed sint nihil moles\n    &lt;br&gt;\n    &lt;strong&gt;Priority:&lt;/strong&gt; Emergency\n    &lt;br&gt;\n    &lt;string&gt;You can view the ticket details here:&lt;/string&gt;\n    &lt;br&gt;&lt;br&gt;\n    &lt;a ng-href=\&quot;https://sumit-s-test.vueops-qa.com/service_requests/sum-est-0204\&quot; class=\&quot;ng-binding\&quot; href=\&quot;https://sumit-s-test.vueops-qa.com/service_requests/sum-est-0204\&quot; style=\&quot;color: #2e74b5; text-decoration: none;\&quot;&gt;https://sumit-s-test.vueops-qa.com/service_requests/sum-est-0204&lt;/a&gt;\n    &lt;br&gt;\n&lt;/p&gt;\n\n&lt;p&gt;\n    &lt;strong&gt;Facility Address:&lt;/strong&gt;\n    &lt;br&gt;\n    &lt;span ng-bind-html=\&quot;serviceRequest.formattedFacilityAddress\&quot; class=\&quot;ng-binding\&quot;&gt;Metro Street&lt;br&gt;B 23 Street&lt;br&gt;Noida City, NCR State 110092&lt;/span&gt;\n    &lt;br&gt;\n&lt;/p&gt;\n\n&lt;p class=\&quot;ng-binding\&quot;&gt;\n    &lt;strong&gt;Client Contact Information&lt;/strong&gt;\n    &lt;br&gt;\n    &lt;strong&gt;Name:&lt;/strong&gt; Sumit Vueops Account\n    &lt;br&gt;\n    &lt;strong&gt;Email:&lt;/strong&gt; [email protected]\n    &lt;br&gt;\n    &lt;strong&gt;Phone Number:&lt;/strong&gt; 999-687-4668\n&lt;/p&gt;\n\n&lt;p&gt;\n    &lt;strong&gt;STEP 2:&lt;/strong&gt;\n    When the repair work is complete we ask that you respond to this email with the following information and a photo of the completed work:\n    &lt;br&gt;\n&lt;/p&gt;\n&lt;p&gt;\n    &lt;strong&gt;Work Performed&lt;/strong&gt;\n    &lt;br&gt;\n    &lt;br&gt;\n    &lt;strong&gt;Root Cause:&lt;/strong&gt;\n    &lt;br&gt;\n    &lt;strong&gt;Repair Date:&lt;/strong&gt;\n&lt;/p&gt;\n\n&lt;p&gt;\n    \n &lt;/p&gt;\n&lt;div class=\&quot;footer\&quot; style=\&quot;font-size: 10pt; font-family: &#39;FrnkGothITC Bk BT&#39;, &#39;Calibri&#39;, &#39;Arial&#39;, sans-serif; color: #999999; letter-spacing: 2pt;\&quot;&gt;&lt;p&gt;Thank You, &lt;br&gt;Powered by &lt;a href=\&quot;www.vueops.com\&quot; style=\&quot;color: #2e74b5; text-decoration: none;\&quot;&gt;VueOps&lt;/a&gt;&lt;br&gt;Know Your Building Inside Out&lt;sup&gt;TM&lt;sup&gt;&lt;/sup&gt;&lt;/sup&gt;&lt;/p&gt;&lt;/div&gt;\n&lt;/body&gt;\n&lt;/html&gt;\n&quot;, &quot;stripped-signature&quot;=&gt;&quot;Work Performed\n\nRoot Cause:\n\nRepair Date:\n\nThank You,\nPowered by VueOps ( www.vueops.com )\nKnow Your Building Inside OutTM&quot;, &quot;stripped-text&quot;=&gt;&quot;Hello,\n\nA new Warranty Ticket has been issued for Email Subject Test edit for Sumit&#39;s Test.\nPlease follow the steps below to resolve this issue.\n\nSTEP 1:\nContact the client contact noted below for scheduling your inspection and repair. You may contact the client by phone or by replying-all to this email.\n\nWarranty Ticket Details:\n\nTicket #: SUM-EST-0204\n\nClient: Sumit&#39;s Test\n\nFacility: Email Subject Test edit\n\nProject: 118 docs\n\nTitle: Perferendis voluptat\n\nDescription: In excepteur aliquid\n\nLocation: Sed sint nihil moles\n\nPriority: Emergency\n\nYou can view the ticket details here:\n\nhttps://sumit-s-test.vueops-qa.com/service_requests/sum-est-0204 ( https://sumit-s-test.vueops-qa.com/service_requests/sum-est-0204 )\n\nFacility Address:\n\nMetro Street\nB 23 Street\nNoida City, NCR State 110092\n\nClient Contact Information\n\nName: Sumit Vueops Account\n\nEmail: [email protected]\n\nPhone Number: 999-687-4668\n\nSTEP 2:\nWhen the repair work is complete we ask that you respond to this email with the following information and a photo of the completed work:\n&quot;, &quot;subject&quot;=&gt;&quot;Warranty Ticket SUM-EST-0204 for Email Subject Test edit for Sumit&#39;s Test has been issued to you for coordination&quot;, &quot;timestamp&quot;=&gt;&quot;1673638018&quot;, &quot;token&quot;=&gt;&quot;90ec0b4c8e14caf44f4bc7259699e8cefdff521b15985ebdfa&quot;}
+</code></pre>
+<p>この問題を解決する方法を教えてください。</p>
+<h2 id="解決策">解決策</h2>
+<p>解決策を見つけることができます。 Content-Type
+application/x-www-form-urlencoded を取得していますが、これは
+URI.decode_www_form を使用して変換する必要があります。これで、正しい
+JSON リクエスト本文を取得できるようになりました。</p>
+  </div>
+</body>
+</html>

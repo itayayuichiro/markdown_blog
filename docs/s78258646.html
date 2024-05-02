@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>Heroku にデプロイすると GraphQL が機能しないが、ローカルでは正しく機能する (Shopify Ruby gem) | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">Heroku にデプロイすると GraphQL
+が機能しないが、ローカルでは正しく機能する (Shopify Ruby gem)</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>Shopify gem (バージョン 9.0.2) で Ruby アプリを使用しています</p>
+<p>最近まですべてがうまく機能していましたが、突然 Heroku での GraphQL
+呼び出しを解析できなくなりました。</p>
+<p>しかし、同じプロセスをローカルで実行すると、うまくいきます</p>
+<p>たとえば、両方で次のようになります。 - 認証情報、api_version
+を使用して ShopifyAPI を初期化しています</p>
+<ul>
+<li>以下のリクエストを行います</li>
+</ul>
+<pre><code>query_variables = {&#39;gid&#39; =&gt; gid}
+    query_str = &lt;&lt;-&#39;GRAPHQL&#39;
+      query($gid: ID!) {
+        product(id: $gid) {
+          id
+        }
+      }
+    GRAPHQL
+</code></pre>
+<p>-その後、クライアントを初期化します。</p>
+<p>client = ShopifyAPI::GraphQL.client</p>
+<p>ローカルでは正常に動作しますが、Heraku では次のエラーが発生します</p>
+<p>ローカルでは正常に動作しますが、Heraku では次のエラーが発生します</p>
+<p>数か月前には Heroku でもうまく動作しました</p>
+<p>GraphQL自体から来ているようですが、なぜこのエラーが表示されたのかわかりません
+Heroku 上で正しく初期化されていないかのように</p>
+<p>私のショップにリンクされていないようです。変更を加えずに他のものを試しましたが、まだ機能しません。</p>
+<p>エラーがどこから来たのか何か考えはありますか?</p>
+<p>エラーがどこから来たのか何か考えはありますか?</p>
+<p>編集: REST API には問題ありません</p>
+<p>Edit2：Railsコンソールのバックトレース（heroku run Rails
+cを使用）：</p>
+<pre><code>app/vendor/bundle/ruby/2.6.0/gems/graphql-client-0.19.0/lib/graphql/client/document_types.rb:62:in `rescue in analyze_types&#39;
+/app/vendor/bundle/ruby/2.6.0/gems/graphql-client-0.19.0/lib/graphql/client/document_types.rb:45:in `analyze_types&#39;
+/app/vendor/bundle/ruby/2.6.0/gems/graphql-client-0.19.0/lib/graphql/client.rb:189:in `parse&#39;
+/app/lib/utilities/graphql.rb:29:in `query_shopify&#39;
+/app/lib/utilities/graphql.rb:368:in `get_product_by_id&#39;
+(irb):4:in `irb_binding&#39;
+/app/vendor/ruby-2.6.6/lib/ruby/2.6.0/irb/workspace.rb:85:in `eval&#39;
+/app/vendor/ruby-2.6.6/lib/ruby/2.6.0/irb/workspace.rb:85:in `evaluate&#39;
+/app/vendor/ruby-2.6.6/lib/ruby/2.6.0/irb/context.rb:385:in `evaluate&#39;
+/app/vendor/ruby-2.6.6/lib/ruby/2.6.0/irb.rb:493:in `block (2 levels) in eval_input&#39;
+/app/vendor/ruby-2.6.6/lib/ruby/2.6.0/irb.rb:647:in `signal_status&#39;
+/app/vendor/ruby-2.6.6/lib/ruby/2.6.0/irb.rb:490:in `block in eval_input&#39;
+/app/vendor/ruby-2.6.6/lib/ruby/2.6.0/irb/ruby-lex.rb:246:in `block (2 levels) in each_top_level_statement&#39;
+/app/vendor/ruby-2.6.6/lib/ruby/2.6.0/irb/ruby-lex.rb:232:in `loop&#39;
+/app/vendor/ruby-2.6.6/lib/ruby/2.6.0/irb/ruby-lex.rb:232:in `block in each_top_level_statement&#39;
+/app/vendor/ruby-2.6.6/lib/ruby/2.6.0/irb/ruby-lex.rb:231:in `catch&#39;
+/app/vendor/ruby-2.6.6/lib/ruby/2.6.0/irb/ruby-lex.rb:231:in `each_top_level_statement&#39;
+/app/vendor/ruby-2.6.6/lib/ruby/2.6.0/irb.rb:489:in `eval_input&#39;
+/app/vendor/ruby-2.6.6/lib/ruby/2.6.0/irb.rb:428:in `block in run&#39;
+/app/vendor/ruby-2.6.6/lib/ruby/2.6.0/irb.rb:427:in `catch&#39;
+/app/vendor/ruby-2.6.6/lib/ruby/2.6.0/irb.rb:427:in `run&#39;
+/app/vendor/ruby-2.6.6/lib/ruby/2.6.0/irb.rb:383:in `start&#39;
+/app/vendor/bundle/ruby/2.6.0/gems/railties-5.2.8.1/lib/rails/commands/console/console_command.rb:64:in `start&#39;
+/app/vendor/bundle/ruby/2.6.0/gems/railties-5.2.8.1/lib/rails/commands/console/console_command.rb:19:in `start&#39;
+/app/vendor/bundle/ruby/2.6.0/gems/railties-5.2.8.1/lib/rails/commands/console/console_command.rb:96:in `perform&#39;
+/app/vendor/bundle/ruby/2.6.0/gems/thor-1.3.1/lib/thor/command.rb:28:in `run&#39;
+/app/vendor/bundle/ruby/2.6.0/gems/thor-1.3.1/lib/thor/invocation.rb:127:in `invoke_command&#39;
+/app/vendor/bundle/ruby/2.6.0/gems/thor-1.3.1/lib/thor.rb:527:in `dispatch&#39;
+/app/vendor/bundle/ruby/2.6.0/gems/railties-5.2.8.1/lib/rails/command/base.rb:69:in `perform&#39;
+/app/vendor/bundle/ruby/2.6.0/gems/railties-5.2.8.1/lib/rails/command.rb:46:in `invoke&#39;
+/app/vendor/bundle/ruby/2.6.0/gems/railties-5.2.8.1/lib/rails/commands.rb:18:in `&lt;top (required)&gt;&#39;
+/app/bin/rails:4:in `require&#39;
+/app/bin/rails:4:in `&lt;main&gt;&#39;
+</code></pre>
+<h2 id="解決策">解決策</h2>
+<p>エラーはgraphql-client gemの更新が原因でした</p>
+<p>この宝石は今年更新されました。以前のバージョンは 2022
+年のものでした</p>
+<p>私が使用している shopify gem バージョン (9.0.2) は、graphql-client
+の最後のバージョンを使用しており、このバージョンの shopify gem
+と互換性がありません</p>
+<p>Gemfile
+に以前のバージョンを強制的に入れたところ、再び動作するようになりました</p>
+<p>エンジニアmnkyの協力に感謝します</p>
+  </div>
+</body>
+</html>

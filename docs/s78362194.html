@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>Vercel プロジェクトでの Jekyll ビルド エラー | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">Vercel プロジェクトでの Jekyll ビルド エラー</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>Bitbucket リポジトリでホストされている Jekyll Web サイトがあります。
+そして、その Web サイトを実行して静的ファイルを生成する Vercel
+プロジェクトがあります。
+数日前までは問題なく動作していましたが、今日からはこのエラー
+メッセージが表示されて動作しなくなりました。
+なぜこれが今機能しないのかわかりません。</p>
+<p>ローカルでは問題なく動作しますが、Vercel
+がビルドしようとした場合にのみ動作しません。</p>
+<pre><code>Running build in Washington, D.C., USA (East) – iad1
+Cloning bitbucket.org/kaplangabriel/jekyll-blog (Branch: main, Commit: 72555ed)
+Previous build cache not available
+Cloning completed: 3.940s
+Running &quot;vercel build&quot;
+Vercel CLI 33.7.1
+Warning: Detected &quot;engines&quot;: { &quot;node&quot;: &quot;&gt;= 0.10.0&quot; } in your `package.json` that will automatically upgrade when a new major Node.js Version is released. Learn More: http://vercel.link/node-version
+Installing dependencies...
+Fetching https://github.com/eventmachine/eventmachine.git
+Fetching gem metadata from https://rubygems.org/...........
+Resolving dependencies...
+Fetching rake 13.2.1
+Installing rake 13.2.1
+Fetching bigdecimal 3.1.7
+Fetching concurrent-ruby 1.2.3
+Installing bigdecimal 3.1.7 with native extensions
+Installing concurrent-ruby 1.2.3
+Fetching connection_pool 2.4.1
+Installing connection_pool 2.4.1
+Fetching drb 2.2.1
+Installing drb 2.2.1
+Fetching minitest 5.22.3
+Installing minitest 5.22.3
+Fetching public_suffix 5.0.5
+Installing public_suffix 5.0.5
+Fetching multi_json 1.15.0
+Installing multi_json 1.15.0
+Fetching colorator 1.1.0
+Installing colorator 1.1.0
+Fetching http_parser.rb 0.8.0
+Installing http_parser.rb 0.8.0 with native extensions
+Fetching ffi 1.16.3
+Installing ffi 1.16.3 with native extensions
+Fetching forwardable-extended 2.6.0
+Installing forwardable-extended 2.6.0
+Fetching gemoji 4.1.0
+Installing gemoji 4.1.0
+Fetching google-protobuf 4.26.1 (x86_64-linux)
+Installing google-protobuf 4.26.1 (x86_64-linux)
+Fetching racc 1.7.3
+Installing racc 1.7.3 with native extensions
+Fetching rb-fsevent 0.11.2
+Installing rb-fsevent 0.11.2
+Fetching rexml 3.2.6
+Installing rexml 3.2.6
+Fetching liquid 4.0.4
+Installing liquid 4.0.4
+Fetching mercenary 0.4.0
+Installing mercenary 0.4.0
+Fetching rouge 4.2.1
+Installing rouge 4.2.1
+Fetching safe_yaml 1.0.5
+Installing safe_yaml 1.0.5
+Fetching unicode-display_width 2.5.0
+Installing unicode-display_width 2.5.0
+Fetching webrick 1.8.1
+Installing webrick 1.8.1
+Fetching jekyll-paginate 1.1.0
+Installing jekyll-paginate 1.1.0
+Fetching i18n 1.14.4
+Installing i18n 1.14.4
+Fetching tzinfo 2.0.6
+Installing tzinfo 2.0.6
+Fetching net-http-persistent 4.0.2
+Installing net-http-persistent 4.0.2
+Fetching addressable 2.8.6
+Installing addressable 2.8.6
+Fetching net-http 0.4.1
+Installing net-http 0.4.1
+Fetching em-websocket 0.5.3
+Installing em-websocket 0.5.3
+Fetching pathutil 0.16.2
+Installing pathutil 0.16.2
+Fetching sass-embedded 1.75.0 (x86_64-linux-gnu)
+Installing sass-embedded 1.75.0 (x86_64-linux-gnu)
+Fetching nokogiri 1.16.4 (x86_64-linux)
+Installing nokogiri 1.16.4 (x86_64-linux)
+Fetching kramdown 2.4.0
+Installing kramdown 2.4.0
+Fetching terminal-table 3.0.2
+Installing terminal-table 3.0.2
+Fetching activesupport 7.1.3.2
+Installing activesupport 7.1.3.2
+Fetching faraday-net_http 3.1.0
+Installing faraday-net_http 3.1.0
+Fetching jekyll-sass-converter 3.0.0
+Installing jekyll-sass-converter 3.0.0
+Fetching kramdown-parser-gfm 1.1.0
+Installing kramdown-parser-gfm 1.1.0
+Fetching html-pipeline 2.14.3
+Installing html-pipeline 2.14.3
+Fetching faraday 2.9.0
+Installing faraday 2.9.0
+Fetching faraday-net_http_persistent 2.1.0
+Installing faraday-net_http_persistent 2.1.0
+Fetching faraday-retry 2.2.1
+Installing faraday-retry 2.2.1
+Fetching sawyer 0.9.2
+Installing sawyer 0.9.2
+Fetching algolia 2.3.4
+Installing algolia 2.3.4
+Fetching octokit 4.25.1
+Installing octokit 4.25.1
+Fetching jekyll-gist 1.5.0
+Installing jekyll-gist 1.5.0
+Fetching rb-inotify 0.10.1
+Installing rb-inotify 0.10.1
+Fetching listen 3.9.0
+Installing listen 3.9.0
+Fetching jekyll-watch 2.2.1
+Installing jekyll-watch 2.2.1
+Fetching jekyll 4.3.3
+Installing jekyll 4.3.3
+Fetching jekyll-feed 0.17.0
+Fetching jekyll-include-cache 0.2.1
+Installing jekyll-feed 0.17.0
+Installing jekyll-include-cache 0.2.1
+Fetching jekyll-sitemap 1.4.0
+Fetching jemoji 0.13.0
+Installing jemoji 0.13.0
+Installing jekyll-sitemap 1.4.0
+Bundle complete! 13 Gemfile dependencies, 60 gems now installed.
+Bundled gems are installed into `./vendor/bundle`
+Post-install message from html-pipeline:
+-------------------------------------------------
+Thank you for installing html-pipeline!
+You must bundle Filter gem dependencies.
+See html-pipeline README.md for more details.
+https://github.com/jch/html-pipeline#dependencies
+-------------------------------------------------
+Installing dependencies...
+added 136 packages in 8s
+60 packages are looking for funding
+  run `npm fund` for details
+/ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/source/git.rb:222:in `rescue in load_spec_files&#39;: https://github.com/eventmachine/eventmachine.git (at v1.2.7@9cb13a8) is not yet checked out. Run `bundle install` first. (Bundler::GitError)
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/source/git.rb:218:in `load_spec_files&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/source/path.rb:108:in `local_specs&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/source/git.rb:185:in `specs&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/lazy_specification.rb:97:in `materialize_for_installation&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/spec_set.rb:281:in `map!&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/spec_set.rb:281:in `specs_for_dependency&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/spec_set.rb:34:in `block in for&#39;
+    from &lt;internal:kernel&gt;:187:in `loop&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/spec_set.rb:22:in `for&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/spec_set.rb:121:in `materialize&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/definition.rb:579:in `materialize&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/definition.rb:203:in `specs&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/definition.rb:270:in `specs_for&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/runtime.rb:18:in `setup&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler.rb:162:in `setup&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/setup.rb:26:in `block in &lt;top (required)&gt;&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/ui/shell.rb:159:in `with_level&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/ui/shell.rb:111:in `silence&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/setup.rb:26:in `&lt;top (required)&gt;&#39;
+    from &lt;internal:/ruby33/lib/ruby/3.3.0/rubygems/core_ext/kernel_require.rb&gt;:127:in `require&#39;
+    from &lt;internal:/ruby33/lib/ruby/3.3.0/rubygems/core_ext/kernel_require.rb&gt;:127:in `require&#39;
+    from /vercel/path0/vendor/bin/jekyll:25:in `&lt;main&gt;&#39;
+/ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/source/path.rb:210:in `load_spec_files&#39;: The path `/vercel/path0/vendor/bundle/ruby/3.2.0/bundler/gems/eventmachine-9cb13a8a6236` does not exist. (Bundler::PathError)
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/source/git.rb:219:in `load_spec_files&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/source/path.rb:108:in `local_specs&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/source/git.rb:185:in `specs&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/lazy_specification.rb:97:in `materialize_for_installation&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/spec_set.rb:281:in `map!&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/spec_set.rb:281:in `specs_for_dependency&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/spec_set.rb:34:in `block in for&#39;
+    from &lt;internal:kernel&gt;:187:in `loop&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/spec_set.rb:22:in `for&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/spec_set.rb:121:in `materialize&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/definition.rb:579:in `materialize&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/definition.rb:203:in `specs&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/definition.rb:270:in `specs_for&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/runtime.rb:18:in `setup&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler.rb:162:in `setup&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/setup.rb:26:in `block in &lt;top (required)&gt;&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/ui/shell.rb:159:in `with_level&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/ui/shell.rb:111:in `silence&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/setup.rb:26:in `&lt;top (required)&gt;&#39;
+    from &lt;internal:/ruby33/lib/ruby/3.3.0/rubygems/core_ext/kernel_require.rb&gt;:127:in `require&#39;
+    from &lt;internal:/ruby33/lib/ruby/3.3.0/rubygems/core_ext/kernel_require.rb&gt;:127:in `require&#39;
+    from /vercel/path0/vendor/bin/jekyll:25:in `&lt;main&gt;&#39;
+Error: Command &quot;jekyll build&quot; exited with 1
+</code></pre>
+<p>これは私の Gemfile です</p>
+<pre><code>source &quot;https://rubygems.org&quot;
+# Hello! This is where you manage which Jekyll version is used to run.
+# When you want to use a different version, change it below, save the
+# file and run `bundle install`. Run Jekyll with `bundle exec`, like so:
+#
+#     bundle exec jekyll serve --livereload
+#
+# This will help ensure the proper Jekyll version is running.
+# Happy Jekylling!
+# gem &quot;jekyll&quot;, &quot;~&gt; 4.2.1&quot;
+# This is the default theme for new Jekyll sites. You may change this to anything you like.
+# gem &quot;minima&quot;, &quot;~&gt; 2.5&quot;
+# If you want to use GitHub Pages, remove the &quot;gem &quot;jekyll&quot;&quot; above and
+# uncomment the line below. To upgrade, run `bundle update github-pages`.
+gem &quot;jekyll-include-cache&quot;, group: :jekyll_plugins
+# If you have any plugins, put them here!
+group :jekyll_plugins do
+  gem &quot;jekyll-paginate&quot;
+  gem &quot;jekyll-sitemap&quot;
+  gem &quot;jekyll-gist&quot;
+  gem &quot;jekyll-feed&quot;
+  gem &quot;jemoji&quot;
+  gem &#39;algolia&#39;, &#39;~&gt; 2.3&#39;, &#39;&gt;= 2.3.4&#39;
+end
+
+# Windows and JRuby does not include zoneinfo files, so bundle the tzinfo-data gem
+# and associated library.
+platforms :mingw, :x64_mingw, :mswin, :jruby do
+  gem &quot;tzinfo&quot;, &quot;~&gt; 1.2&quot;
+  gem &quot;tzinfo-data&quot;
+end
+
+# Performance-booster for watching directories on Windows
+gem &quot;wdm&quot;, &quot;~&gt; 0.1.1&quot;, :platforms =&gt; [:mingw, :x64_mingw, :mswin]
+gem &quot;webrick&quot;
+gem &#39;eventmachine&#39;, &#39;1.2.7&#39;, git: &#39;https://github.com/eventmachine/eventmachine.git&#39;, tag: &#39;v1.2.7&#39;
+gem &#39;faraday-retry&#39;
+</code></pre>
+<p>これは私の Gemfile.lock です</p>
+<pre><code>GEM
+  remote: https://rubygems.org/
+  specs:
+    activesupport (7.1.3.2)
+      base64
+      bigdecimal
+      concurrent-ruby (~&gt; 1.0, &gt;= 1.0.2)
+      connection_pool (&gt;= 2.2.5)
+      drb
+      i18n (&gt;= 1.6, &lt; 2)
+      minitest (&gt;= 5.1)
+      mutex_m
+      tzinfo (~&gt; 2.0)
+    addressable (2.8.6)
+      public_suffix (&gt;= 2.0.2, &lt; 6.0)
+    algolia (2.3.4)
+      faraday (&gt;= 0.15, &lt; 3)
+      faraday-net_http_persistent (&gt;= 0.15, &lt; 3)
+      multi_json (~&gt; 1.0)
+      net-http-persistent
+    base64 (0.2.0)
+    bigdecimal (3.1.7)
+    colorator (1.1.0)
+    concurrent-ruby (1.2.3)
+    connection_pool (2.4.1)
+    drb (2.2.1)
+    em-websocket (0.5.3)
+      eventmachine (&gt;= 0.12.9)
+      http_parser.rb (~&gt; 0)
+    eventmachine (1.2.7)
+    faraday (2.9.0)
+      faraday-net_http (&gt;= 2.0, &lt; 3.2)
+    faraday-net_http (3.1.0)
+      net-http
+    faraday-net_http_persistent (2.1.0)
+      faraday (~&gt; 2.5)
+      net-http-persistent (~&gt; 4.0)
+    faraday-retry (2.2.1)
+      faraday (~&gt; 2.0)
+    ffi (1.16.3-x64-mingw-ucrt)
+    forwardable-extended (2.6.0)
+    gemoji (4.1.0)
+    google-protobuf (4.26.1-x64-mingw-ucrt)
+      rake (&gt;= 13)
+    html-pipeline (2.14.3)
+      activesupport (&gt;= 2)
+      nokogiri (&gt;= 1.4)
+    http_parser.rb (0.8.0)
+    i18n (1.14.4)
+      concurrent-ruby (~&gt; 1.0)
+    jekyll (4.3.3)
+      addressable (~&gt; 2.4)
+      colorator (~&gt; 1.0)
+      em-websocket (~&gt; 0.5)
+      i18n (~&gt; 1.0)
+      jekyll-sass-converter (&gt;= 2.0, &lt; 4.0)
+      jekyll-watch (~&gt; 2.0)
+      kramdown (~&gt; 2.3, &gt;= 2.3.1)
+      kramdown-parser-gfm (~&gt; 1.0)
+      liquid (~&gt; 4.0)
+      mercenary (&gt;= 0.3.6, &lt; 0.5)
+      pathutil (~&gt; 0.9)
+      rouge (&gt;= 3.0, &lt; 5.0)
+      safe_yaml (~&gt; 1.0)
+      terminal-table (&gt;= 1.8, &lt; 4.0)
+      webrick (~&gt; 1.7)
+    jekyll-feed (0.17.0)
+      jekyll (&gt;= 3.7, &lt; 5.0)
+    jekyll-gist (1.5.0)
+      octokit (~&gt; 4.2)
+    jekyll-include-cache (0.2.1)
+      jekyll (&gt;= 3.7, &lt; 5.0)
+    jekyll-paginate (1.1.0)
+    jekyll-sass-converter (3.0.0)
+      sass-embedded (~&gt; 1.54)
+    jekyll-sitemap (1.4.0)
+      jekyll (&gt;= 3.7, &lt; 5.0)
+    jekyll-watch (2.2.1)
+      listen (~&gt; 3.0)
+    jemoji (0.13.0)
+      gemoji (&gt;= 3, &lt; 5)
+      html-pipeline (~&gt; 2.2)
+      jekyll (&gt;= 3.0, &lt; 5.0)
+    kramdown (2.4.0)
+      rexml
+    kramdown-parser-gfm (1.1.0)
+      kramdown (~&gt; 2.0)
+    liquid (4.0.4)
+    listen (3.9.0)
+      rb-fsevent (~&gt; 0.10, &gt;= 0.10.3)
+      rb-inotify (~&gt; 0.9, &gt;= 0.9.10)
+    mercenary (0.4.0)
+    minitest (5.22.3)
+    multi_json (1.15.0)
+    mutex_m (0.2.0)
+    net-http (0.4.1)
+      uri
+    net-http-persistent (4.0.2)
+      connection_pool (~&gt; 2.2)
+    nokogiri (1.16.4-x64-mingw-ucrt)
+      racc (~&gt; 1.4)
+    octokit (4.25.1)
+      faraday (&gt;= 1, &lt; 3)
+      sawyer (~&gt; 0.9)
+    pathutil (0.16.2)
+      forwardable-extended (~&gt; 2.6)
+    public_suffix (5.0.5)
+    racc (1.7.3)
+    rake (13.2.1)
+    rb-fsevent (0.11.2)
+    rb-inotify (0.10.1)
+      ffi (~&gt; 1.0)
+    rexml (3.2.6)
+    rouge (4.2.1)
+    safe_yaml (1.0.5)
+    sass-embedded (1.75.0-x64-mingw-ucrt)
+      google-protobuf (&gt;= 3.25, &lt; 5.0)
+    sawyer (0.9.2)
+      addressable (&gt;= 2.3.5)
+      faraday (&gt;= 0.17.3, &lt; 3)
+    terminal-table (3.0.2)
+      unicode-display_width (&gt;= 1.1.1, &lt; 3)
+    tzinfo (2.0.6)
+      concurrent-ruby (~&gt; 1.0)
+    unicode-display_width (2.5.0)
+    uri (0.13.0)
+    webrick (1.8.1)
+
+PLATFORMS
+  x64-mingw-ucrt
+
+DEPENDENCIES
+  algolia (~&gt; 2.3, &gt;= 2.3.4)
+  eventmachine
+  faraday-retry
+  jekyll-feed
+  jekyll-gist
+  jekyll-include-cache
+  jekyll-paginate
+  jekyll-sitemap
+  jemoji
+  tzinfo (~&gt; 1.2)
+  tzinfo-data
+  wdm (~&gt; 0.1.1)
+  webrick
+
+BUNDLED WITH
+   2.3.6
+</code></pre>
+<p>この gem ‘eventmachine’ の eventsmachine
+行を変更すると、この新しいエラーが発生します</p>
+<pre><code>/ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/definition.rb:596:in `materialize&#39;: Could not find jekyll-include-cache-0.2.1, jekyll-paginate-1.1.0, jekyll-sitemap-1.4.0, jekyll-gist-1.5.0, jekyll-feed-0.17.0, jemoji-0.13.0, algolia-2.3.4, webrick-1.8.1, eventmachine-1.2.7, faraday-retry-2.2.1, jekyll-4.3.3, octokit-4.25.1, gemoji-4.1.0, html-pipeline-2.14.3, faraday-2.9.0, faraday-net_http_persistent-2.1.0, multi_json-1.15.0, net-http-persistent-4.0.2, addressable-2.8.6, colorator-1.1.0, em-websocket-0.5.3, i18n-1.14.4, jekyll-sass-converter-3.0.0, jekyll-watch-2.2.1, kramdown-2.4.0, kramdown-parser-gfm-1.1.0, liquid-4.0.4, mercenary-0.4.0, pathutil-0.16.2, rouge-4.2.1, safe_yaml-1.0.5, terminal-table-3.0.2, sawyer-0.9.2, activesupport-7.1.3.2, nokogiri-1.16.4-x86_64-linux, faraday-net_http-3.1.0, connection_pool-2.4.1, public_suffix-5.0.5, http_parser.rb-0.8.0, concurrent-ruby-1.2.3, sass-embedded-1.75.0-x86_64-linux-gnu, listen-3.9.0, forwardable-extended-2.6.0, unicode-display_width-2.5.0, bigdecimal-3.1.7, drb-2.2.1, minitest-5.22.3, tzinfo-2.0.6, net-http-0.4.1, google-protobuf-4.26.1-x86_64-linux, rb-fsevent-0.11.2, rb-inotify-0.10.1, rake-13.2.1, ffi-1.16.3 in cached gems or installed locally (Bundler::GemNotFound)
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/definition.rb:203:in `specs&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/definition.rb:270:in `specs_for&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/runtime.rb:18:in `setup&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler.rb:162:in `setup&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/setup.rb:26:in `block in &lt;top (required)&gt;&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/ui/shell.rb:159:in `with_level&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/ui/shell.rb:111:in `silence&#39;
+    from /ruby33/lib/ruby/gems/3.3.0/gems/bundler-2.5.9/lib/bundler/setup.rb:26:in `&lt;top (required)&gt;&#39;
+    from &lt;internal:/ruby33/lib/ruby/3.3.0/rubygems/core_ext/kernel_require.rb&gt;:127:in `require&#39;
+    from &lt;internal:/ruby33/lib/ruby/3.3.0/rubygems/core_ext/kernel_require.rb&gt;:127:in `require&#39;
+    from /vercel/path0/vendor/bin/jekyll:25:in `&lt;main&gt;&#39;
+Error: Command &quot;jekyll build&quot; exited with 1
+</code></pre>
+<h2 id="解決策">解決策</h2>
+<p>以下を置き換えて再試行してください</p>
+<pre><code>gem &#39;eventmachine&#39;, &#39;1.2.7&#39;, git: &#39;https://github.com/eventmachine/eventmachine.git&#39;, tag: &#39;v1.2.7&#39;
+</code></pre>
+<p>と</p>
+<pre><code>gem &#39;eventmachine&#39;
+</code></pre>
+  </div>
+</body>
+</html>

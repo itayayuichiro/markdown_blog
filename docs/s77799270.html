@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <link rel="icon" href="../favicon.ico" />
+  <title>Cocoapods のインストールが失敗し、Ruby のローカル バージョンを変更できません | 昼寝王子のエンジニアブログ</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1637770322917058"
+     crossorigin="anonymous"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GV53GJEY2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GV53GJEY2E');
+  </script>
+<script type="application/ld+json">
+  
+</script>
+  <!-- Style for Markdown -->
+  <style>
+  .md2html-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .md2html-container > h1:first-child {
+    margin-top: 0;
+  }
+  body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0; }
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  border-collapse: collapse;
+  padding: 0; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="md2html-container">
+<header>
+<h1 class="title">Cocoapods のインストールが失敗し、Ruby のローカル
+バージョンを変更できません</h1>
+</header>
+<h2 id="概要">概要</h2>
+<p>MacBook Pro、macOS Catalina 10.15.7</p>
+<p>Cocoapods をインストールしようとすると 2 つの主な問題があります。1
+つ目は、Ruby のバージョンを 2.7.5
+に変更しようとするとエラーが発生します。グローバルには変更できますが、ローカルには変更できないためです。</p>
+<pre><code>user@MacBook-Pro-de-User / % rbenv versions      
+  system
+* 2.7.5 (set by /Users/user/.rbenv/version)
+  mruby-3.0.0
+
+user@MacBook-Pro-de-User / % ruby -v                   
+ruby 2.6.3p62 (2019-04-16 revision 67580) [universal.x86_64-darwin19]
+
+user@MacBook-Pro-de-User / % sudo rbenv local 2.7.5    
+Password:
+/usr/local/Cellar/rbenv/1.2.0/libexec/rbenv-version-file-write: line 19: .ruby-version: Read-only file system
+</code></pre>
+<p>2番目の問題は、cocoapodsをインストールしようとするときです。</p>
+<pre><code>user@MacBook-Pro-de-User / % sudo gem install cocoapods
+Password:
+Building native extensions. This could take a while...
+ERROR:  Error installing cocoapods:
+    ERROR: Failed to build gem native extension.
+
+    current directory: /Library/Ruby/Gems/2.6.0/gems/ffi-1.16.3/ext/ffi_c
+/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/bin/ruby -I /System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/2.6.0 -r ./siteconf20240111-988-w3p1cs.rb extconf.rb
+*** extconf.rb failed ***
+Could not create Makefile due to some reason, probably lack of necessary
+libraries and/or headers.  Check the mkmf.log file for more details.  You may
+need configuration options.
+
+Provided configuration options:
+    --with-opt-dir
+    --without-opt-dir
+    --with-opt-include
+    --without-opt-include=${opt-dir}/include
+    --with-opt-lib
+    --without-opt-lib=${opt-dir}/lib
+    --with-make-prog
+    --without-make-prog
+    --srcdir=.
+    --curdir
+    --ruby=/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/bin/$(RUBY_BASE_NAME)
+    --with-ffi_c-dir
+    --without-ffi_c-dir
+    --with-ffi_c-include
+    --without-ffi_c-include=${ffi_c-dir}/include
+    --with-ffi_c-lib
+    --without-ffi_c-lib=${ffi_c-dir}/lib
+    --enable-debug
+    --disable-debug
+    --enable-system-libffi
+    --disable-system-libffi
+    --with-libffi-config
+    --without-libffi-config
+    --with-pkg-config
+    --without-pkg-config
+/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/2.6.0/mkmf.rb:467:in `try_do&#39;: The compiler failed to generate an executable file. (RuntimeError)
+You have to install development tools first.
+    from /System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/2.6.0/mkmf.rb:546:in `block in try_link0&#39;
+    from /System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/2.6.0/tmpdir.rb:93:in `mktmpdir&#39;
+    from /System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/2.6.0/mkmf.rb:543:in `try_link0&#39;
+    from /System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/2.6.0/mkmf.rb:570:in `try_link&#39;
+    from /System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/2.6.0/mkmf.rb:672:in `try_ldflags&#39;
+    from /System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/2.6.0/mkmf.rb:1832:in `pkg_config&#39;
+    from extconf.rb:9:in `system_libffi_usable?&#39;
+    from extconf.rb:46:in `&lt;main&gt;&#39;
+
+To see why this extension failed to compile, please check the mkmf.log which can be found here:
+
+  /Library/Ruby/Gems/2.6.0/extensions/universal-darwin-19/2.6.0/ffi-1.16.3/mkmf.log
+
+extconf failed, exit code 1
+
+Gem files will remain installed in /Library/Ruby/Gems/2.6.0/gems/ffi-1.16.3 for inspection.
+Results logged to /Library/Ruby/Gems/2.6.0/extensions/universal-darwin-19/2.6.0/ffi-1.16.3/gem_make.out
+</code></pre>
+<p>mkmf.log:</p>
+<pre><code>&quot;pkg-config --exists libffi&quot;
+| pkg-config --libs libffi
+=&gt; &quot;-lffi\n&quot;
+&quot;xcrun clang -o conftest -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/include/ruby-2.6.0/universal-darwin19 -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/include/ruby-2.6.0/ruby/backward -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/include/ruby-2.6.0 -I. -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT    -g -Os -pipe -DHAVE_GCC_ATOMIC_BUILTINS conftest.c  -L. -L/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib -L. -L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.Internal.sdk/usr/local/lib   -arch x86_64   -lruby.2.6   &quot;
+In file included from conftest.c:1:
+In file included from /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/include/ruby-2.6.0/ruby.h:33:
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/include/ruby-2.6.0/ruby/ruby.h:24:10: fatal error: &#39;ruby/config.h&#39; file not found
+#include &quot;ruby/config.h&quot;
+         ^~~~~~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/include/ruby-2.6.0/ruby/ruby.h:24:10: note: did not find header &#39;config.h&#39; in framework &#39;ruby&#39; (loaded from &#39;/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks&#39;)
+1 error generated.
+checked program was:
+/* begin */
+1: #include &quot;ruby.h&quot;
+2: 
+3: int main(int argc, char **argv)
+4: {
+5:   return 0;
+6: }
+/* end */
+</code></pre>
+<p>また、 brew install Cocoapods を実行しようとしましたが、 llvm cmake
+–build でスタックします。 また、llvm
+だけをインストールしようとすると、次のようになります。</p>
+<pre><code>user@MacBook-Pro-de-User /usr % brew install llvm
+    Warning: You are using macOS 10.15.
+    We (and Apple) do not provide support for this old version.
+    It is expected behaviour that some formulae will fail to build in this old version.
+    It is expected behaviour that Homebrew will be buggy and slow.
+    Do not create any issues about this on Homebrew&#39;s GitHub repositories.
+    Do not create any issues even if you think this message is unrelated.
+    Any opened issues will be immediately closed without response.
+    Do not ask for help from Homebrew or its maintainers on social media.
+    You may ask for help in Homebrew&#39;s discussions but are unlikely to receive a response.
+    Try to figure out the problem yourself and submit a fix as a pull request.
+    We will review it but may or may not accept it.
+    
+    ==&gt; Fetching llvm
+    ==&gt; Downloading https://raw.githubusercontent.com/Homebrew/homebrew-core/a656e8d
+    ######################################################################### 100.0%
+    ==&gt; Downloading https://github.com/llvm/llvm-project/releases/download/llvmorg-1
+    Already downloaded: /Users/user/Library/Caches/Homebrew/downloads/0f45ee25df06c0fb1fa6d0d6df4677a9487c4b95f1020855dc61f95b532eb9c0--llvm-project-17.0.6.src.tar.xz
+    ==&gt; cmake -G Ninja .. -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra;lld;lldb;ml
+    ==&gt; cmake --build . 
+</code></pre>
+<h2 id="解決策">解決策</h2>
+<p>そこで私はここで私の問題の解決策を見つけました：Rubyのインストール。
+Cocoapods のインストールに関する問題は、Ruby の古いバージョン (2.6.3)
+が原因で、ローカルで他のバージョンに変更できませんでした。おそらく、バージョンがインストールされているにもかかわらず、インストール中にエラーが発生したためです。インストールに関する問題は
+openssl のバージョンが原因で、インストールには正しいと思われる 1.1
+ではなく 3.0 が使用されていました。 1.1 openssl
+バージョンをインストールし、その openssl バージョンで Ruby
+バージョンをインストールするだけで済みました。</p>
+<pre><code>brew install [email protected]
+rvm install ruby-3.3.0 --with-openssl-dir=$(brew --prefix [email protected])
+</code></pre>
+  </div>
+</body>
+</html>
